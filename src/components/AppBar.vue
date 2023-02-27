@@ -32,6 +32,14 @@
           <li class="nav-item">
             <a class="nav-link text-light" href="#">Justificativas</a>
           </li>
+          <li class="nav-item">
+            <a
+              class="nav-link text-light"
+              href="#"
+              @click="$router.push('/workers')"
+              >Trabalhador</a
+            >
+          </li>
         </ul>
         <form class="d-flex" role="search">
           <input

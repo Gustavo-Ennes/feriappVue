@@ -29,8 +29,11 @@ const authenticatedRoutes: RouteRecordRaw[] = [
     component: () => import("./home/Home.vue"),
     meta: { requiresAuth: true },
   },
+  {
+    path: "/workers",
+    component: () => import("./worker/Workers.vue"),
+    meta: { requiresAuth: true },
+  },
 ];
-
-
 
 export { unauthenticatedRoutes, authenticatedRoutes };
