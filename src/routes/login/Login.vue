@@ -77,7 +77,7 @@ export default {
       this.$store.dispatch("stopLoading");
 
       if (this.$store.state.user) {
-        this.$router.push("/home");
+        this.$router.push("/");
       } else {
         this.openToast();
       }
