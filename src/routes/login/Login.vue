@@ -45,13 +45,18 @@
         </div>
       </div>
       <LoadingFrame />
+      <WrongPasswordToast />
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { Toast } from "bootstrap";
+
 import { login as loginUser } from "../../firebase/firebase";
 import LoadingFrame from "../../components/LoadingFrame.vue";
+import WrongPasswordToast from "./components/WrongPasswordToast.vue";
+
 export default {
   name: "Login",
   data() {
@@ -61,13 +66,24 @@ export default {
     };
   },
   methods: {
+    openToast() {
+      const toastLiveExample = document.getElementById("liveToast");
+      const toast = new Toast(toastLiveExample as HTMLElement);
+      toast.show();
+    },
     async login(): Promise<void> {
       this.$store.dispatch("startLoading");
       await loginUser(this.email, this.password);
       this.$store.dispatch("stopLoading");
+
+      if (this.$store.state.user) {
+        this.$router.push("/home");
+      } else {
+        this.openToast();
+      }
     },
   },
-  components: { LoadingFrame },
+  components: { LoadingFrame, WrongPasswordToast },
 };
 </script>
 
