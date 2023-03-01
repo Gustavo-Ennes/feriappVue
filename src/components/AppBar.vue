@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-primary text-light">
+  <nav class="navbar navbar-expand-lg bg-primary">
     <div class="container-fluid">
       <a class="navbar-brand text-light" href="#">Feriapp</a>
       <button
@@ -11,7 +11,7 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon text-light"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">

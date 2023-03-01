@@ -3,6 +3,7 @@ import { store } from "@/store/store";
 import type { RouteRecordRaw } from "vue-router";
 
 import NotFound from "./notFound/NotFound.vue";
+// import testRoute from "./worker/components/WorkerModal/WorkerModal.vue";
 
 const unauthenticatedRoutes: RouteRecordRaw[] = [
   {
@@ -11,11 +12,6 @@ const unauthenticatedRoutes: RouteRecordRaw[] = [
     beforeEnter() {
       return store.state.user ? router.push("/") : true;
     },
-  },
-  {
-    path: "/",
-    component: () => import("./home/Home.vue"),
-    meta: { requiresAuth: true },
   },
   {
     path: "/:pathMatch(.*)",
@@ -34,6 +30,10 @@ const authenticatedRoutes: RouteRecordRaw[] = [
     component: () => import("./worker/Workers.vue"),
     meta: { requiresAuth: true },
   },
+  // {
+  //   path: "/test",
+  //   component: testRoute,
+  // },
 ];
 
 export { unauthenticatedRoutes, authenticatedRoutes };

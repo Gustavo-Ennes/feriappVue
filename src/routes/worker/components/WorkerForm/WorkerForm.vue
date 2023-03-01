@@ -14,22 +14,27 @@
         />
       </div>
       <div class="col-12 float-right">
-        <button class="btn btn-primary mt-2 w-100">
+        <button class="btn btn-primary mt-2 w-100" @click="instantiateModal">
           <i class="fa-solid fa-user-plus p-1"></i>{{ " " }} Trabalhador
         </button>
       </div>
     </div>
   </div>
+  <WorkerModal type="create" :modal="modal" />
 </template>
 
 <script lang="ts">
+import { Modal } from "bootstrap";
+
 import type { WorkerFormDataInterface } from "../../types";
+import WorkerModal from "../WorkerModal/WorkerModal.vue";
 
 export default {
   name: "WorkerForm",
   data(): WorkerFormDataInterface {
     return {
       searchTerm: "",
+      modal: undefined,
     };
   },
   watch: {
@@ -37,5 +42,13 @@ export default {
       this.$emit("searchTermUpdated", this.searchTerm);
     },
   },
+  methods: {
+    instantiateModal() {
+      const modalHTML = document.getElementById("exampleModal");
+      this.modal = new Modal(modalHTML as HTMLElement, {});
+      this.modal.show();
+    },
+  },
+  components: { WorkerModal },
 };
 </script>
