@@ -1,6 +1,6 @@
 <template>
   <form
-    @submit.prevent="submitForm($data.form)"
+    @submit.prevent="submitForm(recentData)"
     class="row justify-content-center align-items-center"
     id="workerCreateForm"
   >
@@ -52,8 +52,8 @@
         <option selected :value="null">Selecione o departamento</option>
         <option
           v-for="department in departments"
-          :key="department.id"
-          :value="department.id"
+          :key="department._id"
+          :value="department._id"
         >
           {{ department.name }}
         </option>
@@ -72,27 +72,54 @@
 </template>
 
 <script lang="ts">
+import { format } from "date-fns";
 import type { WorkerModalFormDataInterface } from "../../../../types";
 
 export default {
   name: "WorkerModalForm",
-  props: ["departments", "submitForm"],
+  props: ["departments", "submitForm", "worker"],
   data(): WorkerModalFormDataInterface {
     return {
       form: {
-        name: "",
-        role: "",
-        matriculation: "",
-        registry: "",
-        admissionDate: "",
-        departmentId: null,
+        name: this.worker?.name || "",
+        role: this.worker?.role || "",
+        matriculation: this.worker?.matriculation || "",
+        registry: this.worker?.registry || "",
+        admissionDate: this.worker?.admissionDate || "",
+        departmentId: this.worker?.departmentId || null,
       },
     };
+  },
+  computed: {
+    recentData() {
+      return this.$data.form;
+    },
   },
   watch: {
     form: {
       handler() {
         this.$emit("formUpdated", this.form);
+      },
+      deep: true,
+    },
+    worker: {
+      handler() {
+        if (this.worker) {
+          const admissionDate = format(
+            new Date(this.worker.admissionDate),
+            "yyyy-MM-dd"
+          );
+          this.form = { ...this.worker, admissionDate };
+        } else {
+          this.form = {
+            name: "",
+            role: "",
+            matriculation: "",
+            registry: "",
+            admissionDate: "",
+            departmentId: null,
+          };
+        }
       },
       deep: true,
     },

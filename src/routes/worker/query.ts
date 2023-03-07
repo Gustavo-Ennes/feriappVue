@@ -1,7 +1,7 @@
 const workersQuery = `
 query Workers{
   workers{
-    id
+    _id
     name
     registry
     matriculation
@@ -13,4 +13,13 @@ query Workers{
 }
 `;
 
-export { workersQuery };
+const departmentQuery: string = `
+query Departments{
+  departments{
+    _id
+    name
+  }
+}
+`;
+
+export { workersQuery, departmentQuery };

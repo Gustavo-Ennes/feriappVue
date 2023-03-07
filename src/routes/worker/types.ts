@@ -1,6 +1,5 @@
-import type { Modal } from "bootstrap";
+import type { Modal, Toast } from "bootstrap";
 import type { InferType } from "yup";
-import type { VueElement } from "vue";
 
 import type { workerCreateFormSchema } from "./components/WorkerModal/components/WorkerModalForm/form";
 import type { ComponentProps } from "@/__VLS_types";
@@ -25,11 +24,19 @@ interface WorkerResponseInterface {
 interface WorkersDataInterface {
   allWorkers: Worker[] | null;
   displayWorkers: Worker[] | null;
+  modal?: Modal;
+  modalType?: string;
+  selectedWorker: Worker | undefined;
+  departments?: Department[];
+}
+
+interface Department {
+  _id: string;
+  name: string;
 }
 
 interface WorkerFormDataInterface {
   searchTerm: string;
-  modal?: Modal;
 }
 
 interface WorkerModalDataInterface {
@@ -37,6 +44,13 @@ interface WorkerModalDataInterface {
   dataToSend?: WorkerModalFormDataInterface;
   errors: string[] | undefined;
   formModified: boolean;
+  toastPayload:
+    | {
+        text?: string;
+        title?: string;
+        type?: string;
+      }
+    | undefined;
 }
 
 interface WorkerModalFormDataInterface {
@@ -64,12 +78,31 @@ interface WorkerModalInterface extends WorkerModalDataInterface {
   modal: Modal;
 }
 
+interface WorkerTableDataInterface {
+  confirmationModal?: Modal;
+}
+
+interface DepartmentResponseInterface {
+  data?: {
+    departments?: Department[];
+  };
+  errors?: any;
+}
+
+interface TranslatedStatusObject {
+  active: string;
+  license: string;
+  dayOff: string;
+  vacation: string;
+}
+
 type WorkerModalComponentInterface = ComponentProps<WorkerModalInterface>;
 
 type WorkerFormType = InferType<typeof workerCreateFormSchema>;
 
 export type {
   Worker,
+  Department,
   WorkerResponseInterface,
   WorkersDataInterface,
   WorkerFormDataInterface,
@@ -78,4 +111,7 @@ export type {
   WorkerFormType,
   WorkerCreatePayloadInterface,
   WorkerModalComponentInterface,
+  WorkerTableDataInterface,
+  DepartmentResponseInterface,
+  TranslatedStatusObject,
 };

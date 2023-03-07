@@ -3,8 +3,9 @@ import type { User } from "firebase/auth";
 import { createStore, Store } from "vuex";
 import type { InjectionKey } from "vue";
 
-import type { State, StoreComponents } from "./store.d";
+import type { State, StoreComponents, ToastParams } from "./store.d";
 import VuexPersistence from "vuex-persist";
+import { Toast } from "bootstrap";
 
 const vuexLocal = new VuexPersistence<State>({
   storage: window.localStorage,
@@ -17,9 +18,13 @@ const store = createStore<State>({
     return {
       loading: false,
       user: null,
+      toast: undefined,
     };
   },
   mutations: {
+    setToast(state: State, value: ToastParams) {
+      state.toast = value;
+    },
     setLoading(state: State, value: boolean) {
       state.loading = value;
     },
@@ -34,7 +39,7 @@ const store = createStore<State>({
     login({ commit }: StoreComponents, user: User) {
       commit("setUser", user);
     },
-    logout({ commit }: StoreComponents, user: User) {
+    logout({ commit }: StoreComponents) {
       commit("resetUser");
     },
     startLoading({ commit }: StoreComponents) {
@@ -42,6 +47,24 @@ const store = createStore<State>({
     },
     stopLoading({ commit }: StoreComponents) {
       commit("setLoading", false);
+    },
+    showToast({ commit, state }: StoreComponents, toastParams: ToastParams) {
+      console.log(
+        "🚀 ~ file: store.ts:52 ~ showToast ~ toastParams:",
+        toastParams
+      );
+      commit("setToast", toastParams);
+      const toastHTML = document.getElementById("myUniqueId");
+      console.log("🚀 ~ file: store.ts:55 ~ showToast ~ toastHTML:", toastHTML);
+      toastHTML?.classList.remove("d-none");
+      toastHTML?.classList.add("d-block");
+      new Promise((resolve, _) => {
+        setTimeout(() => {
+          toastHTML?.classList.add("d-none");
+          toastHTML?.classList.remove("d-block");
+          resolve(true);
+        }, toastParams.timeout || 2500);
+      });
     },
   },
   plugins: [vuexLocal.plugin],

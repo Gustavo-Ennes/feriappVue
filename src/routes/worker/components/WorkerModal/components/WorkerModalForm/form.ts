@@ -24,14 +24,12 @@ const workerCreateFormSchema: Schema = object({
   matriculation: string()
     .required("A matrícula é obrigatória")
     .matches(/^\d{5,7}$/gm, "Matrícula precisa ter 6 dígitos"),
-  departmentId: string()
-    .required("O departamento é obrigatório")
-    .max(1, "Departamento é obrigatório"),
+  departmentId: string().required("O departamento é obrigatório"),
   admissionDate: string()
     .required("Data de admissão é obrigatória")
     .matches(
-      /^\d{2}\-\d{2}\-\d{4}$/gm,
-      "A data de admissão precisa estar nesse formato: MM/dd/yyyy"
+      /^\d{4}\-\d{2}\-\d{2}$/gm,
+      "A data de admissão precisa estar nesse formato: yyyy/MM/dd"
     ),
   status: string().default("active"),
 });

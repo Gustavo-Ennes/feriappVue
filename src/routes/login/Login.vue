@@ -44,18 +44,14 @@
           </div>
         </div>
       </div>
-      <LoadingFrame />
-      <WrongPasswordToast />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Toast } from "bootstrap";
-
 import { login as loginUser } from "../../firebase/firebase";
 import LoadingFrame from "../../components/LoadingFrame.vue";
-import WrongPasswordToast from "./components/WrongPasswordToast.vue";
+import GeneralToast from "../../components/GeneralToast.vue";
 
 export default {
   name: "Login",
@@ -67,9 +63,12 @@ export default {
   },
   methods: {
     openToast() {
-      const toastLiveExample = document.getElementById("liveToast");
-      const toast = new Toast(toastLiveExample as HTMLElement);
-      toast.show();
+      this.$store.dispatch("showToast", {
+        title: "Usuário ou senha incorreta",
+        type: "danger",
+        text: "A infomação de usuário e/ou senha está incorreta. Verifique seu CAPS LOCK e tente novamente.",
+        icon: "lock",
+      });
     },
     async login(): Promise<void> {
       this.$store.dispatch("startLoading");
@@ -83,7 +82,7 @@ export default {
       }
     },
   },
-  components: { LoadingFrame, WrongPasswordToast },
+  components: { LoadingFrame, GeneralToast },
 };
 </script>
 

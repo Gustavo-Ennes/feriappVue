@@ -16,7 +16,8 @@
           <WorkerModalForm
             :departments="departments"
             @formUpdated="processForm"
-            :submit-form="sendData"
+            :submit-form="worker ? handleUpdate : handleCreate"
+            :worker="worker"
           />
           <WorkerErrorsCollpase :errors="errors" v-if="!!errors" />
         </div>
@@ -34,12 +35,13 @@
 </template>
 
 <script lang="ts">
+import GeneralToast from "../../../../components/GeneralToast.vue";
 import type {
   WorkerFormType,
   WorkerModalDataInterface,
   WorkerModalFormDataInterface,
 } from "../../types";
-import { getDepartments, createWorker } from "./fetch";
+import { getDepartments, createWorker, updateWorker } from "../../fetch";
 import { validateForm } from "./components/WorkerModalForm/form";
 import WorkerModalForm from "./components/WorkerModalForm/WorkerModalForm.vue";
 import WorkerErrorsCollpase from "./components/WorkerErrorsCollapse/WorkerErrorsCollapse.vue";
@@ -48,7 +50,8 @@ import WorkerModalHeader from "./components/WorkerModalHeader/WorkerModalHeader.
 
 export default {
   name: "WorkerModal",
-  props: ["type", "modal"],
+  props: ["type", "modal", "worker"],
+  emits: ["workerCreated"],
   async beforeMount() {
     const {
       data: { departments },
@@ -56,17 +59,69 @@ export default {
     this.departments = departments;
   },
   methods: {
+    prepareToastPayload({
+      type,
+      success,
+      name,
+    }: {
+      type: string;
+      success: boolean;
+      name: string;
+    }): void {
+      this.toastPayload = {
+        title: success
+          ? `Trabalhador foi ${type === "create" ? "criado" : "modificado"}`
+          : `Houve um problema na ${
+              type === "create" ? "criação" : "midificação"
+            } do trabalhador`,
+        text: success
+          ? `O trabalhador ${name} foi ${
+              type === "create" ? "criado" : "modificado"
+            } com sucesso.`
+          : `algo deu errado na ${
+              type === "create" ? "criação" : "modificação"
+            } do ${name}.`,
+        type: success ? "info" : "danger",
+      };
+    },
     async processForm(data: WorkerModalFormDataInterface): Promise<void> {
+      console.log(
+        "🚀 ~ file: WorkerModal.vue:88 ~ processForm ~ data:",
+        JSON.stringify(data, null, 2)
+      );
       const { errors }: WorkerFormType = await validateForm(data);
       this.errors = errors;
       if (!this.formModified) this.formModified = true;
     },
-    async sendData(data: WorkerModalFormDataInterface): Promise<void> {
-      const { validatedForm } = await validateForm(data);
+    async handleCreate(data: WorkerModalFormDataInterface): Promise<void> {
+      const { validatedForm, errors } = await validateForm(data);
       if (validatedForm) {
-        const newWorker = await createWorker(validatedForm);
+        const { data } = await createWorker(validatedForm);
+        if (!errors && data.createWorker) {
+          this.$emit("workerCreated");
+        }
         this.modal?.hide();
+        this.prepareToastPayload({
+          name: validatedForm.name,
+          type: "create",
+          success: !!data.createWorker,
+        });
+        this.$store.dispatch("showToast", this.toastPayload);
       }
+    },
+    async handleUpdate(data: WorkerModalFormDataInterface): Promise<void> {
+      const { validatedForm, errors } = await validateForm(data);
+      const response = { success: false };
+      if (validatedForm) {
+        response.success = await updateWorker(validatedForm);
+      }
+      this.modal?.hide();
+      this.prepareToastPayload({
+        name: validatedForm.name,
+        type: "edit",
+        success: response.success,
+      });
+      this.$store.dispatch("showToast", this.toastPayload);
     },
   },
   data(): WorkerModalDataInterface {
@@ -75,6 +130,7 @@ export default {
       dataToSend: undefined,
       errors: undefined,
       formModified: false,
+      toastPayload: undefined,
     };
   },
   components: {
@@ -82,6 +138,7 @@ export default {
     WorkerErrorsCollpase,
     WorkerModalButtons,
     WorkerModalHeader,
+    GeneralToast,
   },
 };
 </script>
