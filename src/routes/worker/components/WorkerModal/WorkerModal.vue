@@ -85,10 +85,6 @@ export default {
       };
     },
     async processForm(data: WorkerModalFormDataInterface): Promise<void> {
-      console.log(
-        "🚀 ~ file: WorkerModal.vue:88 ~ processForm ~ data:",
-        JSON.stringify(data, null, 2)
-      );
       const { errors }: WorkerFormType = await validateForm(data);
       this.errors = errors;
       if (!this.formModified) this.formModified = true;

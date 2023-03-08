@@ -84,6 +84,4 @@ const updateWorker = async (
   }
 };
 
-export { createWorker, getDepartments, updateWorker };
-
-export { getWorkers };
+export { createWorker, getDepartments, updateWorker, getWorkers };

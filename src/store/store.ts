@@ -49,13 +49,8 @@ const store = createStore<State>({
       commit("setLoading", false);
     },
     showToast({ commit, state }: StoreComponents, toastParams: ToastParams) {
-      console.log(
-        "🚀 ~ file: store.ts:52 ~ showToast ~ toastParams:",
-        toastParams
-      );
       commit("setToast", toastParams);
       const toastHTML = document.getElementById("myUniqueId");
-      console.log("🚀 ~ file: store.ts:55 ~ showToast ~ toastHTML:", toastHTML);
       toastHTML?.classList.remove("d-none");
       toastHTML?.classList.add("d-block");
       new Promise((resolve, _) => {

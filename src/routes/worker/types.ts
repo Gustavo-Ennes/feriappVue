@@ -64,6 +64,7 @@ interface WorkerCreatePayloadInterface {
   registry: string;
   departmentId: string | null;
   admissionDate: string;
+  _id?: string;
 }
 interface WorkerModalInterface extends WorkerModalDataInterface {
   processForm: (
