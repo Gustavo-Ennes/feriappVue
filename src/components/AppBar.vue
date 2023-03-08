@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-primary">
     <div class="container-fluid">
-      <a class="navbar-brand text-light" href="#">Feriapp</a>
+      <router-link class="navbar-brand text-light" to="/">Feriapp</router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -16,8 +16,11 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active text-light" aria-current="page" href="#"
-              >Home</a
+            <router-link
+              class="nav-link active text-light"
+              aria-current="page"
+              to="/"
+              >Home</router-link
             >
           </li>
           <li class="nav-item">
@@ -33,12 +36,9 @@
             <a class="nav-link text-light" href="#">Justificativas</a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link text-light"
-              href="#"
-              @click="$router.push('/workers')"
-              >Trabalhador</a
-            >
+            <router-link class="nav-link text-light" to="/workers">
+              Trabalhador
+            </router-link>
           </li>
         </ul>
         <form class="d-flex" role="search">
