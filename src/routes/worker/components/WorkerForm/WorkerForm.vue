@@ -1,8 +1,8 @@
 <template>
   <div class="p-3">
-    <div class="row justify-content-center align-items-center">
+    <div class="row gap-2 justify-content-center align-items-center">
       <div class="col-12">
-        <h1 class="py-4">Trabalhador</h1>
+        <h1 class="pt-4 text-center">Trabalhador</h1>
       </div>
       <div class="col-12">
         <label for="workerSearchTerm pt-4">Buscar trabalhador</label>

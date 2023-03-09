@@ -30,6 +30,12 @@ const authenticatedRoutes: RouteRecordRaw[] = [
     component: () => import("./worker/Workers.vue"),
     meta: { requiresAuth: true },
   },
+  {
+    path: "/dayOff",
+    component: () => import("./vacation/Vacation.vue"),
+    props: { type: "dayOff" },
+    meta: { requiresAuth: true },
+  },
   // {
   //   path: "/test",
   //   component: testRoute,

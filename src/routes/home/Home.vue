@@ -11,7 +11,7 @@
       />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
-      <MainButton label="Abono" action="" icon-class="file-circle-plus" />
+      <MainButton label="Abono" :action="() => $router.push('/dayOff')" icon-class="file-circle-plus" />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
       <MainButton
