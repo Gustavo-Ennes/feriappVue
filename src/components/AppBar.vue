@@ -24,7 +24,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#">Abono</a>
+            <router-link class="nav-link text-light" to="/dayOff">Abono</router-link>
           </li>
           <li class="nav-item">
             <a class="nav-link text-light" href="#">Férias</a>
@@ -76,7 +76,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .navbar {
   width: 100%;
 }

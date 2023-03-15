@@ -23,8 +23,13 @@ export default {
 .btn {
   width: 100%;
   border: 3px solid rgb(0, 140, 255);
-  .fa-solid{
+  .fa-solid {
     font-size: 30px;
+  }
+  &:hover {
+    i {
+      color: #ffa600;
+    }
   }
 }
 </style>

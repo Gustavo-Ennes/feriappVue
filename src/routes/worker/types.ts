@@ -1,10 +1,11 @@
-import type { Modal, Toast } from "bootstrap";
+import type { Modal } from "bootstrap";
 import type { InferType } from "yup";
 
 import type { workerCreateFormSchema } from "./components/WorkerModal/components/WorkerModalForm/form";
 import type { ComponentProps } from "@/__VLS_types";
 
 interface Worker {
+  _id?: string;
   name: string;
   admissionDate: string;
   role: string;
@@ -98,8 +99,8 @@ interface TranslatedStatusObject {
 }
 
 type WorkerModalComponentInterface = ComponentProps<WorkerModalInterface>;
-
 type WorkerFormType = InferType<typeof workerCreateFormSchema>;
+type VacationType = "dayOff" | "vacation" | "premiumLicense";
 
 export type {
   Worker,
@@ -115,4 +116,5 @@ export type {
   WorkerTableDataInterface,
   DepartmentResponseInterface,
   TranslatedStatusObject,
+  VacationType,
 };

@@ -3,11 +3,10 @@ import { deleteWorkerMutation } from "./mutation";
 
 const deleteWorker = async ({ _id }: { _id: string }): Promise<void> => {
   const variables = {
-      _id,
+    _id,
   };
 
   store.dispatch("startLoading");
-
   try {
     const deleteResponse = await fetch(import.meta.env.VITE_BACKEND_ENDPOINT, {
       headers: { "Content-Type": "application/json" },

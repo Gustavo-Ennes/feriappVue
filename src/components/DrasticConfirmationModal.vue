@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal modal-danger fade"
-    id="deleteConfirmationModal"
+    :id="_id"
     tabindex="-1"
     aria-labelledby="deleteConfirmationModalLabel"
     aria-hidden="true"
@@ -19,11 +19,11 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body text-center">
           <p class="text-center">
             Você está prestes a deletar algo permanentemente.
           </p>
-          <small>Tem certeza que quer continuar?</small>
+          <small class="fw-bold">Tem certeza que quer continuar?</small>
         </div>
         <div class="modal-footer text-light bg-danger">
           <button
@@ -47,24 +47,21 @@
 </template>
 
 <script lang="ts">
-import { deleteWorker } from "../../../fetch";
-
 export default {
   name: "DeleteConfirmationModal",
-  props: ["worker"],
-  emits: ["hide", "deleteWorker"],
+  props: ["_id", "confirmationCallback"],
+  emits: ["hide"],
   methods: {
     async sendDeleteConfirmation(): Promise<void> {
       const toastPayload: { title?: string; text?: string; type?: string } = {};
       try {
-        await deleteWorker(this.worker._id);
-        this.$emit("deleteWorker", this.worker);
+        await this.confirmationCallback();
         toastPayload.title = `Sucesso!`;
-        toastPayload.text = `Você deletou com sucesso o trabalhador ${this.worker.name}`;
-        toastPayload.type = "danger";
+        toastPayload.text = `Deletedo(a) com sucesso`;
+        toastPayload.type = "info";
       } catch (error) {
         toastPayload.title = `Algo deu errado!`;
-        toastPayload.text = `Algo deu errado ao deletar um trabalhador. Tente novamente mais tarde`;
+        toastPayload.text = `Algo deu errado ao deletar. Tente novamente mais tarde`;
         toastPayload.type = "danger";
       } finally {
         this.$store.dispatch("showToast", toastPayload);

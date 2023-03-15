@@ -8,7 +8,10 @@ query Workers{
     status
     role
     admissionDate
-    departmentId
+    department{
+      _id
+      name
+    }
   }
 }
 `;

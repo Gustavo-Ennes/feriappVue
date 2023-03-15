@@ -10,7 +10,6 @@
         class="form-control"
         placeholder="Nome"
         v-model="form.name"
-        error="asd"
         required
       />
     </div>

@@ -1,5 +1,5 @@
 import { store } from "@/store/store";
-import { object, string, date, type Schema } from "yup";
+import { object, string, type Schema } from "yup";
 
 import type { WorkerFormType } from "../../../../types";
 
@@ -32,6 +32,7 @@ const workerCreateFormSchema: Schema = object({
       "A data de admissão precisa estar nesse formato: yyyy/MM/dd"
     ),
   status: string().default("active"),
+  _id: string(),
 });
 
 const validateForm = async (
@@ -59,5 +60,5 @@ const validateForm = async (
   }
 };
 
-export { workerCreateFormSchema };
+export type { workerCreateFormSchema };
 export { validateForm };

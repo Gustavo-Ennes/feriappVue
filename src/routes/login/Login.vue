@@ -71,14 +71,19 @@ export default {
       });
     },
     async login(): Promise<void> {
-      this.$store.dispatch("startLoading");
-      await loginUser(this.email, this.password);
-      this.$store.dispatch("stopLoading");
+      try {
+        this.$store.dispatch("startLoading");
+        await loginUser(this.email, this.password);
 
-      if (this.$store.state.user) {
-        this.$router.push("/");
-      } else {
-        this.openToast();
+        if (this.$store.state.user) {
+          this.$router.push("/");
+        } else {
+          this.openToast();
+        }
+      } catch (error: any) {
+        console.log("error at firebase login:\n", error.message);
+      } finally {
+        this.$store.dispatch("stopLoading");
       }
     },
   },
@@ -86,7 +91,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .row {
   display: block;
 }

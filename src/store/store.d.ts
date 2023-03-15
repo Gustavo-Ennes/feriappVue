@@ -5,7 +5,8 @@ export interface ToastParams {
   text: string;
   title: string;
   type: "info" | "danger";
-  timeout?: number
+  timeout?: number;
+  icon?: string;
 }
 export interface State {
   loading: boolean;

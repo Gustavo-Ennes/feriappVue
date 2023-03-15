@@ -5,7 +5,6 @@ import type { InjectionKey } from "vue";
 
 import type { State, StoreComponents, ToastParams } from "./store.d";
 import VuexPersistence from "vuex-persist";
-import { Toast } from "bootstrap";
 
 const vuexLocal = new VuexPersistence<State>({
   storage: window.localStorage,
@@ -58,7 +57,7 @@ const store = createStore<State>({
           toastHTML?.classList.add("d-none");
           toastHTML?.classList.remove("d-block");
           resolve(true);
-        }, toastParams.timeout || 2500);
+        }, toastParams?.timeout || 2500);
       });
     },
   },

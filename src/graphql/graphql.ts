@@ -12,7 +12,7 @@ const runQuery = async ({
   store.dispatch("startLoading");
 
   try {
-    const response = await fetch("http://35.247.252.32/graphql", {
+    const response = await fetch(import.meta.env.VITE_BACKEND_ENDPOINT, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify({ query, variables }),

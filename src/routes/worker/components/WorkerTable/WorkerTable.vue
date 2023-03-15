@@ -17,7 +17,7 @@
           <td>{{ worker.role }}</td>
           <td>{{ getTranslatedStatus(worker.status) }}</td>
           <td>{{ getAdmissionDate(worker) }}</td>
-          <td>{{ getDepartmentName(worker.departmentId) }}</td>
+          <td>{{ worker?.department.name }}</td>
           <td>
             <i
               class="fa-solid fa-trash-can text-danger px-xs-1 px-2 px-md-4"
@@ -58,11 +58,6 @@ export default {
   },
   methods: {
     getTranslatedStatus,
-    getDepartmentName(workerDeparmentId: string): void {
-      return this.departments?.filter((department: Department) => {
-        return department._id === workerDeparmentId;
-      })?.[0]?.name;
-    },
     handleDeleteWorker(worker: Worker) {
       this.workers.splice(this.workers.indexOf(worker), 1);
     },
@@ -85,7 +80,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .btn-xs {
   width: 10px;
   text-align: center;

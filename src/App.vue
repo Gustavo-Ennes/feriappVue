@@ -17,6 +17,7 @@ export default {
     :title="$store.state.toast?.title"
     :text="$store.state.toast?.text"
     :type="$store.state.toast?.type"
+    :icon="$store.state.toast?.icon"
     _id="myUniqueId"
   />
 </template>

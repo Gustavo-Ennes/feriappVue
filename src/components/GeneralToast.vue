@@ -38,6 +38,8 @@ export default {
     closeToast() {
       const toast = document.getElementById(this._id);
       toast?.classList.remove("d-block");
+      toast?.classList.add("d-none");
+
     },
   },
 };

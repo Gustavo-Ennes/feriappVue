@@ -1,30 +1,30 @@
 <template>
   <div class="row justify-content-center align-items-stretch mx-0 mt-4">
     <div class="col-sm-12 col-md-6 col-lg-4">
-      <MainButton label="Férias" action="" icon-class="file-circle-plus" />
+      <MainButton label="Férias" action="" icon-class="umbrella-beach" />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
       <MainButton
         label="Licença-prêmio"
         action=""
-        icon-class="file-circle-plus"
+        icon-class="plane-departure"
       />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
-      <MainButton label="Abono" action="" icon-class="file-circle-plus" />
+      <MainButton label="Abono" :action="() => $router.push('/dayOff')" icon-class="martini-glass-citrus" />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
       <MainButton
         label="Justificativas"
         action=""
-        icon-class="file-circle-plus"
+        icon-class="magnifying-glass-dollar"
       />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
       <MainButton
         label="Trabalhadores"
         :action="() => $router.push('/workers')"
-        icon-class="helmet-safety"
+        icon-class="id-card"
       />
     </div>
   </div>
