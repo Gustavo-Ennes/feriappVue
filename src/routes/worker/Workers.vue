@@ -11,11 +11,12 @@
       </div>
       <div class="col-12">
         <WorkerTable
-          :workers="displayWorkers"
+          :workers="filteredWorkers"
           class="py-4"
-          v-if="displayWorkers?.length"
+          v-if="workers?.length"
           @selectWorker="handleSelectWorker"
           @openModal="handleOpenModal"
+          :openConfirmationModal="() => confirmationModal?.show()"
         />
         <h3 v-else class="label">Não há trabalhadores para o termo buscado.</h3>
       </div>
@@ -25,21 +26,26 @@
     :type="modalType"
     :modal="modal"
     :worker="selectedWorker"
-    @worker-created="getAllWorkers"
+    @form-submitted="getAllWorkers"
+  />
+  <DrasticConfirmationModal
+    _id="workerConfirmationModal"
+    @hide="confirmationModal?.hide()"
+    :confirmationCallback="() => handleDeleteWorker(selectedWorker?._id as string)"
+    text="Observe que ao deletar o trabalhador, todas as suas férias serão deletadas permanentemente."
+    confirm-drastic-action-button-label="Deletar assim mesmo"
   />
 </template>
 
 <script lang="ts">
 import { Modal } from "bootstrap";
 
+import DrasticConfirmationModal from "../../components/DrasticConfirmationModal.vue";
 import WorkerTable from "./components/WorkerTable/WorkerTable.vue";
 import WorkerForm from "./components/WorkerForm/WorkerForm.vue";
 import WorkerModal from "./components/WorkerModal/WorkerModal.vue";
-import { getWorkers } from "./fetch";
-import type {
-  WorkerResponseInterface,
-  WorkersDataInterface,
-} from "./types";
+import { deleteWorker, getWorkers } from "./fetch";
+import type { WorkerResponseInterface, WorkersDataInterface } from "./types";
 
 export default {
   name: "Workers",
@@ -51,47 +57,64 @@ export default {
   },
   data(): WorkersDataInterface {
     return {
-      allWorkers: null,
-      displayWorkers: null,
+      filteredWorkers: undefined,
+      workers: undefined,
       modal: undefined,
       modalType: "",
       selectedWorker: undefined,
       departments: undefined,
+      confirmationModal: undefined,
     };
   },
   methods: {
+    async handleDeleteWorker(_id: string): Promise<void> {
+      await deleteWorker(_id);
+      await this.getAllWorkers();
+    },
     async getAllWorkers(): Promise<void> {
       const { data }: WorkerResponseInterface = await getWorkers();
       if (data?.workers) {
-        this.allWorkers = data.workers;
-        this.displayWorkers = this.allWorkers;
+        this.workers = data.workers;
+        this.filteredWorkers = this.workers;
       }
     },
     handleSelectWorker(worker: any) {
       this.selectedWorker = worker;
-    },  
+    },
     handleOpenModal(type: string): void {
       this.modalType = type;
       this.modal?.show();
     },
     instantiateModal(): void {
       const modalHTML = document.getElementById("exampleModal");
+      const confirmationModalHTML = document.getElementById(
+        "workerConfirmationModal"
+      );
       this.modal = new Modal(modalHTML as HTMLElement, {});
+      this.confirmationModal = new Modal(
+        confirmationModalHTML as HTMLElement,
+        {}
+      );
     },
     async handleWorkerCreated(): Promise<void> {
       await this.getAllWorkers();
     },
     updateWorkers(searchTerm: string): void {
-      this.displayWorkers =
-        this.allWorkers?.filter(
+      this.filteredWorkers =
+        this.workers?.filter(
           ({ name, matriculation, registry }) =>
             name.includes(searchTerm) ||
             matriculation.includes(searchTerm) ||
             registry.includes(searchTerm)
-        ) ?? null;
+        ) ?? [];
     },
   },
-  components: { WorkerTable, WorkerForm, WorkerModal },
+  components: {
+    WorkerTable,
+    WorkerForm,
+    WorkerModal,
+    DrasticConfirmationModal,
+  },
 };
 </script>
 

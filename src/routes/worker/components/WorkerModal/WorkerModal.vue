@@ -40,6 +40,7 @@ import type {
   WorkerFormType,
   WorkerModalDataInterface,
   WorkerModalFormDataInterface,
+  WorkerCreatePayloadInterface,
 } from "../../types";
 import { getDepartments, createWorker, updateWorker } from "../../fetch";
 import { validateForm } from "./components/WorkerModalForm/form";
@@ -51,7 +52,7 @@ import WorkerModalHeader from "./components/WorkerModalHeader/WorkerModalHeader.
 export default {
   name: "WorkerModal",
   props: ["type", "modal", "worker"],
-  emits: ["workerCreated"],
+  emits: ["formSubmitted"],
   async beforeMount() {
     const {
       data: { departments },
@@ -84,17 +85,24 @@ export default {
         type: success ? "info" : "danger",
       };
     },
-    async processForm(data: WorkerModalFormDataInterface): Promise<void> {
+    async processForm(data: WorkerCreatePayloadInterface): Promise<void> {
+      data.department = data.departmentId;
+      delete data.departmentId;
       const { errors }: WorkerFormType = await validateForm(data);
       this.errors = errors;
       if (!this.formModified) this.formModified = true;
     },
-    async handleCreate(data: WorkerModalFormDataInterface): Promise<void> {
+    async handleCreate(data: WorkerCreatePayloadInterface): Promise<void> {
+      console.log("🚀 ~ file: WorkerModal.vue:97 ~ handleCreate ~ data:", data);
       const { validatedForm, errors } = await validateForm(data);
+      console.log(
+        "🚀 ~ file: WorkerModal.vue:94 ~ handleCreate ~ validatedForm:",
+        validatedForm
+      );
       if (validatedForm) {
         const { data } = await createWorker(validatedForm);
         if (!errors && data.createWorker) {
-          this.$emit("workerCreated");
+          this.$emit("formSubmitted");
         }
         this.modal?.hide();
         this.prepareToastPayload({
@@ -110,6 +118,7 @@ export default {
       const response = { success: false };
       if (validatedForm) {
         response.success = await updateWorker(validatedForm);
+        this.$emit("formSubmitted");
       }
       this.modal?.hide();
       this.prepareToastPayload({

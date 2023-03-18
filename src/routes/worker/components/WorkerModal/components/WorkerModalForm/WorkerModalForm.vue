@@ -1,6 +1,6 @@
 <template>
   <form
-    @submit.prevent="submitForm(recentData)"
+    @submit.prevent="submitForm(computedForm)"
     class="row justify-content-center align-items-center"
     id="workerCreateForm"
   >
@@ -85,19 +85,19 @@ export default {
         matriculation: this.worker?.matriculation || "",
         registry: this.worker?.registry || "",
         admissionDate: this.worker?.admissionDate || "",
-        departmentId: this.worker?.departmentId || null,
+        departmentId: this.worker?.department?._id || null,
       },
     };
   },
   computed: {
-    recentData() {
-      return this.$data.form;
+    computedForm() {
+      return { ...this.form, department: this.form.departmentId };
     },
   },
   watch: {
     form: {
       handler() {
-        this.$emit("formUpdated", this.form);
+        this.$emit("formUpdated", this.computedForm);
       },
       deep: true,
     },
@@ -108,7 +108,11 @@ export default {
             new Date(this.worker.admissionDate),
             "yyyy-MM-dd"
           );
-          this.form = { ...this.worker, admissionDate };
+          this.form = {
+            ...this.worker,
+            admissionDate,
+            departmentId: this.worker.department._id,
+          };
         } else {
           this.form = {
             name: "",

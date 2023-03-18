@@ -23,9 +23,10 @@ interface WorkerResponseInterface {
 }
 
 interface WorkersDataInterface {
-  allWorkers: Worker[] | null;
-  displayWorkers: Worker[] | null;
+  workers?: Worker[];
+  filteredWorkers?: Worker[];
   modal?: Modal;
+  confirmationModal?: Modal;
   modalType?: string;
   selectedWorker: Worker | undefined;
   departments?: Department[];
@@ -63,7 +64,8 @@ interface WorkerCreatePayloadInterface {
   role: string;
   matriculation: string;
   registry: string;
-  departmentId: string | null;
+  departmentId?: string | null;
+  department?: string | null;
   admissionDate: string;
   _id?: string;
 }

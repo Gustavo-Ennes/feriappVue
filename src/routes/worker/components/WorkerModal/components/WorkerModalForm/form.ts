@@ -17,14 +17,14 @@ const workerCreateFormSchema: Schema = object({
     }),
   registry: string()
     .required("O registro é obrigatório")
+    .matches(/^\d{5,7}$/gm, "Matrícula precisa ter 6 dígitos"),
+  matriculation: string()
+    .required("A matrícula é obrigatória")
     .matches(
       /^\d{1,3}\.\d{3}\-\d$/gm,
       "O registro precisa estar nesse formato: xx.xxx-x ou xxx.xxx-x"
     ),
-  matriculation: string()
-    .required("A matrícula é obrigatória")
-    .matches(/^\d{5,7}$/gm, "Matrícula precisa ter 6 dígitos"),
-  departmentId: string().required("O departamento é obrigatório"),
+  department: string().required("O departamento é obrigatório"),
   admissionDate: string()
     .required("Data de admissão é obrigatória")
     .matches(

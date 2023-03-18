@@ -21,13 +21,8 @@
           <td>
             <i
               class="fa-solid fa-trash-can text-danger px-xs-1 px-2 px-md-4"
-              @click="showConfirmationModal"
+              @click="handleDelete(worker)"
             ></i>
-            <DeleteConfirmationModal
-              :worker="worker"
-              @hide="confirmationModal?.hide()"
-              @deleteWorker="handleDeleteWorker"
-            />
             <i
               class="fa-solid fa-pen text-warning"
               @click="handleEdit(worker)"
@@ -44,13 +39,12 @@
 import { format } from "date-fns";
 import { Modal } from "bootstrap";
 
-import type { Worker, WorkerTableDataInterface, Department } from "../../types";
-import DeleteConfirmationModal from "./components/DeleteConfirmationModal.vue";
-import { getTranslatedStatus } from "./components/status";
+import type { Worker, WorkerTableDataInterface } from "../../types";
+import { getTranslatedStatus } from "./status";
 
 export default {
   name: "WorkerTable",
-  props: ["workers", "departments"],
+  props: ["workers", "departments", "openConfirmationModal"],
   data(): WorkerTableDataInterface {
     return {
       confirmationModal: undefined,
@@ -58,15 +52,9 @@ export default {
   },
   methods: {
     getTranslatedStatus,
-    handleDeleteWorker(worker: Worker) {
-      this.workers.splice(this.workers.indexOf(worker), 1);
-    },
-    showConfirmationModal() {
-      if (!this.confirmationModal) {
-        const modalHTML = document.getElementById("deleteConfirmationModal");
-        this.confirmationModal = new Modal(modalHTML as HTMLElement);
-      }
-      this.confirmationModal.show();
+    handleDelete(worker: Worker) {
+      this.$emit("selectWorker", worker);
+      this.openConfirmationModal();
     },
     handleEdit(worker: Worker) {
       this.$emit("selectWorker", worker);
@@ -76,7 +64,6 @@ export default {
       return format(new Date(worker.admissionDate), "dd/MM/yyyy");
     },
   },
-  components: { DeleteConfirmationModal },
 };
 </script>
 
@@ -90,3 +77,5 @@ export default {
   cursor: pointer;
 }
 </style>
+
+// TODO see why don delete workers

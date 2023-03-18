@@ -10,7 +10,7 @@
       <div class="modal-content">
         <div class="modal-header bg-danger text-light">
           <h5 class="modal-title" id="deleteConfirmationModalLabel">
-            Tem certeza?
+            {{ computedTitle }}
           </h5>
           <button
             type="button"
@@ -21,9 +21,9 @@
         </div>
         <div class="modal-body text-center">
           <p class="text-center">
-            Você está prestes a deletar algo permanentemente.
+            {{ computedText }}
           </p>
-          <small class="fw-bold">Tem certeza que quer continuar?</small>
+          <small class="fw-bold">{{ computedAnswer }}</small>
         </div>
         <div class="modal-footer text-light bg-danger">
           <button
@@ -31,14 +31,14 @@
             class="btn btn-link text-light"
             data-bs-dismiss="modal"
           >
-            Cancelar
+            {{ computedCancelButtonLabel }}
           </button>
           <button
             type="button"
             class="btn btn-outline-light"
             @click="sendDeleteConfirmation"
           >
-            Deletar
+            {{ computedConfirmDrasticActionButtonLabel }}
           </button>
         </div>
       </div>
@@ -49,8 +49,47 @@
 <script lang="ts">
 export default {
   name: "DeleteConfirmationModal",
-  props: ["_id", "confirmationCallback"],
+  props: [
+    "_id",
+    "confirmationCallback",
+    "title",
+    "text",
+    "answer",
+    "cancelButtonLabel",
+    "confirmDrasticActionButtonLabel",
+  ],
   emits: ["hide"],
+  data() {
+    return {
+      modal: {
+        title: "Tem certeza?",
+        text: "Você está prestes a deletar algo permanentemente.",
+        answer: "Tem certeza que quer continuar?",
+        cancelButtonLabel: "Cancelar",
+        confirmDrasticActionButtonLabel: "Deletar",
+      },
+    };
+  },
+  computed: {
+    computedTitle() {
+      return this.title ?? this.modal.title;
+    },
+    computedText() {
+      return this.text ?? this.modal.text;
+    },
+    computedAnswer() {
+      return this.answer ?? this.modal.answer;
+    },
+    computedCancelButtonLabel() {
+      return this.cancelButtonLabel ?? this.modal.cancelButtonLabel;
+    },
+    computedConfirmDrasticActionButtonLabel() {
+      return (
+        this.confirmDrasticActionButtonLabel ??
+        this.modal.confirmDrasticActionButtonLabel
+      );
+    },
+  },
   methods: {
     async sendDeleteConfirmation(): Promise<void> {
       const toastPayload: { title?: string; text?: string; type?: string } = {};
@@ -59,7 +98,11 @@ export default {
         toastPayload.title = `Sucesso!`;
         toastPayload.text = `Deletedo(a) com sucesso`;
         toastPayload.type = "info";
-      } catch (error) {
+      } catch (error: any) {
+        console.log(
+          "Error executing DrasticConfirmationModal confirmationCallback prop method:\n",
+          error.message
+        );
         toastPayload.title = `Algo deu errado!`;
         toastPayload.text = `Algo deu errado ao deletar. Tente novamente mais tarde`;
         toastPayload.type = "danger";
