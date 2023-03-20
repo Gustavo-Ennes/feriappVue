@@ -1,12 +1,12 @@
 <template>
   <div class="row justify-content-center align-items-stretch mx-0 mt-4">
     <div class="col-sm-12 col-md-6 col-lg-4">
-      <MainButton label="Férias" action="" icon-class="umbrella-beach" />
+      <MainButton label="Férias" :action="() => $router.push('/vacation')" icon-class="umbrella-beach" />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
       <MainButton
         label="Licença-prêmio"
-        action=""
+        :action="() => $router.push('/license')"
         icon-class="plane-departure"
       />
     </div>

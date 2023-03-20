@@ -3,8 +3,6 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 import { store } from "@/store/store";
 
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://firebase.google.com/docs/web/learn-more#config-object
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
 };
@@ -30,3 +28,5 @@ const logout = async (): Promise<void> => {
 };
 
 export { login, logout };
+
+// TODO fix .env in production

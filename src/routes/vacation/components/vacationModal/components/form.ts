@@ -12,7 +12,7 @@ const VacationCreateFormSchema: Schema = object({
   type: string()
     .required("O registro é obrigatório")
     .oneOf(
-      ["vacation", "premiumLicense", "dayOff"],
+      ["vacation", "license", "dayOff"],
       "Tipo de férias é inválido"
     ),
   startDate: string()

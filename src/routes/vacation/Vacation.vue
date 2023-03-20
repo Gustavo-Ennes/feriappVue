@@ -4,7 +4,7 @@
       <h1 class="col-4 offset-4 pt-4 text-center">{{ computedTitle }}</h1>
       <h1 class="col pt-4 text-center">
         <button class="btn btn-primary" @click="handleOpenModal('create')">
-          <i class="fa-solid fa-plus" /> novo {{ computedTitle }}
+          <i class="fa-solid fa-plus" /> {{ computedButtonLabel }}
         </button>
       </h1>
       <div class="col-12">
@@ -58,6 +58,11 @@ export default {
       confirmationModal: undefined,
     };
   },
+  watch: {
+    async type(): Promise<void> {
+      await this.getAllVacations();
+    },
+  },
   computed: {
     computedTitle() {
       return this.type === "dayOff"
@@ -65,6 +70,11 @@ export default {
         : this.type === "vacation"
         ? "Férias"
         : "Licença-Prêmio";
+    },
+    computedButtonLabel() {
+      if (this.type === "dayOff") return "novo abono";
+      else if (this.type === "vacation") return "novas férias";
+      else if (this.type === "license") return "nova licença-prêmio";
     },
   },
   methods: {
@@ -74,6 +84,10 @@ export default {
       );
       if (data?.vacations) {
         this.vacations = data.vacations;
+        console.log(
+          "🚀 ~ file: Vacation.vue:77 ~ getAllVacations ~ this.vacations:",
+          this.vacations
+        );
       }
     },
     handleSelectVacation(vacation: Vacation) {

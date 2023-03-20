@@ -50,14 +50,12 @@ const store = createStore<State>({
     showToast({ commit, state }: StoreComponents, toastParams: ToastParams) {
       commit("setToast", toastParams);
       const toastHTML = document.getElementById("myUniqueId");
-      toastHTML?.classList.remove("d-none");
       toastHTML?.classList.add("d-block");
       new Promise((resolve, _) => {
         setTimeout(() => {
-          toastHTML?.classList.add("d-none");
           toastHTML?.classList.remove("d-block");
           resolve(true);
-        }, toastParams?.timeout || 2500);
+        }, toastParams?.timeout || 1500);
       });
     },
   },

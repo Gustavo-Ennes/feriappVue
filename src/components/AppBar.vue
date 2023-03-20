@@ -27,10 +27,10 @@
             <router-link class="nav-link text-light" to="/dayOff">Abono</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#">Férias</a>
+            <router-link class="nav-link text-light" to="/vacation">Férias</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#">Licença-prêmio</a>
+            <router-link class="nav-link text-light" to="/license">Licença -Prêmio</router-link>
           </li>
           <li class="nav-item">
             <a class="nav-link text-light" href="#">Justificativas</a>

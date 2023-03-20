@@ -50,17 +50,17 @@ export default {
     text() {
       if (this.vacation.type === "dayOff")
         return this.vacation.daysQtd === 1 ? "Integral" : "Meio-período";
-      return `Duração: ${this.vacation.daysQtd} dias, retornando ${this.returnDate}`;
+      return `Duração: ${this.vacation.daysQtd} dias\nRetorno: ${this.returnDate}`;
     },
     computedDate(): string {
       return format(new Date(this.vacation.startDate), "dd/MM/yyyy");
     },
     returnDate(): string {
       return format(
-        add(new Date(this.vacation.startDate), {
-          days: this.vacation.daysQtd + 1,
+        add(new Date(this.vacation.endDate), {
+          days: 1,
         }),
-        "dd/MM/YYYY"
+        "dd/MM/yyyy"
       );
     },
   },
@@ -81,3 +81,5 @@ i {
   cursor: pointer;
 }
 </style>
+
+// TOOD test the vacations

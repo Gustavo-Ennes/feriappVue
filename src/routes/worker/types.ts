@@ -102,7 +102,7 @@ interface TranslatedStatusObject {
 
 type WorkerModalComponentInterface = ComponentProps<WorkerModalInterface>;
 type WorkerFormType = InferType<typeof workerCreateFormSchema>;
-type VacationType = "dayOff" | "vacation" | "premiumLicense";
+type VacationType = "dayOff" | "vacation" | "license";
 
 export type {
   Worker,

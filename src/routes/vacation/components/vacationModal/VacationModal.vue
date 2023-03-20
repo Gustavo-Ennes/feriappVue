@@ -46,10 +46,8 @@ import { format, set, parse } from "date-fns";
 
 import GeneralToast from "../../../../components/GeneralToast.vue";
 import type {
-  Vacation,
   VacationFetchInterface,
   VacationFormType,
-  VacationModalFormInterface,
   VacationModalDataInterface,
   VacationModalFormDataInterface,
 } from "../../types";
@@ -123,7 +121,7 @@ export default {
         this.modal?.hide();
         await this.prepareToastPayload({
           error: errors?.[0],
-          date: format(validatedForm.startDate, "dd-MM-yyyy"),
+          date: format(new Date(validatedForm.startDate), "dd-MM-yyyy"),
           type: "create",
           success: !!data?.createVacation,
         });
@@ -155,7 +153,7 @@ export default {
       this.prepareToastPayload({
         error: errors?.[0],
         date: format(new Date(validatedForm.startDate), "dd-MM-yyyy"),
-        type: "edit",
+        type: "info",
         success: response.success,
       });
       this.$store.dispatch("showToast", this.toastPayload);

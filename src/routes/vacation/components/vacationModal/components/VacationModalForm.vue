@@ -70,7 +70,7 @@ export default {
         worker: this.vacation?.worker._id ?? null,
         type: this.vacation?.type ?? this.type,
         startDate: this.vacation?.startDate ?? format(new Date(), "yyyy-MM-dd"),
-        _id: undefined
+        _id: undefined,
       },
     };
   },
@@ -82,7 +82,7 @@ export default {
     vacationsOptions() {
       return getVacationOptions(this.type);
     },
-    computedForm() {  
+    computedForm() {
       return this.form;
     },
   },
@@ -104,7 +104,7 @@ export default {
             ...this.vacation,
             startDate,
             worker: this.vacation.worker._id,
-            _id: this.vacation._id
+            _id: this.vacation._id,
           };
         } else {
           this.form = {

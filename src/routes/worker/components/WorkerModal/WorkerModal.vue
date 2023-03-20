@@ -93,12 +93,8 @@ export default {
       if (!this.formModified) this.formModified = true;
     },
     async handleCreate(data: WorkerCreatePayloadInterface): Promise<void> {
-      console.log("🚀 ~ file: WorkerModal.vue:97 ~ handleCreate ~ data:", data);
       const { validatedForm, errors } = await validateForm(data);
-      console.log(
-        "🚀 ~ file: WorkerModal.vue:94 ~ handleCreate ~ validatedForm:",
-        validatedForm
-      );
+
       if (validatedForm) {
         const { data } = await createWorker(validatedForm);
         if (!errors && data.createWorker) {

@@ -12,7 +12,7 @@ type DayOption = {
 type VacationDayOptions = DayOption[];
 type DayOptionsInterface = {
   vacation: VacationDayOptions;
-  premiumLicense: VacationDayOptions;
+  license: VacationDayOptions;
   dayOff: VacationDayOptions;
 };
 
@@ -20,7 +20,7 @@ const vacation: VacationDayOptions = [
   { daysQtd: 15, label: "quinze" },
   { daysQtd: 30, label: "trinta" },
 ];
-const premiumLicense: VacationDayOptions = [
+const license: VacationDayOptions = [
   ...vacation,
   { daysQtd: 45, label: "quarenta e cinco" },
   { daysQtd: 60, label: "sessenta" },
@@ -33,18 +33,18 @@ const dayOff: VacationDayOptions = [
 ];
 const daysOptions: DayOptionsInterface = {
   vacation,
-  premiumLicense,
+  license,
   dayOff,
 };
 const allDaysOptions: VacationDayOptions = [
   ...vacation,
-  ...premiumLicense,
+  ...license,
   ...dayOff,
 ];
 
 const vacationOptions = {
   vacation: "Férias",
-  premiumLicense: "Licença-Prêmio",
+  license: "Licença-Prêmio",
   dayOff: "Abono",
 };
 

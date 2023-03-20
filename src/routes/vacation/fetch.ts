@@ -31,7 +31,7 @@ const getPremiumLicenses = async (): Promise<VacationFetchInterface> =>
   runQuery({
     query: vacationsQuery,
     label: "premiumLicenses",
-    variables: { type: "premiumLicense" },
+    variables: { type: "license" },
   });
 
 const getWorkerById = async ({
@@ -71,7 +71,7 @@ const getVacationsByType = async (
 ): Promise<VacationFetchInterface> => {
   if (type === "dayOff") return getDayOffs();
   if (type === "vacation") return getVacations();
-  if (type === "premiumLicense") return getPremiumLicenses();
+  if (type === "license") return getPremiumLicenses();
   return { data: undefined };
 };
 
