@@ -13,7 +13,15 @@
       </thead>
       <tbody>
         <tr v-for="worker in workers">
-          <td>{{ worker.name }}</td>
+          <td>
+            <router-link
+              :to="{
+                name: 'worker',
+                params: { _id: worker._id },
+              }"
+              >{{ worker.name }}</router-link
+            >
+          </td>
           <td>{{ worker.role }}</td>
           <td>{{ getTranslatedStatus(worker.status) }}</td>
           <td>{{ getAdmissionDate(worker) }}</td>

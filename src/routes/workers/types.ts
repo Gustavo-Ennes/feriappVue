@@ -10,7 +10,7 @@ interface Worker {
   admissionDate: string;
   role: string;
   status: string;
-  departmentId: string;
+  department: { _id: string; name: string };
   registry: string;
   matriculation: string;
 }

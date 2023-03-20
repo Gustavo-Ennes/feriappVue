@@ -1,5 +1,5 @@
 import { runQuery } from "@/graphql/graphql";
-import { getWorkers } from "../worker/fetch";
+import { getWorkers } from "../workers/fetch";
 import { vacationsQuery, workerByIdQuery } from "./query";
 import {
   vacationCreateMutation,
@@ -11,7 +11,7 @@ import type {
   VacationModalFormInterface,
   WorkerFetchInterface,
 } from "./types";
-import type { VacationType } from "../worker/types";
+import type { VacationType } from "../workers/types";
 
 const getDayOffs = async (): Promise<VacationFetchInterface> =>
   runQuery({

@@ -1,6 +1,6 @@
-const workersQuery = `
-query Workers{
-  workers{
+const workerByIdQuery = `
+query WorkerById($_id: ID!){
+  worker(_id: $_id){
     _id
     name
     registry
@@ -16,13 +16,4 @@ query Workers{
 }
 `;
 
-const departmentQuery: string = `
-query Departments{
-  departments{
-    _id
-    name
-  }
-}
-`;
-
-export { workersQuery, departmentQuery };
+export { workerByIdQuery };

@@ -27,7 +27,7 @@ const authenticatedRoutes: RouteRecordRaw[] = [
   },
   {
     path: "/workers",
-    component: () => import("./worker/Workers.vue"),
+    component: () => import("./workers/Workers.vue"),
     meta: { requiresAuth: true },
   },
   {
@@ -46,6 +46,13 @@ const authenticatedRoutes: RouteRecordRaw[] = [
     path: "/license/",
     component: () => import("./vacation/Vacation.vue"),
     props: { type: "license" },
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/worker/:_id",
+    name: "worker",
+    component: () => import("./worker/Worker.vue"),
+    props: true,
     meta: { requiresAuth: true },
   },
   // {

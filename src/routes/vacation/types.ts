@@ -1,7 +1,7 @@
 import type { Modal } from "bootstrap";
 import type { InferType } from "yup";
 
-import type { Worker } from "../worker/types";
+import type { Worker } from "../workers/types";
 import type { VacationCreateFormSchema } from "./components/vacationModal/components/form";
 
 interface Vacation {

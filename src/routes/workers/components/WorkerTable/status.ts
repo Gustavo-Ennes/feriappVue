@@ -1,4 +1,4 @@
-import type { TranslatedStatusObject } from "@/routes/worker/types";
+import type { TranslatedStatusObject } from "@/routes/workers/types";
 
 const translatedStatusObject: TranslatedStatusObject = {
   active: "ativo",
