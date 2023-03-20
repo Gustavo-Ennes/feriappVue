@@ -40,6 +40,11 @@
               Trabalhador
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link text-light" to="/departments">
+              Setores
+            </router-link>
+          </li>
         </ul>
         <form class="d-flex" role="search">
           <input

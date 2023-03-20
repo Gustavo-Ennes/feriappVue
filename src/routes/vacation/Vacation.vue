@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="row gap-2 justify-content-center">
+  <div class="container my-3 text-center">
+    <div class="row g-2 justify-content-center">
       <h1 class="col-4 offset-4 pt-4 text-center">{{ computedTitle }}</h1>
       <h1 class="col pt-4 text-center">
         <button class="btn btn-primary" @click="handleOpenModal('create')">

@@ -55,6 +55,12 @@ const authenticatedRoutes: RouteRecordRaw[] = [
     props: true,
     meta: { requiresAuth: true },
   },
+  {
+    path: "/departments",
+    name: "departments",
+    component: () => import("./departments/Departments.vue"),
+    meta: { requiresAuth: true },
+  },
   // {
   //   path: "/test",
   //   component: testRoute,
