@@ -38,7 +38,7 @@ const validateForm = async (
     });
     response.validatedForm = validatedForm;
   } catch (error: any) {
-    console.log("🚀 ~ file: form.ts:39 ~ error:", error);
+    console.log("Error validating form :", error);
     response.errors = error.errors;
   } finally {
     store.dispatch("stopLoading");

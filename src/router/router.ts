@@ -1,10 +1,10 @@
 import { store } from "@/store/store";
 import { createRouter, createWebHistory } from "vue-router";
-import { authenticatedRoutes, unauthenticatedRoutes } from "../routes/routes";
+import { routes } from "../routes/routes";
 
 const router = createRouter({
   history: createWebHistory("/"),
-  routes: store.state.user ? authenticatedRoutes : unauthenticatedRoutes,
+  routes,
 });
 
 router.beforeEach((to, from) => {

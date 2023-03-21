@@ -2,18 +2,22 @@
   <div class="container text-center my-5">
     <div class="row justify-content-start align-items-center g-2">
       <h1 class="col-12">{{ worker?.name }}</h1>
-      <h6 class="col-12">Cargo: {{ worker?.role }}</h6>
-      <div class="col-6">
+      <h6 class="col-12 mb-5">Cargo: {{ worker?.role }}</h6>
+      <div class="col-12 col-sm-6">
         <p>Registro: {{ worker?.registry }}</p>
       </div>
-      <div class="col-6">
+      <div class="col-12 col-sm-6">
         <p>Matrícula: {{ worker?.matriculation }}</p>
       </div>
-      <div class="col-6">
+      <div class="col-12 col-sm-6">
         <p>Data de admissão: {{ computedAdmissionDate }}</p>
       </div>
-      <div class="col-6">
-        <p><router-link to="/departments">Departamento: {{ worker?.department.name }}</router-link></p>
+      <div class="col-12 col-sm-6">
+        <p>
+          <router-link to="/departments"
+            >Departamento: {{ worker?.department.name }}</router-link
+          >
+        </p>
       </div>
     </div>
   </div>

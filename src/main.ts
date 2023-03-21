@@ -1,9 +1,9 @@
 import { createApp } from "vue";
 import "animate.css";
 
-import AppVue from "./App.vue";
 import "./assets/app.scss";
 import { router } from "./router/router";
+import AppVue from "./App.vue";
 import { store, key } from "./store/store";
 
 // 5. Create and mount the root instance.

@@ -17,10 +17,7 @@
 </template>
 
 <script lang="ts">
-import type {
-  Department,
-  DepartmentModalFormDataInterface,
-} from "../../../types";
+import type { DepartmentModalFormDataInterface } from "../../../types";
 
 export default {
   name: "DepartmentModalForm",
@@ -47,7 +44,7 @@ export default {
     department: {
       handler() {
         if (this.department) {
-          this.form = this.department;
+          this.form = { ...this.department };
         } else {
           this.form = {
             name: "",

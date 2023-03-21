@@ -56,25 +56,9 @@ export default {
     presentVacations(): Vacation[] {
       return this.vacations.length
         ? this.vacations.filter((vacation: Vacation) => {
-            console.log(
-              "🚀 ~ file: VacationTabs.vue:82 ~ returnthis.vacations.filter ~ vacation:",
-              vacation
-            );
             const today = new Date();
-            console.log(
-              "🚀 ~ file: VacationTabs.vue:81 ~ returnthis.vacations.filter ~ today:",
-              today
-            );
             const vacationStart = new Date(vacation.startDate);
-            console.log(
-              "🚀 ~ file: VacationTabs.vue:82 ~ returnthis.vacations.filter ~ vacationStart:",
-              vacationStart
-            );
             const vacationEnd = new Date(vacation.endDate as string);
-            console.log(
-              "🚀 ~ file: VacationTabs.vue:84 ~ returnthis.vacations.filter ~ vacationEnd:",
-              vacationEnd
-            );
             return isWithinInterval(today, {
               start: vacationStart,
               end: vacationEnd,

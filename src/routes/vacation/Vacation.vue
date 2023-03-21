@@ -84,10 +84,6 @@ export default {
       );
       if (data?.vacations) {
         this.vacations = data.vacations;
-        console.log(
-          "🚀 ~ file: Vacation.vue:77 ~ getAllVacations ~ this.vacations:",
-          this.vacations
-        );
       }
     },
     handleSelectVacation(vacation: Vacation) {

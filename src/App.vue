@@ -1,14 +1,3 @@
-<script lang="ts">
-import LoadingFrame from "./components/LoadingFrame.vue";
-import AppBar from "./components/AppBar.vue";
-import GeneralToast from "./components/GeneralToast.vue";
-
-export default {
-  name: "app",
-  components: { LoadingFrame, AppBar, GeneralToast },
-};
-</script>
-
 <template>
   <AppBar v-if="$store.state.user" />
   <router-view />
@@ -21,3 +10,28 @@ export default {
     _id="myUniqueId"
   />
 </template>
+
+<script lang="ts">
+import LoadingFrame from "./components/LoadingFrame.vue";
+import AppBar from "./components/AppBar.vue";
+import GeneralToast from "./components/GeneralToast.vue";
+import { Tooltip } from "bootstrap";
+
+export default {
+  name: "app",
+  mounted() {
+    this.enableTooltipsEverywhere();
+  },
+  methods: {
+    enableTooltipsEverywhere() {
+      const tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new Tooltip(tooltipTriggerEl);
+      });
+    },
+  },
+  components: { LoadingFrame, AppBar, GeneralToast },
+};
+</script>

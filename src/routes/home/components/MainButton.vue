@@ -27,6 +27,7 @@ export default {
     font-size: 30px;
   }
   &:hover {
+    border: 2px solid #ffa600;
     i {
       color: #ffa600;
     }

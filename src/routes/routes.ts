@@ -5,7 +5,7 @@ import type { RouteRecordRaw } from "vue-router";
 import NotFound from "./notFound/NotFound.vue";
 // import testRoute from "./worker/components/WorkerModal/WorkerModal.vue";
 
-const unauthenticatedRoutes: RouteRecordRaw[] = [
+const routes: RouteRecordRaw[] = [
   {
     path: "/login",
     component: () => import("./login/Login.vue"),
@@ -17,9 +17,6 @@ const unauthenticatedRoutes: RouteRecordRaw[] = [
     path: "/:pathMatch(.*)",
     component: NotFound,
   },
-];
-
-const authenticatedRoutes: RouteRecordRaw[] = [
   {
     path: "/",
     component: () => import("./home/Home.vue"),
@@ -61,10 +58,6 @@ const authenticatedRoutes: RouteRecordRaw[] = [
     component: () => import("./departments/Departments.vue"),
     meta: { requiresAuth: true },
   },
-  // {
-  //   path: "/test",
-  //   component: testRoute,
-  // },
 ];
 
-export { unauthenticatedRoutes, authenticatedRoutes };
+export { routes };

@@ -50,9 +50,16 @@ export default {
   props: ["modal", "type", "department"],
   methods: {
     async processForm(data: DepartmentFormInterface): Promise<void> {
-      const { errors }: ValidatedResponse = await validateForm(data);
+      const { validatedForm, errors }: ValidatedResponse = await validateForm(
+        data
+      );
       this.errors = errors;
-      if (!this.formModified) this.formModified = true;
+      if (
+        !this.formModified &&
+        (validatedForm?.name !== this.department?.name || errors)
+      ) {
+        this.formModified = true;
+      }
     },
     async handleCreate(data: DepartmentFormInterface): Promise<void> {
       const { validatedForm, errors } = await validateForm(data);

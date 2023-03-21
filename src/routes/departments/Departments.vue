@@ -11,6 +11,8 @@
           setor
         </button>
       </div>
+    </div>
+    <div class="row justify-content-center g-2">
       <div
         v-for="department in departments"
         :key="department._id"
