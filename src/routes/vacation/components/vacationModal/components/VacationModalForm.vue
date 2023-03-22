@@ -101,9 +101,10 @@ export default {
             "yyyy-MM-dd"
           );
           this.form = {
-            ...this.vacation,
+            daysQtd: this.vacation.daysQtd,
             startDate,
             worker: this.vacation.worker._id,
+            type: this.vacation.type,
             _id: this.vacation._id,
           };
         } else {

@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-primary" id="navbar">
     <div class="container-fluid">
-      <router-link class="navbar-brand text-light" to="/" @click="forceToggle"
+      <router-link class="navbar-brand text-light" to="/" @click="forceClose"
         >Feriapp</router-link
       >
       <button
@@ -21,6 +21,7 @@
               class="nav-link active text-light"
               aria-current="page"
               to="/"
+              @click="forceClose"
               >Home</router-link
             >
           </li>
@@ -28,7 +29,7 @@
             <router-link
               class="nav-link text-light"
               to="/dayOff"
-              @click="forceToggle"
+              @click="forceClose"
               >Abono</router-link
             >
           </li>
@@ -36,7 +37,7 @@
             <router-link
               class="nav-link text-light"
               to="/vacation"
-              @click="forceToggle"
+              @click="forceClose"
               >Férias</router-link
             >
           </li>
@@ -44,7 +45,7 @@
             <router-link
               class="nav-link text-light"
               to="/license"
-              @click="forceToggle"
+              @click="forceClose"
               >Licença -Prêmio</router-link
             >
           </li>
@@ -55,7 +56,7 @@
             <router-link
               class="nav-link text-light"
               to="/workers"
-              @click="forceToggle"
+              @click="forceClose"
             >
               Trabalhador
             </router-link>
@@ -64,7 +65,7 @@
             <router-link
               class="nav-link text-light"
               to="/departments"
-              @click="forceToggle"
+              @click="forceClose"
             >
               Setores
             </router-link>
@@ -77,7 +78,7 @@
             placeholder="Procure alguma coisa"
             aria-label="Search"
           />
-          <button class="btn btn-outline-light m-1" type="submit">
+          <button class="btn btn-outline-light m-1" type="button">
             Buscar
           </button>
           <button
@@ -98,17 +99,27 @@ import { animateCSS } from "@/animate.css/animate.css";
 
 export default {
   name: "AppBar",
+  mounted() {
+    this.navEl = document.getElementById("navbarSupportedContent");
+  },
+  data(): { navEl: HTMLElement | null } {
+    return {
+      navEl: null,
+    };
+  },
   methods: {
     logout() {
       this.$store.dispatch("logout");
       this.$router.push("/login");
     },
+    forceClose(): void {
+      this.navEl?.classList.remove("show");
+    },
     async forceToggle(): Promise<void> {
-      const html = document.getElementById("navbarSupportedContent");
-      if (html?.classList.contains("show")) {
-        html.classList.remove("show");
+      if (this.navEl?.classList.contains("show")) {
+        this.forceClose();
       } else {
-        html?.classList.add("show");
+        this.navEl?.classList.add("show");
         await animateCSS({
           elementId: "navbarSupportedContent",
           animation: "slideInLeft",

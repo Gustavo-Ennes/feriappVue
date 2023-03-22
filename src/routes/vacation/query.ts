@@ -4,7 +4,9 @@ query Vacations($type: String){
     _id
     worker{
       _id
+      role
       name
+      matriculation
       department{
         _id
         name
@@ -15,6 +17,8 @@ query Vacations($type: String){
     startDate
     endDate
     subType
+    createdAt
+    updatedAt
   }
 }
 `;

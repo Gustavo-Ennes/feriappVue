@@ -1,4 +1,6 @@
+import type { Height } from "@/pdf/types";
 import type { Modal } from "bootstrap";
+import type { PDFDocument } from "pdf-lib";
 import type { InferType } from "yup";
 
 import type { Worker } from "../workers/types";
@@ -15,6 +17,8 @@ interface Vacation {
   observation?: string;
   enjoyed?: boolean;
   type: string;
+  createdAt: string;
+  updatedAt: string
 }
 
 interface VacationFetchInterface {
@@ -40,7 +44,7 @@ interface VacationDataInterface {
   modalType?: string;
   vacation?: Vacation;
   workers?: Worker[];
-  confirmationModal?: Modal
+  confirmationModal?: Modal;
 }
 
 interface VacationModalFormInterface {
@@ -73,6 +77,12 @@ interface VacationModalDataInterface {
 
 type VacationFormType = InferType<typeof VacationCreateFormSchema>;
 
+type DrawHalfPageParams = {
+  height: Height;
+  document: PDFDocument;
+  vacation: Vacation;
+};
+
 export type {
   Vacation,
   VacationDataInterface,
@@ -83,4 +93,5 @@ export type {
   VacationModalDataInterface,
   ToastPayloadInterface,
   VacationModalFormInterface,
+  DrawHalfPageParams,
 };

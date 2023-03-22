@@ -10,7 +10,12 @@
       </p>
       <div class="row justify-content-center">
         <div class="col-6">
-          <small class="card-link">ver trabalhador</small>
+          <small class="card-link"
+            ><router-link
+              :to="{ name: 'worker', params: { _id: vacation.worker._id } }"
+              >ver trabalhador</router-link
+            ></small
+          >
         </div>
         <div class="col-2">
           <i
@@ -25,7 +30,10 @@
           />
         </div>
         <div class="col-2">
-          <i class="col-2 card-link fa-solid fa-print text-light text-right" />
+          <i
+            class="col-2 card-link fa-solid fa-print text-light text-right"
+            @click="handleDownloadPdf(vacation)"
+          />
         </div>
       </div>
     </div>
@@ -36,6 +44,8 @@
 import { add, format } from "date-fns";
 
 import { animateCSS } from "@/animate.css/animate.css";
+import { putPdfToDownload } from "@/pdf/pdf";
+import { render } from "../../pdf/render";
 
 export default {
   name: "VacationCard",
@@ -65,6 +75,13 @@ export default {
     },
   },
   methods: {
+    async handleDownloadPdf(worker: Worker): Promise<void> {
+      await putPdfToDownload({
+        name: "Férias",
+        pdfFn: render,
+        vacation: this.vacation,
+      });
+    },
     animateCard(): void {
       animateCSS({
         elementId: this.cardId,
@@ -77,8 +94,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-i {
+i, route-link {
   cursor: pointer;
+}
+a{
+  color: #ddd !important;
 }
 </style>
 
