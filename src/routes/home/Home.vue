@@ -1,7 +1,11 @@
 <template>
   <div class="row justify-content-center align-items-stretch mx-0 mt-4">
     <div class="col-sm-12 col-md-6 col-lg-4">
-      <MainButton label="Férias" :action="() => $router.push('/vacation')" icon-class="umbrella-beach" />
+      <MainButton
+        label="Férias"
+        :action="() => $router.push('/vacation')"
+        icon-class="umbrella-beach"
+      />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
       <MainButton
@@ -11,12 +15,16 @@
       />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
-      <MainButton label="Abono" :action="() => $router.push('/dayOff')" icon-class="martini-glass-citrus" />
+      <MainButton
+        label="Abono"
+        :action="() => $router.push('/dayOff')"
+        icon-class="martini-glass-citrus"
+      />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
       <MainButton
         label="Justificativas"
-        action=""
+        :action="() => $store.dispatch('openJustificationModal')"
         icon-class="magnifying-glass-dollar"
       />
     </div>

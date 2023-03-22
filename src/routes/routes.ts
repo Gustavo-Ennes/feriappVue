@@ -3,7 +3,6 @@ import { store } from "@/store/store";
 import type { RouteRecordRaw } from "vue-router";
 
 import NotFound from "./notFound/NotFound.vue";
-// import testRoute from "./worker/components/WorkerModal/WorkerModal.vue";
 
 const routes: RouteRecordRaw[] = [
   {

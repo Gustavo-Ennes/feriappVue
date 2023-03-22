@@ -1,5 +1,6 @@
 import type { User } from "firebase/auth";
 import { Store } from "vuex";
+import { Modal } from "bootstrap";
 
 export interface ToastParams {
   text: string;
@@ -12,6 +13,7 @@ export interface State {
   loading: boolean;
   user: User | null;
   toast?: ToastParams;
+  justificationModal?: Modal;
 }
 export interface StoreComponents {
   state: State;

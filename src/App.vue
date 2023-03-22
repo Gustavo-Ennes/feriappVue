@@ -2,6 +2,7 @@
   <AppBar v-if="$store.state.user" />
   <router-view />
   <LoadingFrame v-if="$store.state.loading" />
+  <JustificationModal />
   <GeneralToast
     :title="$store.state.toast?.title"
     :text="$store.state.toast?.text"
@@ -12,10 +13,12 @@
 </template>
 
 <script lang="ts">
+import { Tooltip } from "bootstrap";
+
+import JustificationModal from "./components/JustificationModal/JustificationModal.vue";
 import LoadingFrame from "./components/LoadingFrame.vue";
 import AppBar from "./components/AppBar.vue";
 import GeneralToast from "./components/GeneralToast.vue";
-import { Tooltip } from "bootstrap";
 
 export default {
   name: "app",
@@ -32,6 +35,6 @@ export default {
       });
     },
   },
-  components: { LoadingFrame, AppBar, GeneralToast },
+  components: { LoadingFrame, AppBar, GeneralToast, JustificationModal },
 };
 </script>

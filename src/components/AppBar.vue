@@ -50,7 +50,11 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#">Justificativas</a>
+            <span
+              class="nav-link text-light"
+              @click="$store.dispatch('openJustificationModal')"
+              >Justificativas</span
+            >
           </li>
           <li class="nav-item">
             <router-link
@@ -132,6 +136,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+span {
+  cursor: pointer;
+  &:hover {
+    color: #dd0 !important;
+  }
+}
 .navbar {
   width: 100%;
   a:hover {

@@ -10,7 +10,9 @@ const vacationParagraphBegin = (vacation: Vacation): string => `
 \tAtravés deste, venho solicitar ${translateVacation(vacation.type)} de ${
   vacation.type === "dayOff"
     ? translateVacationSubtype(vacation.subType as string)
-    : `${numberToNumberString(vacation.daysQtd)} dia(s) de fruição`
+    : `${vacation.daysQtd} (${numberToNumberString(
+        vacation.daysQtd
+      )}) dia(s) de fruição`
 }, `;
 
 const vacationParagraphEnd = (

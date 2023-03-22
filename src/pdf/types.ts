@@ -1,4 +1,5 @@
 import type { Vacation } from "@/routes/vacation/types";
+import type { Worker } from "@/routes/workers/types";
 import type { PDFDocument } from "pdf-lib";
 
 type Height = {
@@ -9,13 +10,13 @@ type Height = {
 
 type PdfFnParam = {
   document?: PDFDocument;
-  vacation: Vacation
+  instance: Vacation | Worker;
 };
 
 type CreatePdfParams = {
   name: string;
   pdfFn: (pdfFnParam: PdfFnParam) => Promise<void>;
-  vacation: Vacation
+  instance: Vacation | Worker;
 };
 
 type CreateTitleParams = {
@@ -23,6 +24,7 @@ type CreateTitleParams = {
   document: PDFDocument;
   height: Height;
   type?: string;
+  size?: number;
 };
 
 type CreateParagraphParams = {
@@ -40,6 +42,7 @@ type CreateSignParams = {
   name: string;
   role: string;
   matriculation?: string;
+  x?: number;
 };
 
 export type {

@@ -5,6 +5,7 @@ import type { InjectionKey } from "vue";
 
 import type { State, StoreComponents, ToastParams } from "./store.d";
 import VuexPersistence from "vuex-persist";
+import { Modal } from "bootstrap";
 
 const vuexLocal = new VuexPersistence<State>({
   storage: window.localStorage,
@@ -18,6 +19,7 @@ const store = createStore<State>({
       loading: false,
       user: null,
       toast: undefined,
+      justificationModal: undefined,
     };
   },
   mutations: {
@@ -32,6 +34,10 @@ const store = createStore<State>({
     },
     resetUser(state: State): void {
       state.user = null;
+    },
+    setJustificationModal(state: State): void {
+      const modalHTML = document.getElementById("justificationModal");
+      state.justificationModal = new Modal(modalHTML as HTMLElement);
     },
   },
   actions: {
@@ -57,6 +63,15 @@ const store = createStore<State>({
           resolve(true);
         }, toastParams?.timeout || 1500);
       });
+    },
+    openJustificationModal({ commit, state }: StoreComponents, modal: Modal) {
+      if (!state.justificationModal) commit("setJustificationModal");
+      (state.justificationModal as unknown as Modal).show();
+    },
+    closeJustificationModal({ state }: StoreComponents) {
+      if (state.justificationModal) {
+        (state.justificationModal as unknown as Modal).hide();
+      }
     },
   },
   plugins: [vuexLocal.plugin],

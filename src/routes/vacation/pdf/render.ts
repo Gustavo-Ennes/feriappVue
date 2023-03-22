@@ -7,7 +7,7 @@ import {
   createTitle,
 } from "@/pdf/factory";
 import type { PdfFnParam } from "@/pdf/types";
-import type { DrawHalfPageParams } from "../types";
+import type { DrawHalfPageParams, Vacation } from "../types";
 import type { Worker } from "@/routes/workers/types";
 import { translateMonth, translateVacation } from "./utils";
 import { vacationParagraph, dayOffParagraph } from "./text";
@@ -77,7 +77,7 @@ const drawHalfPage = async ({
   });
 };
 
-const render = async ({ document, vacation }: PdfFnParam): Promise<void> => {
+const render = async ({ document, instance }: PdfFnParam): Promise<void> => {
   if (document) {
     const page = document.addPage();
     const height = {
@@ -89,9 +89,9 @@ const render = async ({ document, vacation }: PdfFnParam): Promise<void> => {
         this.actual -= 45;
       },
     };
-    await drawHalfPage({ document, height, vacation });
+    await drawHalfPage({ document, height, vacation: instance as Vacation });
     height.stepHugeLine();
-    await drawHalfPage({ document, height, vacation });
+    await drawHalfPage({ document, height, vacation: instance as Vacation });
   }
 };
 

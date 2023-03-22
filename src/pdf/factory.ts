@@ -47,12 +47,14 @@ const createTitle = async ({
   title,
   document,
   height,
+  size = 24
 }: CreateTitleParams): Promise<void> => {
   const page = document.getPage(0);
   // title
   page.drawText(title.toUpperCase(), {
     y: height.actual,
     x: type === "license" ? 65 : 130,
+    size
   });
 };
 
@@ -79,6 +81,7 @@ const createSign = async ({
   document,
   height,
   matriculation,
+  x = 300
 }: CreateSignParams): Promise<void> => {
   const page = document.getPage(0);
   const roleString = `Função: ${role}`;
@@ -86,20 +89,20 @@ const createSign = async ({
   const aboveNameLine = roleString.concat(matriculationString);
 
   page.drawLine({
-    start: { x: 200, y: height.actual },
-    end: { x: 400, y: height.actual },
+    start: { x: x - 100, y: height.actual },
+    end: { x: x + 100, y: height.actual },
   });
   height.stepLine();
   page.drawText(name, {
     y: height.actual,
-    x: 295 - name.length * 3,
+    x: x - 5 - name.length * 3,
     size: 13,
   });
   height.stepLine();
   if (aboveNameLine) {
     page.drawText(aboveNameLine, {
       y: height.actual,
-      x: 295 - aboveNameLine.length * 2.3,
+      x: x - 5 - aboveNameLine.length * 2.3,
       size: 11,
     });
     height.stepLine();

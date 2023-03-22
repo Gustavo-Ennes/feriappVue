@@ -69,7 +69,7 @@ export default {
         ? "Abono"
         : this.type === "vacation"
         ? "Férias"
-        : "Licença-Prêmio";
+        : "Licença Prêmio";
     },
     computedButtonLabel() {
       if (this.type === "dayOff") return "novo abono";

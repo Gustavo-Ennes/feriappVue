@@ -79,7 +79,7 @@ export default {
       await putPdfToDownload({
         name: "Férias",
         pdfFn: render,
-        vacation: this.vacation,
+        instance: this.vacation,
       });
     },
     animateCard(): void {
