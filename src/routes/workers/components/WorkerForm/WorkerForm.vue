@@ -14,7 +14,13 @@
         />
       </div>
       <div class="col-12 float-right">
-        <button class="btn btn-primary mt-2 w-100" @click="handleCreate">
+        <button
+          class="btn btn-primary mt-2 w-100"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          :title="`Você criará um trabalhador`"
+          @click="handleCreate"
+        >
           <i class="fa-solid fa-user-plus p-1"></i>{{ " " }} Trabalhador
         </button>
       </div>

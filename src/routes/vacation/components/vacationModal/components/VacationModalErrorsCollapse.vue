@@ -3,6 +3,9 @@
     class="btn btn-sm btn-outline-primary mt-3 ml-3"
     type="button"
     aria-expanded="false"
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    :title="`O seu formulário possui errors, veja...`"
     @click="collapse?.toggle"
   >
     Veja os erros

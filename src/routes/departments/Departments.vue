@@ -5,6 +5,9 @@
       <div class="col pt-4 text-center">
         <button
           class="btn btn-sm btn-primary"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          :title="`Você criará um setor`"
           @click="() => handleOpenModal('create')"
         >
           <i class="fa-solid fa-plus" />

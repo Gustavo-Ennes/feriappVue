@@ -30,10 +30,16 @@
             <i
               class="fa-solid fa-trash-can text-danger px-xs-1 px-2 px-md-4"
               @click="handleDelete(worker)"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              :title="`Você deletará o(a) ${worker.name.toLowerCase()}`"
             ></i>
             <i
               class="fa-solid fa-pen text-warning"
               @click="handleEdit(worker)"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              :title="`clique para editar o(a) ${worker.name.toLowerCase()}`"
             ></i>
           </td>
         </tr>

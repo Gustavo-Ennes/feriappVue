@@ -82,12 +82,21 @@
             placeholder="Procure alguma coisa"
             aria-label="Search"
           />
-          <button class="btn btn-outline-light m-1" type="button">
+          <button
+            class="btn btn-outline-light m-1"
+            type="button"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            :title="`Busque por trabalhadores`"
+          >
             Buscar
           </button>
           <button
             class="btn btn-outline-light m-1"
             type="submit"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            :title="`Você sairá do sistema`"
             @click="logout"
           >
             <i class="fa-solid fa-power-off text-danger" alt="Logout" />

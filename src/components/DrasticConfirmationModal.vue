@@ -17,6 +17,9 @@
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            :title="`Feche o modal`"
           ></button>
         </div>
         <div class="modal-body text-center">
@@ -30,12 +33,18 @@
             type="button"
             class="btn btn-link text-light"
             data-bs-dismiss="modal"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            :title="`Cancele a ação`"
           >
             {{ computedCancelButtonLabel }}
           </button>
           <button
             type="button"
             class="btn btn-outline-light"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            :title="`Confirme a ação`"
             @click="sendDeleteConfirmation"
           >
             {{ computedConfirmDrasticActionButtonLabel }}

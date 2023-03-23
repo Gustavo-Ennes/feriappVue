@@ -1,12 +1,18 @@
 <template>
-  <button type="button" class="btn btn-secondary" @click="modal?.hide">
+  <button type="button" class="btn btn-secondary" 
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    :title="`Cancele a ação`" @click="modal?.hide">
     Cancelar
   </button>
   <button
     type="submit"
     class="btn btn-primary"
-    :disabled="!!errors || !formModified"
     form="workerCreateForm"
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    :title="`Você irá confirmar a ação`"
+    :disabled="!!errors || !formModified"
   >
     {{ type === "create" ? "Criar" : "Salvar" }}
   </button>

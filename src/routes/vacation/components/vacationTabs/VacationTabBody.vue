@@ -13,6 +13,7 @@
           class="col-12 col-sm-6 col-md-4 col-lg-3"
         >
           <VacationCard
+            :title="title"
             :vacation="vacation"
             :handleEdit="handleEdit"
             :handleDelete="handleDelete"
@@ -29,7 +30,7 @@ import VacationCard from "./VacationCard.vue";
 
 export default {
   name: "VacationTabBody",
-  props: ["type", "vacations", "active", "handleEdit", "handleDelete"],
+  props: ["type", "vacations", "active", "handleEdit", "handleDelete", "title"],
   components: { VacationCard },
 };
 </script>

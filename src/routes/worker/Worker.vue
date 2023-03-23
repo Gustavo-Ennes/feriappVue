@@ -14,7 +14,11 @@
       </div>
       <div class="col-12 col-sm-6">
         <p>
-          <router-link to="/departments"
+          <router-link
+            to="/departments"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            :title="`Visitar o departamento de ${worker?.department.name}`"
             >Departamento: {{ worker?.department.name }}</router-link
           >
         </p>

@@ -8,6 +8,7 @@
   <div class="tab-content">
     <VacationTabBody
       type="future"
+      :title="title"
       :vacations="futureVacations()"
       :active="true"
       :handleEdit="handleEdit"
@@ -15,6 +16,7 @@
     />
     <VacationTabBody
       type="present"
+      :title="title"
       :vacations="presentVacations()"
       :handleEdit="handleEdit"
       :handleDelete="handleDelete"
@@ -36,7 +38,7 @@ import type { Vacation } from "../../types";
 
 export default {
   name: "VacationTabs",
-  props: ["vacations"],
+  props: ["vacations", "title"],
   emits: ["selectVacation", "openModal", "deleteVacation"],
   components: { VacationTabHeader, VacationTabBody },
   methods: {

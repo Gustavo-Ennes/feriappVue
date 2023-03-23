@@ -3,12 +3,19 @@
     <div class="row g-2 justify-content-center">
       <h1 class="col-4 offset-4 pt-4 text-center">{{ computedTitle }}</h1>
       <h1 class="col pt-4 text-center">
-        <button class="btn btn-primary" @click="handleOpenModal('create')">
+        <button
+          class="btn btn-primary"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          :title="`Você criará um(a) ${computedTitle.toLowerCase()}`"
+          @click="handleOpenModal('create')"
+        >
           <i class="fa-solid fa-plus" /> {{ computedButtonLabel }}
         </button>
       </h1>
       <div class="col-12">
         <VacationTabs
+        :title="computedButtonLabel"
           :vacations="vacations"
           @deleteVacation="showConfirmationModal"
           @selectVacation="handleSelectVacation"

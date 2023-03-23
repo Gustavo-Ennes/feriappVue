@@ -36,7 +36,13 @@
                 />
               </div>
               <div class="mt-4 text-center">
-                <button @click="login" class="btn btn-primary my-2">
+                <button
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  :title="`Você tentará entrar no sistema`"
+                  @click="login"
+                  class="btn btn-primary my-2"
+                >
                   Entrar
                 </button>
               </div>

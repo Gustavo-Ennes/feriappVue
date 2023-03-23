@@ -13,6 +13,9 @@
           <small class="card-link"
             ><router-link
               :to="{ name: 'worker', params: { _id: vacation.worker._id } }"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              :title="`Ver perfil do(a) ${vacation.worker.name}`"
               >ver trabalhador</router-link
             ></small
           >
@@ -21,18 +24,27 @@
           <i
             class="col-2 card-link fa-solid fa-pen text-warning text-right"
             @click="handleEdit(vacation)"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            :title="`Clique para editar a(o) ${computedTitle}`"
           />
         </div>
         <div class="col-2">
           <i
             class="col-2 card-link fa-solid fa-trash text-danger text-right"
             @click="handleDelete(vacation)"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            :title="`Você irá deletar a(o) ${computedTitle}`"
           />
         </div>
         <div class="col-2">
           <i
             class="col-2 card-link fa-solid fa-print text-light text-right"
             @click="handleDownloadPdf(vacation)"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            :title="`Aqui você baixa o pdf da(o) ${computedTitle}`"
           />
         </div>
       </div>
@@ -49,7 +61,7 @@ import { render } from "../../pdf/render";
 
 export default {
   name: "VacationCard",
-  props: ["vacation", "handleEdit", "handleDelete"],
+  props: ["vacation", "handleEdit", "handleDelete", "title"],
   data() {
     return {
       name: "",
@@ -57,6 +69,9 @@ export default {
     };
   },
   computed: {
+    computedTitle() {
+      return this.title?.split(" ")[1] ?? "";
+    },
     text() {
       if (this.vacation.type === "dayOff")
         return this.vacation.daysQtd === 1 ? "Integral" : "Meio-período";
@@ -94,10 +109,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-i, route-link {
+i,
+route-link {
   cursor: pointer;
 }
-a{
+a {
   color: #ddd !important;
 }
 </style>
