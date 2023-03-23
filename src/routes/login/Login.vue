@@ -96,7 +96,7 @@ export default {
   display: block;
 }
 .background-img {
-  background-image: url(../../assets/loginCover.jpg);
+  background-image: url(../../../assets/loginCover.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }

@@ -19,18 +19,20 @@ export default {
   height: 30vh;
   width: 200px;
   text-align: center;
+  :hover {
+      color: #ffa600;
+  }
 }
 .btn {
   width: 100%;
   border: 3px solid rgb(0, 140, 255);
+  background-color: rgba(0, 0, 188, 0.1);
   .fa-solid {
     font-size: 30px;
   }
   &:hover {
     border: 2px solid #ffa600;
-    i {
-      color: #ffa600;
-    }
+  background-color: rgb(0, 137, 250);
   }
 }
 </style>

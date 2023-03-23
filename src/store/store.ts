@@ -37,7 +37,7 @@ const store = createStore<State>({
     },
     setJustificationModal(state: State): void {
       const modalHTML = document.getElementById("justificationModal");
-      state.justificationModal = new Modal(modalHTML as HTMLElement);
+      state.justificationModal = new Modal(modalHTML as HTMLElement); 
     },
   },
   actions: {
@@ -65,8 +65,8 @@ const store = createStore<State>({
       });
     },
     openJustificationModal({ commit, state }: StoreComponents, modal: Modal) {
-      if (!state.justificationModal) commit("setJustificationModal");
-      (state.justificationModal as unknown as Modal).show();
+      commit("setJustificationModal");
+      (state.justificationModal as unknown as Modal)?.show();
     },
     closeJustificationModal({ state }: StoreComponents) {
       if (state.justificationModal) {

@@ -52,7 +52,7 @@
           <li class="nav-item">
             <span
               class="nav-link text-light"
-              @click="$store.dispatch('openJustificationModal')"
+              @click="() => $store.dispatch('openJustificationModal')"
               >Justificativas</span
             >
           </li>

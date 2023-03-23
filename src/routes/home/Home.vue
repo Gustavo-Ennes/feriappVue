@@ -24,7 +24,7 @@
     <div class="col-sm-12 col-md-6 col-lg-4">
       <MainButton
         label="Justificativas"
-        :action="() => $store.dispatch('openJustificationModal')"
+        :action="async() => $store.dispatch('openJustificationModal')"
         icon-class="magnifying-glass-dollar"
       />
     </div>

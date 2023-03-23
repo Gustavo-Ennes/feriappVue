@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import "animate.css";
 
-import "./assets/app.scss";
+import "../assets/app.scss";
 import { router } from "./router/router";
 import AppVue from "./App.vue";
 import { store, key } from "./store/store";
