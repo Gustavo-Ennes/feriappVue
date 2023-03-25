@@ -57,6 +57,13 @@ const routes: RouteRecordRaw[] = [
     component: () => import("./departments/Departments.vue"),
     meta: { requiresAuth: true },
   },
+  {
+    path: "/search/:searchTerm",
+    name: "search",
+    component: () => import("./search/Search.vue"),
+    props: true,
+    meta: { requiresAuth: true },
+  },
 ];
 
 export { routes };

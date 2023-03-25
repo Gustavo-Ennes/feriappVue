@@ -37,7 +37,7 @@ const store = createStore<State>({
     },
     setJustificationModal(state: State): void {
       const modalHTML = document.getElementById("justificationModal");
-      state.justificationModal = new Modal(modalHTML as HTMLElement); 
+      state.justificationModal = new Modal(modalHTML as HTMLElement);
     },
   },
   actions: {

@@ -1,6 +1,6 @@
 <template>
   <div v-if="$store.state.loading" class="loading">
-    <div class="spinner-border text-warning" role="status">
+    <div class="spinner-border" role="status">
       <span class="sr-only spinner"></span>
     </div>
   </div>
@@ -24,8 +24,8 @@ export default {
   bottom: 0;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.493);
-  color: #333;
+  background-color: rgba(21, 0, 78, 0.596);
+  color: #e7ecb5;
   z-index: 10;
 }
 .spinner {

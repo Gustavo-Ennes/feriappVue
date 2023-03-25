@@ -1,5 +1,5 @@
 <template>
-  <AppBar v-if="$store.state.user" />
+  <AppBar v-if="$store.state.user" @search-requested="handleSearch" />
   <router-view />
   <LoadingFrame v-if="$store.state.loading" />
   <JustificationModal />
@@ -26,6 +26,11 @@ export default {
     this.enableTooltipsEverywhere();
   },
   methods: {
+    handleSearch(searchTerm: string) {
+      const encodedTerm = encodeURIComponent(searchTerm);
+      const desiredLocation = `http://${window.location.hostname}:${window.location.port}/search/${encodedTerm}`;
+      window.location.href = desiredLocation;
+    },
     enableTooltipsEverywhere() {
       const tooltipTriggerList = [].slice.call(
         document.querySelectorAll('[data-bs-toggle="tooltip"]')

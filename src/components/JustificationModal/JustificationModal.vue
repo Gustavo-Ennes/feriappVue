@@ -18,6 +18,7 @@
           <JustificationModalForm
             :submit-form="handleCreateJustificationPDF"
             @set-worker="handleSetSelectedWorker"
+            :workers="workers"
           />
         </div>
         <div class="modal-footer">
@@ -32,7 +33,6 @@
 </template>
 
 <script lang="ts">
-import { Modal } from "bootstrap";
 import type { Worker } from "@/routes/workers/types";
 import JustificationModalForm from "./components/JustificationModalForm.vue";
 import JustificationModalHeader from "./components/JustificationModalHeader.vue";
@@ -40,13 +40,25 @@ import JustificationModalButtons from "./components/JustificationModalButtons.vu
 import type { JustificationModalData } from "./types";
 import { putPdfToDownload } from "@/pdf/pdf";
 import { render } from "./pdf/render";
+import { getWorkers } from "@/routes/workers/fetch";
 
 export default {
   name: "JustificationModal",
   data(): JustificationModalData {
     return {
       selectedWorker: null,
+      workers: null,
     };
+  },
+  mounted() {
+    const modalEl = document.getElementById("justificationModal");
+    (modalEl as HTMLElement).addEventListener(
+      "show.bs.modal",
+      async (event): Promise<void> => {
+        const { data } = await getWorkers();
+        this.workers = data.workers;
+      }
+    );
   },
   methods: {
     handleSetSelectedWorker(worker: Worker) {

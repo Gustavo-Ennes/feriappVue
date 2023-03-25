@@ -8,10 +8,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
-const auth = getAuth(app);
+const auth = getAuth(firebaseApp);
 
 const login = async (email: string, password: string): Promise<void> => {
   try {
@@ -27,6 +27,6 @@ const logout = async (): Promise<void> => {
   await store.dispatch("logout");
 };
 
-export { login, logout };
+export { login, logout, firebaseApp };
 
 // TODO fix .env in production

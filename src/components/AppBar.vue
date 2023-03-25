@@ -78,22 +78,15 @@
         <form class="d-flex" role="search">
           <input
             class="form-control me-2"
-            type="search"
+            type="text"
             placeholder="Procure alguma coisa"
             aria-label="Search"
+            v-model="searchTerm"
+            @keyup.enter="() => handleSearch()"
           />
           <button
             class="btn btn-outline-light m-1"
             type="button"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            :title="`Busque por trabalhadores`"
-          >
-            Buscar
-          </button>
-          <button
-            class="btn btn-outline-light m-1"
-            type="submit"
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             :title="`Você sairá do sistema`"
@@ -112,15 +105,22 @@ import { animateCSS } from "@/animate.css/animate.css";
 
 export default {
   name: "AppBar",
+  emits: ["searchRequested"],
   mounted() {
     this.navEl = document.getElementById("navbarSupportedContent");
   },
-  data(): { navEl: HTMLElement | null } {
+  data(): { navEl: HTMLElement | null; searchTerm: string } {
     return {
       navEl: null,
+      searchTerm: "",
     };
   },
   methods: {
+    handleSearch() {
+      this.$emit("searchRequested", this.searchTerm);
+      this.searchTerm = "";
+      this.forceClose();
+    },
     logout() {
       this.$store.dispatch("logout");
       this.$router.push("/login");

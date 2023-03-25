@@ -31,19 +31,14 @@ import type { Worker } from "@/routes/workers/types";
 
 export default {
   name: "JustificationModalForm",
-  props: ["submitForm"],
+  props: ["submitForm", "workers"],
   emits: ["setWorker"],
-  data(): { form: { worker: string | null }; workers: Worker[] } {
+  data(): { form: { worker: string | null } } {
     return {
       form: {
         worker: null,
       },
-      workers: [],
     };
-  },
-  async beforeMount() {
-    const { data } = await getWorkers();
-    this.workers = data.workers;
   },
   computed: {
     computedForm() {
@@ -53,7 +48,7 @@ export default {
   watch: {
     "form.worker": function () {
       const worker = this.workers.filter(
-        ({ _id }) => _id === this.form.worker
+        ({ _id }: Worker) => _id === this.form.worker
       )[0];
       this.$emit("setWorker", worker);
     },
