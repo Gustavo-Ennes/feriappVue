@@ -40,7 +40,7 @@ const drawJustificationBlock = async ({
   await createParagraph({
     document,
     height,
-    text: `Secretaria: ${worker.department.name.toUpperCase()}`,
+    text: `Setor: Transporte`,
     x: page.getWidth() - 170,
     fontSize: 12,
   });

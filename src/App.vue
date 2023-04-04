@@ -28,7 +28,11 @@ export default {
   methods: {
     handleSearch(searchTerm: string) {
       const encodedTerm = encodeURIComponent(searchTerm);
-      const desiredLocation = `http://${window.location.hostname}:${window.location.port}/search/${encodedTerm}`;
+      const desiredLocation = `http${
+        import.meta.env.NODE_ENV !== "test" ? "s" : ""
+      }://${window.location.hostname}${
+        import.meta.env.NODE_ENV !== "test" ? `:${window.location.port}` : ""
+      }/search/${encodedTerm}`;
       window.location.href = desiredLocation;
     },
     enableTooltipsEverywhere() {

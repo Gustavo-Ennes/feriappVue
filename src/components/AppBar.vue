@@ -78,11 +78,10 @@
         <form class="d-flex" role="search">
           <input
             class="form-control me-2"
-            type="text"
             placeholder="Procure alguma coisa"
             aria-label="Search"
             v-model="searchTerm"
-            @keyup.enter="() => handleSearch()"
+            @keyup.enter="handleSearch"
           />
           <button
             class="btn btn-outline-light m-1"
