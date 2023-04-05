@@ -75,7 +75,7 @@
             </router-link>
           </li>
         </ul>
-        <form class="d-flex" role="search">
+        <div class="d-flex" role="search">
           <input
             class="form-control me-2"
             placeholder="Procure alguma coisa"
@@ -93,7 +93,7 @@
           >
             <i class="fa-solid fa-power-off text-danger" alt="Logout" />
           </button>
-        </form>
+        </div>
       </div>
     </div>
   </nav>

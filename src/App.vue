@@ -26,14 +26,8 @@ export default {
     this.enableTooltipsEverywhere();
   },
   methods: {
-    handleSearch(searchTerm: string) {
-      const encodedTerm = encodeURIComponent(searchTerm);
-      const desiredLocation = `http${
-        import.meta.env.NODE_ENV !== "test" ? "s" : ""
-      }://${window.location.hostname}${
-        import.meta.env.NODE_ENV !== "test" ? `:${window.location.port}` : ""
-      }/search/${encodedTerm}`;
-      window.location.href = desiredLocation;
+    handleSearch(searchTerm: string): void {
+      this.$router.push({name: 'search', params: { searchTerm}})
     },
     enableTooltipsEverywhere() {
       const tooltipTriggerList = [].slice.call(

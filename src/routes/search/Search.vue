@@ -47,6 +47,15 @@ export default {
     async doSearch(): Promise<void> {
       const { data } = await getSearchResults(this.searchTerm);
       this.results = data?.search;
+      console.log(
+        "🚀 ~ file: Search.vue:50 ~ doSearch ~ this.results:",
+        this.results
+      );
+    },
+  },
+  watch: {
+    async searchTerm() {
+      await this.doSearch();
     },
   },
   components: { SearchDepartment, SearchVacation, SearchWorker },
