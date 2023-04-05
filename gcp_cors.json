@@ -1,0 +1,13 @@
+[
+  {
+    "origin": [
+      "http://localhost:5173",
+      "https://feriapp-vue.vercel.app/",
+      "https://feriapp.ennes.dev/",
+      "https://dev.feriapp.ennes.dev/"
+    ],
+    "method": ["GET"],
+    "responseHeader": ["Content-Type"],
+    "maxAgeSeconds": 3600
+  }
+]
