@@ -75,7 +75,7 @@ export default {
     text() {
       if (this.vacation.type === "dayOff")
         return this.vacation.daysQtd === 1 ? "Integral" : "Meio-período";
-      return `Duração: ${this.vacation.daysQtd} dias\nRetorno: ${this.returnDate}`;
+      return `${this.vacation.daysQtd} dias, retornando ${this.returnDate}`;
     },
     computedDate(): string {
       return format(new Date(this.vacation.startDate), "dd/MM/yyyy");
