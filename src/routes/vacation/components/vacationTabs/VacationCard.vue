@@ -3,7 +3,7 @@
     <div class="card-body">
       <h5 class="card-title text-light">{{ computedDate }}</h5>
       <h6 class="card-subtitle mb-2 text-warning">
-        {{ vacation.worker.name }}
+        {{ capitalizeName(vacation.worker.name) }}
       </h6>
       <p class="card-text">
         {{ text }}
@@ -58,6 +58,7 @@ import { add, format } from "date-fns";
 import { animateCSS } from "@/animate.css/animate.css";
 import { putPdfToDownload } from "@/pdf/pdf";
 import { render } from "../../pdf/render";
+import { capitalizeName } from "@/routes/utils";
 
 export default {
   name: "VacationCard",
@@ -90,6 +91,7 @@ export default {
     },
   },
   methods: {
+    capitalizeName,
     async handleDownloadPdf(worker: Worker): Promise<void> {
       await putPdfToDownload({
         name: "Férias",

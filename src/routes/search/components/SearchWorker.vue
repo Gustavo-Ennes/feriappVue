@@ -11,8 +11,8 @@
           :key="worker._id"
         >
           <div class="ms-2 me-auto">
-            <div class="fw-bold">{{ worker.name }}</div>
-            <small>{{ worker.department.name }}</small>
+            <div class="fw-bold">{{ capitalizeName(worker) }}</div>
+            <small>{{ capitalizeName(worker.department.name) }}</small>
           </div>
           <span
             class="badge bg-primary rounded-pill"
@@ -27,12 +27,14 @@
 </template>
 
 <script lang="ts">
+import { capitalizeName } from "@/routes/utils";
 import type { Worker } from "@/routes/workers/types";
 
 export default {
   name: "SearchWorker",
   props: ["workers"],
   methods: {
+    capitalizeName,
     handlePush(worker: Worker) {
       this.$router.push({ name: "worker", params: { _id: worker._id } });
     },

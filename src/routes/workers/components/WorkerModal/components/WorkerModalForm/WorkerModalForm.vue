@@ -54,7 +54,7 @@
           :key="department._id"
           :value="department._id"
         >
-          {{ department.name }}
+          {{ capitalizeName(department.name) }}
         </option>
       </select>
     </div>
@@ -73,6 +73,7 @@
 <script lang="ts">
 import { format } from "date-fns";
 import type { WorkerModalFormDataInterface } from "../../../../types";
+import { capitalizeName } from "@/routes/utils";
 
 export default {
   name: "WorkerModalForm",
@@ -127,5 +128,6 @@ export default {
       deep: true,
     },
   },
+  methods: { capitalizeName },
 };
 </script>
