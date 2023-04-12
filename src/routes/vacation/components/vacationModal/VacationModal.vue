@@ -105,7 +105,7 @@ export default {
     },
     async handleCreate(payload: VacationModalFormDataInterface): Promise<void> {
       const { validatedForm, errors } = await validateForm(payload);
-      
+
       validatedForm.startDate = set(
         parse(validatedForm.startDate, "yyyy-MM-dd", new Date()),
         { milliseconds: 1 }
@@ -131,8 +131,6 @@ export default {
     async handleUpdate(payload: VacationModalFormDataInterface): Promise<void> {
       const { validatedForm, errors } = await validateForm(payload);
       const response = { success: false };
-      // TODO do this with worker
-      //virtuals and timezone ajustment
       delete validatedForm.subType;
       delete validatedForm.endDate;
       validatedForm.startDate = set(

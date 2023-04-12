@@ -9,7 +9,7 @@
     <VacationTabBody
       type="future"
       :title="title"
-      :vacations="futureVacations()"
+      :vacations="futureVacations(vacations)"
       :active="true"
       :handleEdit="handleEdit"
       :handleDelete="handleDelete"
@@ -17,13 +17,13 @@
     <VacationTabBody
       type="present"
       :title="title"
-      :vacations="presentVacations()"
+      :vacations="presentVacations(vacations)"
       :handleEdit="handleEdit"
       :handleDelete="handleDelete"
     />
     <VacationTabBody
       type="past"
-      :vacations="pastVacations()"
+      :vacations="pastVacations(vacations)"
       :handleEdit="handleEdit"
       :handleDelete="handleDelete"
     />
@@ -33,7 +33,7 @@
 <script lang="ts">
 import VacationTabHeader from "./VacationTabHeader.vue";
 import VacationTabBody from "./VacationTabBody.vue";
-import { isAfter, isBefore, add, isWithinInterval } from "date-fns";
+import { futureVacations, pastVacations, presentVacations } from "../../utils";
 import type { Vacation } from "../../types";
 
 export default {
@@ -42,6 +42,9 @@ export default {
   emits: ["selectVacation", "openModal", "deleteVacation"],
   components: { VacationTabHeader, VacationTabBody },
   methods: {
+    pastVacations,
+    futureVacations,
+    presentVacations,
     handleEdit(vacation: Vacation): void {
       this.$emit("selectVacation", vacation);
       this.$emit("openModal", "edit");
@@ -49,45 +52,6 @@ export default {
     handleDelete(vacation: Vacation): void {
       this.$emit("selectVacation", vacation);
       this.$emit("deleteVacation", vacation._id);
-    },
-    futureVacations(): Vacation[] {
-      return this.vacations.filter((vacation: Vacation) =>
-        isAfter(new Date(vacation.startDate), this.getTomorrow())
-      );
-    },
-    presentVacations(): Vacation[] {
-      return this.vacations.length
-        ? this.vacations.filter((vacation: Vacation) => {
-            const today = new Date();
-            const vacationStart = new Date(vacation.startDate);
-            const vacationEnd = new Date(vacation.endDate as string);
-            return isWithinInterval(today, {
-              start: vacationStart,
-              end: vacationEnd,
-            });
-          })
-        : [];
-    },
-    pastVacations(): Vacation[] {
-      return this.vacations.filter((vacation: Vacation) =>
-        isBefore(new Date(vacation.endDate as string), this.getYesterday())
-      );
-    },
-    getYesterday(): Date {
-      const today: Date = new Date();
-      return add(today, {
-        hours: -today.getHours(),
-        minutes: -today.getMinutes(),
-        seconds: -today.getSeconds() - 1,
-      });
-    },
-    getTomorrow(): Date {
-      const today: Date = new Date();
-      return add(today, {
-        hours: 27 - today.getHours(),
-        minutes: -today.getMinutes(),
-        seconds: -today.getSeconds(),
-      });
     },
   },
 };

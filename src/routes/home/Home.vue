@@ -24,7 +24,7 @@
     <div class="col-sm-12 col-md-6 col-lg-4">
       <MainButton
         label="Justificativas"
-        :action="async() => $store.dispatch('openJustificationModal')"
+        :action="async () => $store.dispatch('openJustificationModal')"
         icon-class="magnifying-glass-dollar"
       />
     </div>
@@ -35,15 +35,35 @@
         icon-class="id-card"
       />
     </div>
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <MainButton
+        label="Retornos e saídas"
+        :action="() => offcanvas?.show()"
+        icon-class="cart-flatbed-suitcase"
+      />
+    </div>
   </div>
+  <NextVacationsPanel />
 </template>
 
 <script lang="ts">
+import { Offcanvas } from "bootstrap";
 import MainButton from "./components/MainButton.vue";
+import NextVacationsPanel from "./components/nextVacationsPanel/NextVacationsPanel.vue";
+import type { HomeDataType } from "./types";
 
 export default {
   name: "Home",
-  components: { MainButton },
+  components: { MainButton, NextVacationsPanel },
+  data(): HomeDataType {
+    return {
+      offcanvas: undefined,
+    };
+  },
+  mounted() {
+    const el = document.getElementById("offcanvasVacations");
+    this.offcanvas = new Offcanvas(el as HTMLElement);
+  },
 };
 </script>
 
