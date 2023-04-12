@@ -2,7 +2,10 @@
   <div class="card" :id="`vacation-card-${vacation._id}`">
     <div class="card-body">
       <h5 class="card-title text-light">{{ computedDate }}</h5>
-      <h6 class="card-subtitle mb-2 text-warning">
+      <h6
+        class="card-subtitle mb-2 text-warning d-block text-truncate text-center"
+        :style="{ maxWidth: '170px', margin: 'auto' }"
+      >
         {{ capitalizeName(vacation.worker.name) }}
       </h6>
       <p class="card-text">
@@ -118,6 +121,12 @@ route-link {
 }
 a {
   color: #ddd !important;
+}
+.card {
+  height: 200px;
+  &-text {
+    margin-top: 10%;
+  }
 }
 </style>
 

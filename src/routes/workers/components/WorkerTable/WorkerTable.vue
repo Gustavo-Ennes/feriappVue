@@ -19,6 +19,7 @@
                 name: 'worker',
                 params: { _id: worker._id },
               }"
+              class="d-block text-truncate"
               >{{ capitalizeName(worker.name) }}</router-link
             >
           </td>

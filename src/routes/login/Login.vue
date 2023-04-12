@@ -41,7 +41,7 @@
                   data-bs-placement="top"
                   :title="`Você tentará entrar no sistema`"
                   @click="login"
-                  class="btn btn-primary my-2"
+                  class="btn btn-outline-light my-2"
                 >
                   Entrar
                 </button>
@@ -107,7 +107,7 @@ export default {
   background-size: cover;
 }
 .blur {
-  background-color: rgba(206, 206, 206, 0.801);
+  background-color: rgba(229, 255, 0, 0.288);
   display: flex;
   align-items: center;
   justify-content: center;
