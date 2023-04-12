@@ -43,18 +43,18 @@
       />
     </div>
   </div>
-  <NextVacationsPanel />
+  <VacationsPanel />
 </template>
 
 <script lang="ts">
 import { Offcanvas } from "bootstrap";
 import MainButton from "./components/MainButton.vue";
-import NextVacationsPanel from "./components/nextVacationsPanel/NextVacationsPanel.vue";
+import VacationsPanel from "./components/VacationsPanel/VacationsPanel.vue";
 import type { HomeDataType } from "./types";
 
 export default {
   name: "Home",
-  components: { MainButton, NextVacationsPanel },
+  components: { MainButton, VacationsPanel },
   data(): HomeDataType {
     return {
       offcanvas: undefined,

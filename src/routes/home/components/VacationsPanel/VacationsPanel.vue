@@ -37,13 +37,12 @@
 import { getVacations } from "../../fetch";
 import type { VacationDataType } from "../../types";
 import { nextVacations, presentVacations, pastVacations } from "./utils";
-import { capitalizeName } from "../../../utils";
 import { format } from "date-fns";
 import type { Worker } from "../../../workers/types";
-import NextVacationsSection from "./components/NextVacationsSection.vue";
+import NextVacationsSection from "./components/VacationsPanelSection.vue";
 
 export default {
-  name: "NextVacationsPanel",
+  name: "VacationsPanel",
   data(): VacationDataType {
     return {
       vacations: [],
@@ -69,7 +68,7 @@ export default {
       return this.vacations ? presentVacations(this.vacations) : [];
     },
   },
-  methods: { capitalizeName, format },
+  methods: { format },
   components: { NextVacationsSection },
 };
 </script>

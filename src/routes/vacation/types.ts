@@ -18,7 +18,7 @@ interface Vacation {
   enjoyed?: boolean;
   type: string;
   createdAt: string;
-  updatedAt: string
+  updatedAt: string;
 }
 
 interface VacationFetchInterface {
@@ -34,6 +34,7 @@ interface VacationFetchInterface {
 interface WorkerFetchInterface {
   data: {
     worker?: Worker;
+    vacations?: Vacation[];
   };
   errors?: any;
 }

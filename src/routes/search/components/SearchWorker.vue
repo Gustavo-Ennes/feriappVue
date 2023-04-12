@@ -11,7 +11,7 @@
           :key="worker._id"
         >
           <div class="ms-2 me-auto">
-            <div class="fw-bold">{{ capitalizeName(worker) }}</div>
+            <div class="fw-bold">{{ capitalizeName(worker.name) }}</div>
             <small>{{ capitalizeName(worker.department.name) }}</small>
           </div>
           <span

@@ -30,9 +30,6 @@ import { capitalizeName } from "@/routes/utils";
 export default {
   name: "SearchDepartment",
   props: ["departments"],
-  mounted() {
-    console.log("departments: ", JSON.stringify(this.departments, null, 2));
-  },
   methods: { capitalizeName },
 };
 </script>

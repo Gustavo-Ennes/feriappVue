@@ -1,12 +1,12 @@
 import { runQuery } from "@/graphql/graphql";
 import type { WorkerFetchInterface } from "../vacation/types";
-import { workerByIdQuery } from "./query";
+import { workerQuery } from "./query";
 
-const getWorkerById = async ({
+const workerAndVacations = async ({
   _id,
 }: {
   _id: string;
 }): Promise<WorkerFetchInterface> =>
-  runQuery({ query: workerByIdQuery, variables: { _id }, label: "workerById" });
+  runQuery({ query: workerQuery, variables: { _id }, label: "workerAndVacationsQuery" });
 
-export { getWorkerById };
+export { workerAndVacations };

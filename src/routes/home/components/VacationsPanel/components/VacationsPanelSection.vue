@@ -32,7 +32,7 @@ import type { Vacation } from "@/routes/vacation/types";
 import { getWorkerStatus } from "../utils";
 
 export default {
-  name: "NextVacationsSection",
+  name: "VacationsPanelSection",
   props: ["vacations", "title", "additionalText", "period"],
   computed: {
     iconClass() {

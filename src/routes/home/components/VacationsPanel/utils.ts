@@ -3,7 +3,6 @@ import { isWithinInterval, add, isPast, isFuture } from "date-fns";
 import type { Worker } from "@/routes/workers/types";
 
 const nextVacations = (vacations: Vacation[]): Vacation[] => {
-  console.log("🚀 ~ file: utils.ts:5 ~ nextVacations ~ vacations:", vacations);
   return vacations.filter((vacation) =>
     isWithinInterval(new Date(vacation.startDate), {
       start: new Date(),
@@ -27,7 +26,6 @@ const presentVacations = (vacations: Vacation[]): Vacation[] =>
   );
 
 const getWorkerStatus = (worker: Worker): string | void => {
-  console.log("🚀 ~ file: utils.ts:30 ~ getWorkerStatus ~ worker:", worker);
   if (worker.status === "license") return "de licença prêmio";
   else if (worker.status === "vacation") return "de férias";
   else if (worker.status === "dayOff") return "abonando";
