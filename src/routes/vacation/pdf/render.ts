@@ -11,6 +11,7 @@ import type { DrawHalfPageParams, Vacation } from "../types";
 import type { Worker } from "@/routes/workers/types";
 import { translateMonth, translateVacation } from "./utils";
 import { vacationParagraph, dayOffParagraph } from "./text";
+import { capitalizeName } from "@/routes/utils";
 
 const drawHalfPage = async ({
   document,
@@ -62,7 +63,7 @@ const drawHalfPage = async ({
   await createSign({
     document,
     height,
-    name: (vacation.worker as unknown as Worker).name,
+    name: capitalizeName((vacation.worker as unknown as Worker).name),
     matriculation: (vacation.worker as unknown as Worker).matriculation,
     role: (vacation.worker as unknown as Worker).role,
   });

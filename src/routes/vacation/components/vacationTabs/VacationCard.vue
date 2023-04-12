@@ -55,6 +55,7 @@
 <script lang="ts">
 import { add, format } from "date-fns";
 
+import type { Vacation } from "@/routes/vacation/types";
 import { animateCSS } from "@/animate.css/animate.css";
 import { putPdfToDownload } from "@/pdf/pdf";
 import { render } from "../../pdf/render";
@@ -92,9 +93,9 @@ export default {
   },
   methods: {
     capitalizeName,
-    async handleDownloadPdf(worker: Worker): Promise<void> {
+    async handleDownloadPdf(vacation: Vacation): Promise<void> {
       await putPdfToDownload({
-        name: "Férias",
+        name: `${vacation.type}`,
         pdfFn: render,
         instance: this.vacation,
       });

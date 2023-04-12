@@ -66,7 +66,7 @@ export default {
     },
     async handleCreateJustificationPDF(): Promise<void> {
       await putPdfToDownload({
-        name: "Férias",
+        name: "Justificativas",
         pdfFn: render,
         instance: this.selectedWorker as Worker,
       });
