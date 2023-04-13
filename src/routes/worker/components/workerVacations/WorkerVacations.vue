@@ -1,13 +1,13 @@
 <template>
   <div class="row justify-content-center align-items-start g-2">
     <div class="col-sm-12 col-md-6 col-lg-4">
-      <WorkerVacationsSection :vacations="realVacations" type="vacation" />
+      <WorkerVacationsSection :vacations="realVacations" v-if="realVacations.length" type="vacation" />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
-      <WorkerVacationsSection :vacations="licenses" type="license" />
+      <WorkerVacationsSection :vacations="licenses" v-if="licenses.length" type="license" />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
-      <WorkerVacationsSection :vacations="dayOffs" type="dayOff" />
+      <WorkerVacationsSection :vacations="dayOffs" v-if="dayOffs.length" type="dayOff" />
     </div>
   </div>
 </template>
