@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-      <h4 class="text-center" v-else>Não há trabalhadores aqui.</h4>
+      <h4 class="text-center" v-else>Não há {{ model }} {{ time }}.</h4>
     </div>
   </div>
 </template>
@@ -35,7 +35,27 @@ import VacationCard from "./VacationCard.vue";
 
 export default {
   name: "VacationTabBody",
-  props: ["type", "vacations", "active", "handleEdit", "handleDelete", "title"],
+  props: [
+    "type",
+    "vacations",
+    "active",
+    "handleEdit",
+    "handleDelete",
+    "title",
+    "vacationType",
+  ],
+  computed: {
+    model() {
+      if (this.vacationType === "dayOff") return "abonos";
+      else if (this.vacationType === "license") return "licenças-prêmio";
+      else if (this.vacationType === "vacation") return "férias";
+    },
+    time() {
+      if (this.type === "present") return "em andamento";
+      else if (this.type === "past") return "fruídas(os)";
+      else if (this.type === "future") return "futuras(os)";
+    },
+  },
   components: { VacationCard },
 };
 </script>
