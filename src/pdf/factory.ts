@@ -62,8 +62,8 @@ const createParagraph = async ({
   document,
   text,
   height,
-  fontSize = 13,
-  x = 50,
+  fontSize = 14,
+  x = 60,
   y = height.actual,
 }: CreateParagraphParams): Promise<void> => {
   const page = document.getPage(0);
@@ -71,7 +71,8 @@ const createParagraph = async ({
     y,
     x,
     size: fontSize,
-    maxWidth: page.getWidth() - 100,
+    maxWidth: page.getWidth() - 120,
+
   });
 };
 

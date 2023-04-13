@@ -30,7 +30,7 @@ const vacationParagraph = (vacation: Vacation): string =>
   vacationParagraphBegin(vacation).concat(vacationParagraphEnd(vacation));
 
 const dayOffParagraph = (vacation: Vacation): string => `
-Através deste, venho requerer a Vossa Senhoria, conforme dispõe a Lei Complementar 001/1993 em seu capítulo IV, artigo 129, inciso IV o abono de trabalho de ${
+\tAtravés deste, venho requerer a Vossa Senhoria, conforme dispõe a Lei Complementar 001/1993 em seu capítulo IV, artigo 129, inciso IV o abono de trabalho de ${
   vacation.subType === "integral" ? "1(um) dia" : "meio experiente"
 }, usufruindo em ${format(
   new Date(vacation.startDate),
