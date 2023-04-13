@@ -50,10 +50,3 @@ export default {
   components: { LoadingFrame, AppBar, GeneralToast, JustificationModal },
 };
 </script>
-
-<style lang="scss">
-#app {
-  background: rgba(255, 255, 255, 0.9) !important;
-  min-height: 100vh;
-}
-</style>
