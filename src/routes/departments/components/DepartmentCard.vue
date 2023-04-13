@@ -34,7 +34,7 @@ export default {
       this.handleOpenModal("edit");
     },
     handleDelete() {
-      this.handleConfirmationModal();
+      // this.handleConfirmationModal();
     },
   },
 };
