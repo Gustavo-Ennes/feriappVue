@@ -9,8 +9,7 @@ import {
 import type { PdfFnParam } from "@/pdf/types";
 import type { DrawHalfPageParams, Vacation } from "../types";
 import type { Worker } from "@/routes/workers/types";
-import { translateMonth, translateVacation } from "./utils";
-import { vacationParagraph, dayOffParagraph } from "./text";
+import { getParagraph, translateMonth, translateVacation } from "./utils";
 import { capitalizeName } from "@/routes/utils";
 
 const drawHalfPage = async ({
@@ -19,10 +18,8 @@ const drawHalfPage = async ({
   vacation,
 }: DrawHalfPageParams): Promise<void> => {
   const page = document.getPage(0);
-  const paragraph =
-    vacation.type === "dayOff"
-      ? dayOffParagraph(vacation)
-      : vacationParagraph(vacation);
+  const paragraph = getParagraph(vacation);
+
   await createHeader(document);
   await createFooter(document);
   await createDaysQtd({
@@ -39,10 +36,17 @@ const drawHalfPage = async ({
   });
 
   height.stepHugeLine();
-  await createParagraph({ document, height, text: paragraph });
+  await createParagraph({
+    document,
+    height,
+    text: paragraph,
+    fontSize: vacation.type === "license" ? 12 : 14,
+  });
 
   height.stepHugeLine();
   height.stepHugeLine();
+  height.stepSmallLine();
+
   const dateString = `Ilha solteira, ${new Date(
     vacation.updatedAt
   ).getDate()} de ${translateMonth(
@@ -54,22 +58,21 @@ const drawHalfPage = async ({
     text: dateString,
     x: page.getWidth() - dateString.length * 7.5,
     ...(vacation.type === "dayOff" && {
-      y: height.actual - 35,
+      y: height.actual - 15,
     }),
   });
 
   height.stepHugeLine();
-  height.stepHugeLine();
+  height.stepSmallLine();
   await createSign({
     document,
     height,
     name: capitalizeName((vacation.worker as unknown as Worker).name),
     matriculation: (vacation.worker as unknown as Worker).matriculation,
-    role: (vacation.worker as unknown as Worker).role,
+    role: capitalizeName((vacation.worker as unknown as Worker).role),
   });
 
-  height.stepLine();
-  height.stepLine();
+  height.stepHugeLine();
   await createSign({
     document,
     height,
@@ -85,6 +88,9 @@ const render = async ({ document, instance }: PdfFnParam): Promise<void> => {
       actual: page.getHeight() - 80,
       stepLine() {
         this.actual -= 15;
+      },
+      stepSmallLine() {
+        this.actual -= 12;
       },
       stepHugeLine() {
         this.actual -= 45;

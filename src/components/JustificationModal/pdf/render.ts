@@ -11,6 +11,9 @@ const render = async ({ document, instance }: PdfFnParam): Promise<void> => {
       stepLine() {
         this.actual -= 20;
       },
+      stepSmallLine(){
+        this.actual -=12
+      },
       stepHugeLine() {
         this.actual -= 28;
       },

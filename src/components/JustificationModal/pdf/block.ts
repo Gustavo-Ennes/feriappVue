@@ -86,7 +86,7 @@ const drawJustificationBlock = async ({
   height.stepLine();
   const underscore = {
     char: "_",
-    times: 68,
+    times: 65,
     line: "",
     getLine: function () {
       while (this.times > 0) {
@@ -106,12 +106,12 @@ const drawJustificationBlock = async ({
   height.stepHugeLine();
   await createSign({
     name: capitalizeName(worker.name),
-    role: worker.role,
+    role: capitalizeName(worker.role),
     document,
     height,
     x: 150,
   });
-  height.actual += 60;
+  height.actual += 44;
   await createSign({
     name: "Sebastião Arosti",
     role: "Diretor de Transporte",
@@ -120,6 +120,7 @@ const drawJustificationBlock = async ({
     x: 450,
   });
   height.stepLine();
+  height.stepSmallLine();
 };
 
 export { drawJustificationBlock };

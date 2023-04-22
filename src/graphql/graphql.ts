@@ -17,7 +17,7 @@ const runQuery = async ({
     const response = await fetch(import.meta.env.VITE_BACKEND_ENDPOINT, {
       headers: {
         "Content-Type": "application/json",
-        token: store.state.user?.uid ?? "",
+        token: store.state?.user?.uid ?? "",
       },
       method: "POST",
       body: JSON.stringify({ query, variables }),

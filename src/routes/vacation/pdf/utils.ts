@@ -1,3 +1,6 @@
+import type { Vacation } from "../types";
+import { vacationParagraph, licenseParagraph, dayOffParagraph } from "./text";
+
 const numberToNumberString = (number: number): string => {
   if (number === 15) return "quinze";
   if (number === 30) return "trinta";
@@ -32,9 +35,22 @@ const translateMonth = (month: number): string => {
 };
 
 const translateVacationSubtype = (subtype: string): string => {
-  if (subtype === "integral") return "expediente pleno";
+  if (subtype === "integral") return "integral";
   if (subtype === "halfDay") return "meio expediente";
   return "";
 };
 
-export { numberToNumberString, translateVacation, translateMonth, translateVacationSubtype };
+const getParagraph = (vacation: Vacation): string => {
+  if (vacation.type === "vacation") return vacationParagraph(vacation);
+  else if (vacation.type === "license") return licenseParagraph(vacation);
+  else if (vacation.type === "dayOff") return dayOffParagraph(vacation);
+  else throw new Error("getParagraph: invalid type parameter");
+};
+
+export {
+  numberToNumberString,
+  translateVacation,
+  translateMonth,
+  translateVacationSubtype,
+  getParagraph,
+};
