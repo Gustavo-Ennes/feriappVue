@@ -26,7 +26,7 @@ export default {
   justify-content: center;
   background-color: rgba(21, 0, 78, 0.596);
   color: #e7ecb5;
-  z-index: 10;
+  z-index: 9999;
 }
 .spinner {
   top: 50%;

@@ -47,14 +47,14 @@ const createTitle = async ({
   title,
   document,
   height,
-  size = 24
+  size = 24,
 }: CreateTitleParams): Promise<void> => {
   const page = document.getPage(0);
   // title
   page.drawText(title.toUpperCase(), {
     y: height.actual,
-    x: type === "license" ? 65 : 130,
-    size
+    x: type === "license" ? 65 : 145,
+    size,
   });
 };
 
@@ -62,7 +62,7 @@ const createParagraph = async ({
   document,
   text,
   height,
-  fontSize = 13,
+  fontSize = 14,
   x = 50,
   y = height.actual,
 }: CreateParagraphParams): Promise<void> => {
@@ -81,31 +81,35 @@ const createSign = async ({
   document,
   height,
   matriculation,
-  x = 300
+  x = 300,
 }: CreateSignParams): Promise<void> => {
   const page = document.getPage(0);
-  const roleString = `Função: ${role}`;
-  const matriculationString = matriculation ? ` ~ Matr.: ${matriculation}` : "";
-  const aboveNameLine = roleString.concat(matriculationString);
+  const matriculationText = `Matr.: ${matriculation}`;
 
   page.drawLine({
-    start: { x: x - 100, y: height.actual },
-    end: { x: x + 100, y: height.actual },
+    start: { x: x - 85, y: height.actual },
+    end: { x: x + 85, y: height.actual },
   });
   height.stepLine();
   page.drawText(name, {
     y: height.actual,
-    x: x - 5 - name.length * 3,
+    x: x - name.length * 3.2,
     size: 13,
   });
-  height.stepLine();
-  if (aboveNameLine) {
-    page.drawText(aboveNameLine, {
+  height.stepSmallLine();
+  page.drawText(role, {
+    y: height.actual,
+    x: x - role.length * 2.5,
+    size: 11,
+  });
+  height.stepSmallLine();
+  if (matriculation) {
+    page.drawText(matriculationText, {
       y: height.actual,
-      x: x - 5 - aboveNameLine.length * 2.3,
-      size: 11,
+      x: x - matriculationText.length * 2.3,
+      size: 10,
     });
-    height.stepLine();
+    height.stepSmallLine();
   }
 };
 
@@ -126,8 +130,8 @@ const createDaysQtd = async ({
     : `${daysQtd} dias`;
   page.drawText(text, {
     y: height.actual + 10,
-    x: subtype ? page.getWidth() - 120 : page.getWidth() - 80,
-    size: 14,
+    x: subtype ? page.getWidth() - 100 : page.getWidth() - 80,
+    size: 11,
   });
 };
 

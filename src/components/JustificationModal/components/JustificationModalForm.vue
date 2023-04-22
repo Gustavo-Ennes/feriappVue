@@ -18,7 +18,7 @@
           :key="selectedWorker._id"
           :value="selectedWorker._id"
         >
-          {{ selectedWorker.name }}
+          {{ nameCapitalized(selectedWorker.name) }}
         </option>
       </select>
     </div>
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { getWorkers } from "@/routes/workers/fetch";
+import { capitalizeName } from "@/routes/utils";
 import type { Worker } from "@/routes/workers/types";
 
 export default {
@@ -51,6 +51,11 @@ export default {
         ({ _id }: Worker) => _id === this.form.worker
       )[0];
       this.$emit("setWorker", worker);
+    },
+  },
+  methods: {
+    nameCapitalized(name: string): string {
+      return capitalizeName(name);
     },
   },
 };

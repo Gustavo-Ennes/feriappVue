@@ -19,13 +19,14 @@
                 name: 'worker',
                 params: { _id: worker._id },
               }"
-              >{{ worker.name }}</router-link
+              class="d-block text-truncate"
+              >{{ capitalizeName(worker.name) }}</router-link
             >
           </td>
           <td>{{ worker.role }}</td>
           <td>{{ getTranslatedStatus(worker.status) }}</td>
           <td>{{ getAdmissionDate(worker) }}</td>
-          <td>{{ worker?.department.name }}</td>
+          <td>{{ capitalizeName(worker?.department.name) }}</td>
           <td>
             <i
               class="fa-solid fa-trash-can text-danger px-xs-1 px-2 px-md-4"
@@ -51,10 +52,10 @@
 
 <script lang="ts">
 import { format } from "date-fns";
-import { Modal } from "bootstrap";
 
 import type { Worker, WorkerTableDataInterface } from "../../types";
 import { getTranslatedStatus } from "./status";
+import { capitalizeName } from "@/routes/utils";
 
 export default {
   name: "WorkerTable",
@@ -65,6 +66,7 @@ export default {
     };
   },
   methods: {
+    capitalizeName,
     getTranslatedStatus,
     handleDelete(worker: Worker) {
       this.$emit("selectWorker", worker);

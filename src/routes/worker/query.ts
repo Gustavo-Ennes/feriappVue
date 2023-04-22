@@ -1,5 +1,5 @@
-const workerByIdQuery = `
-query WorkerById($_id: ID!){
+const workerQuery = `
+query WorkerQuery($_id: ID!){
   worker(_id: $_id){
     _id
     name
@@ -13,7 +13,14 @@ query WorkerById($_id: ID!){
       name
     }
   }
+
+  vacations(fromWorker: $_id){
+    type
+    daysQtd
+    startDate
+    subType
+  }
 }
 `;
 
-export { workerByIdQuery };
+export { workerQuery };

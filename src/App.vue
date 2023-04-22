@@ -1,6 +1,8 @@
 <template>
   <AppBar v-if="$store.state.user" @search-requested="handleSearch" />
-  <router-view />
+  <div class="blur">
+    <router-view />
+  </div>
   <LoadingFrame v-if="$store.state.loading" />
   <JustificationModal />
   <GeneralToast
@@ -27,14 +29,21 @@ export default {
   },
   methods: {
     handleSearch(searchTerm: string): void {
-      this.$router.push({name: 'search', params: { searchTerm}})
+      this.$router.push({ name: "search", params: { searchTerm } });
     },
     enableTooltipsEverywhere() {
       const tooltipTriggerList = [].slice.call(
         document.querySelectorAll('[data-bs-toggle="tooltip"]')
       );
       tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new Tooltip(tooltipTriggerEl);
+        if (!(tooltipTriggerEl as any)._tooltip) {
+          const tooltip = new Tooltip(tooltipTriggerEl);
+          (tooltipTriggerEl as any)._tooltip = tooltip;
+          (tooltipTriggerEl as HTMLElement).addEventListener("remove", () => {
+            tooltip.dispose();
+          });
+          return tooltip;
+        }
       });
     },
   },

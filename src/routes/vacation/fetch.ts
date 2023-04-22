@@ -77,6 +77,7 @@ const getVacationsByType = async (
 
 export {
   getVacationsByType,
+  getVacations,
   getWorkerById,
   getWorkers,
   createVacation,

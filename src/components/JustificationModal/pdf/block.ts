@@ -6,6 +6,7 @@ import {
   createSign,
 } from "@/pdf/factory";
 import type { DrawJustificationBlockParams } from "./types";
+import { capitalizeName } from "@/routes/utils";
 
 const drawJustificationBlock = async ({
   document,
@@ -34,7 +35,7 @@ const drawJustificationBlock = async ({
   await createParagraph({
     document,
     height,
-    text: `Secretaria: ${worker.department.name.toUpperCase()}`,
+    text: `Secretaria: ${capitalizeName(worker.department.name)}`,
     fontSize: 12,
   });
   await createParagraph({
@@ -71,7 +72,7 @@ const drawJustificationBlock = async ({
   await createParagraph({
     document,
     height,
-    text: `Servidor: ${worker.name.toLocaleUpperCase()}`,
+    text: `Servidor: ${capitalizeName(worker.name)}`,
     fontSize: 12,
   });
   await createParagraph({
@@ -85,7 +86,7 @@ const drawJustificationBlock = async ({
   height.stepLine();
   const underscore = {
     char: "_",
-    times: 68,
+    times: 65,
     line: "",
     getLine: function () {
       while (this.times > 0) {
@@ -104,13 +105,13 @@ const drawJustificationBlock = async ({
 
   height.stepHugeLine();
   await createSign({
-    name: worker.name.toUpperCase(),
-    role: worker.role,
+    name: capitalizeName(worker.name),
+    role: capitalizeName(worker.role),
     document,
     height,
     x: 150,
   });
-  height.actual += 60;
+  height.actual += 44;
   await createSign({
     name: "Sebastião Arosti",
     role: "Diretor de Transporte",
@@ -119,6 +120,7 @@ const drawJustificationBlock = async ({
     x: 450,
   });
   height.stepLine();
+  height.stepSmallLine();
 };
 
 export { drawJustificationBlock };

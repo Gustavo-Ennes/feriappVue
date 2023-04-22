@@ -6,6 +6,7 @@ type Height = {
   actual: number;
   stepLine: () => void;
   stepHugeLine: () => void;
+  stepSmallLine: () => void;
 };
 
 type PdfFnParam = {

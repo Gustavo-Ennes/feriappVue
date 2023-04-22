@@ -15,7 +15,8 @@
       </h1>
       <div class="col-12">
         <VacationTabs
-        :title="computedButtonLabel"
+          :title="computedButtonLabel"
+          :vacation-type="type"
           :vacations="vacations"
           @deleteVacation="showConfirmationModal"
           @selectVacation="handleSelectVacation"

@@ -11,7 +11,7 @@
           :key="department._id"
         >
           <div class="ms-2 me-auto">
-            <div class="fw-bold">{{ department.name }}</div>
+            <div class="fw-bold">{{ capitalizeName(department.name) }}</div>
           </div>
           <span
             class="badge bg-primary rounded-pill"
@@ -26,11 +26,10 @@
 </template>
 
 <script lang="ts">
+import { capitalizeName } from "@/routes/utils";
 export default {
   name: "SearchDepartment",
   props: ["departments"],
-  mounted() {
-    console.log("departments: ", JSON.stringify(this.departments, null, 2));
-  },
+  methods: { capitalizeName },
 };
 </script>
