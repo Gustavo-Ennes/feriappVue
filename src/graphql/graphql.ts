@@ -1,6 +1,4 @@
-import { firebaseApp } from "@/firebase/firebase";
 import { store } from "@/store/store";
-import { getAuth, type User } from "firebase/auth";
 
 const runQuery = async ({
   query,

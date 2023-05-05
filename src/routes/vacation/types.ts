@@ -1,4 +1,4 @@
-import type { Height } from "@/pdf/types";
+import type { Height } from "@/routes/pdf/types";
 import type { Modal } from "bootstrap";
 import type { PDFDocument } from "pdf-lib";
 import type { InferType } from "yup";
@@ -83,7 +83,6 @@ type DrawHalfPageParams = {
   document: PDFDocument;
   vacation: Vacation;
 };
-
 export type {
   Vacation,
   VacationDataInterface,

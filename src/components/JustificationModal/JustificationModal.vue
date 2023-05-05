@@ -7,7 +7,7 @@
     aria-labelledby="justificationModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" v-if="!$store.state.loading">
       <div class="modal-content">
         <div class="modal-header">
           <JustificationModalHeader
@@ -16,7 +16,6 @@
         </div>
         <div class="modal-body">
           <JustificationModalForm
-            :submit-form="handleCreateJustificationPDF"
             @set-worker="handleSetSelectedWorker"
             :workers="workers"
           />
@@ -38,8 +37,6 @@ import JustificationModalForm from "./components/JustificationModalForm.vue";
 import JustificationModalHeader from "./components/JustificationModalHeader.vue";
 import JustificationModalButtons from "./components/JustificationModalButtons.vue";
 import type { JustificationModalData } from "./types";
-import { putPdfToDownload } from "@/pdf/pdf";
-import { render } from "./pdf/render";
 import { getWorkers } from "@/routes/workers/fetch";
 
 export default {
@@ -63,13 +60,6 @@ export default {
   methods: {
     handleSetSelectedWorker(worker: Worker) {
       this.selectedWorker = worker;
-    },
-    async handleCreateJustificationPDF(): Promise<void> {
-      await putPdfToDownload({
-        name: "Justificativas",
-        pdfFn: render,
-        instance: this.selectedWorker as Worker,
-      });
     },
   },
   components: {

@@ -1,8 +1,6 @@
 <template>
   <AppBar v-if="$store.state.user" @search-requested="handleSearch" />
-  <div class="blur">
-    <router-view />
-  </div>
+  <router-view />
   <LoadingFrame v-if="$store.state.loading" />
   <JustificationModal />
   <GeneralToast

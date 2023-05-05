@@ -17,6 +17,7 @@
     data-bs-toggle="tooltip"
     data-bs-placement="top"
     :title="`Imprima justificativas de horas extras`"
+    @click="$emit('close')"
   >
     Imprimir
   </button>

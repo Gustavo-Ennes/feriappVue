@@ -64,6 +64,13 @@ const routes: RouteRecordRaw[] = [
     props: true,
     meta: { requiresAuth: true },
   },
+  {
+    path: "/pdf/:type/:_id",
+    name: "pdf",
+    component: () => import("./pdf/Pdf.vue"),
+    props: true,
+    meta: { requiresAuth: true },
+  },
 ];
 
 export { routes };

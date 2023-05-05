@@ -15,10 +15,10 @@
         <option selected :value="null">Selecione o trabalhador</option>
         <option
           v-for="selectedWorker in workers"
-          :key="selectedWorker._id"
-          :value="selectedWorker._id"
+          :key="(selectedWorker as Worker)._id"
+          :value="(selectedWorker as Worker)._id"
         >
-          {{ nameCapitalized(selectedWorker.name) }}
+          {{ nameCapitalized((selectedWorker as Worker).name) }}
         </option>
       </select>
     </div>
@@ -31,7 +31,7 @@ import type { Worker } from "@/routes/workers/types";
 
 export default {
   name: "JustificationModalForm",
-  props: ["submitForm", "workers"],
+  props: ["workers"],
   emits: ["setWorker"],
   data(): { form: { worker: string | null } } {
     return {
@@ -51,11 +51,24 @@ export default {
         ({ _id }: Worker) => _id === this.form.worker
       )[0];
       this.$emit("setWorker", worker);
+      console.log(
+        "Worker changed in ModalForm: ",
+        JSON.stringify(worker, null, 2)
+      );
     },
   },
   methods: {
     nameCapitalized(name: string): string {
       return capitalizeName(name);
+    },
+    submitForm({ worker }: { worker: string | null }) {
+      if (worker) {
+        window.location.href = `http${
+          import.meta.env.MODE !== "development" ? "s" : ""
+        }://${window.location.hostname}:${
+          window.location.port
+        }/pdf/justification/${worker}`;
+      }
     },
   },
 };

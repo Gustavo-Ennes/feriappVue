@@ -63,8 +63,6 @@ import { add, format } from "date-fns";
 
 import type { Vacation } from "@/routes/vacation/types";
 import { animateCSS } from "@/animate.css/animate.css";
-import { putPdfToDownload } from "@/pdf/pdf";
-import { render } from "../../pdf/render";
 import { capitalizeName } from "@/routes/utils";
 
 export default {
@@ -100,10 +98,9 @@ export default {
   methods: {
     capitalizeName,
     async handleDownloadPdf(vacation: Vacation): Promise<void> {
-      await putPdfToDownload({
-        name: `${vacation.type}`,
-        pdfFn: render,
-        instance: this.vacation,
+      this.$router.push({
+        name: "pdf",
+        params: { _id: vacation._id, type: "vacation" },
       });
     },
     animateCard(): void {
@@ -132,5 +129,3 @@ a {
   }
 }
 </style>
-
-// TOOD test the vacations
