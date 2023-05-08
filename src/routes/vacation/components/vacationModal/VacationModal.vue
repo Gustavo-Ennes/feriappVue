@@ -126,6 +126,7 @@ export default {
           success: !!data?.createVacation,
         });
         this.$store.dispatch("showToast", this.toastPayload);
+        this.$router.push({name: 'pdf', params: { _id: data?.createVacation?._id, type: 'vacation'}})
       }
     },
     async handleUpdate(payload: VacationModalFormDataInterface): Promise<void> {
