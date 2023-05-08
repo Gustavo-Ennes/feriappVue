@@ -6,15 +6,34 @@ body {
 
   .card {
     box-shadow: 4px 8px 12px 1px #00000063;
-    background-color: #006effe3;
-    color: rgb(228, 228, 228);
+    background-color: #005bc1;
+    color: #cbcbcb;
   }
 
   .toast {
     box-shadow: 4px 8px 12px 1px #00000063;
   }
 
-  a{
-    color: #777;
+  a {
+    color: #444;
+  }
+
+  .bg-primary {
+    background-color: #005bc1;
+  }
+
+  .text {
+    &-primary {
+      color: #005bc1;
+    }
+    &-secondary {
+      color: #444;
+    }
+    &-light {
+      color: #cbcbcb;
+    }
+    &-info {
+      color: #0056bd;
+    }
   }
 }

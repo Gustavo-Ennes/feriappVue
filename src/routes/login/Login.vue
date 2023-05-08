@@ -56,7 +56,7 @@
 
 <script lang="ts">
 import { login as loginUser } from "../../firebase/firebase";
-import LoadingFrame from "../../components/LoadingFrame.vue";
+import LoadingFrame from "../../components/LoadingFrame/index.vue";
 import GeneralToast from "../../components/GeneralToast.vue";
 
 export default {
@@ -107,7 +107,6 @@ export default {
   background-size: cover;
 }
 .blur {
-  background-color: rgba(229, 255, 0, 0.288);
   display: flex;
   align-items: center;
   justify-content: center;

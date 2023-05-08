@@ -16,7 +16,7 @@
 import { Tooltip } from "bootstrap";
 
 import JustificationModal from "./components/JustificationModal/JustificationModal.vue";
-import LoadingFrame from "./components/LoadingFrame.vue";
+import LoadingFrame from "./components/LoadingFrame/index.vue";
 import AppBar from "./components/AppBar.vue";
 import GeneralToast from "./components/GeneralToast.vue";
 

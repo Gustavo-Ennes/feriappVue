@@ -1,14 +1,15 @@
 <template>
   <div v-if="$store.state.loading" class="loading">
-    <div class="spinner-border" role="status">
-      <span class="sr-only spinner"></span>
-    </div>
+    <LoadingAirplane />
   </div>
 </template>
 
 <script lang="ts">
+import LoadingAirplane from "./LoadingAirplane.vue";
+
 export default {
   name: "LoadingFrame",
+  components: { LoadingAirplane },
 };
 </script>
 
@@ -24,7 +25,7 @@ export default {
   bottom: 0;
   align-items: center;
   justify-content: center;
-  background-color: rgba(21, 0, 78, 0.596);
+  background-color: rgba(24, 124, 255, 0.78);
   color: #e7ecb5;
   z-index: 9999;
 }
