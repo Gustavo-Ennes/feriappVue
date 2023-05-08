@@ -25,10 +25,6 @@ export default {
   },
   methods: {
     abonoText(subtype?: string) {
-      console.log(
-        "🚀 ~ file: WorkerVacationsSection.vue:28 ~ abonoText ~ subtype:",
-        subtype
-      );
       return subtype === "halfDay" ? "meio-período" : "integral";
     },
     text(vacation: Vacation): string {

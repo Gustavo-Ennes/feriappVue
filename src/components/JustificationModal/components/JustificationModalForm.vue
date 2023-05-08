@@ -51,10 +51,6 @@ export default {
         ({ _id }: Worker) => _id === this.form.worker
       )[0];
       this.$emit("setWorker", worker);
-      console.log(
-        "Worker changed in ModalForm: ",
-        JSON.stringify(worker, null, 2)
-      );
     },
   },
   methods: {
