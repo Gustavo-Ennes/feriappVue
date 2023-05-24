@@ -71,6 +71,12 @@ const routes: RouteRecordRaw[] = [
     props: true,
     meta: { requiresAuth: true },
   },
+  {
+    path: "/extraHoursTable",
+    name: "extraHoursTable",
+    component: () => import("./extraHoursTable/ExtraHoursTable.vue"),
+    meta: { requiresAuth: true },
+  },
 ];
 
 export { routes };

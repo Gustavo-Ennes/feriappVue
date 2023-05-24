@@ -1,8 +1,8 @@
 import type { Modal } from "bootstrap";
 import type { InferType } from "yup";
+import type { PropType } from "vue";
 
 import type { workerCreateFormSchema } from "./components/WorkerModal/components/WorkerModalForm/form";
-import type { ComponentProps } from "@/__VLS_types";
 
 interface Worker {
   _id?: string;
@@ -100,7 +100,7 @@ interface TranslatedStatusObject {
   vacation: string;
 }
 
-type WorkerModalComponentInterface = ComponentProps<WorkerModalInterface>;
+type WorkerModalComponentInterface = PropType<WorkerModalInterface>;
 type WorkerFormType = InferType<typeof workerCreateFormSchema>;
 type VacationType = "dayOff" | "vacation" | "license";
 
