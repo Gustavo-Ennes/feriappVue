@@ -46,7 +46,7 @@
               class="nav-link text-light"
               to="/license"
               @click="forceClose"
-              >Licença -Prêmio</router-link
+              >Lic. Prêmio</router-link
             >
           </li>
           <li class="nav-item">

@@ -42,6 +42,13 @@
         icon-class="cart-flatbed-suitcase"
       />
     </div>
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <MainButton
+        label="Horas extras"
+        :action="() => $router.push('/extraHoursTable')"
+        icon-class="table"
+      />
+    </div>
   </div>
   <VacationsPanel />
 </template>

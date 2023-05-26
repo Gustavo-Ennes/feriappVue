@@ -6,52 +6,50 @@
     :hidden="!day"
   >
     <div class="card-body text-center">
-      <p :id="dayNumberId" class="h5 bg-primary text-light rounded">
-        {{ day?.getDate() }}
-      </p>
-      <input
-        v-if="canEdit"
-        type="number"
-        class="form-control form-control-lg text-center text-primary bg-transparent p-1 no-spinners"
-        :placeholder="extraHourNumber"
-        min="0"
-        max="16"
-        step=".5"
-        v-model="newValue"
-      />
-      <input
-        v-if="!canEdit"
-        type="number"
-        :class="`form-control form-control-lg text-center p-1 border-0 bg-transparent text-primary no-spinners`"
-        :value="newValue"
-        disabled
-        readonly
-      />
-      <div class="row text-center dayItemFooter">
-        <div class="col-12 h5">
-          <i
-            :class="`fas fa-${canEdit ? 'check' : 'pen'} text-${
-              canEdit ? 'success' : 'secondary'
-            }`"
-            data-bs-toggle="tooltip"
-            data-bs-placement="bottom"
-            title="Editar"
-            @click="handleEditClick"
-            v-if="day"
+      <div class="row justify-content-center align-items-center">
+        <div class="col-12">
+          <p
+            :id="dayNumberId"
+            :class="`h5 bg-${
+              isWeekend || isHoliday ? 'light' : 'primary'
+            } text-${isWeekend || isHoliday ? 'danger' : 'light'} rounded`"
+          >
+            {{ day?.getDate() }}
+          </p>
+        </div>
+        <div class="col-12" @click="handleToggleEdit">
+          <input
+            type="number"
+            min="0"
+            max="16"
+            step=".5"
+            v-model="newValue"
+            :class="`form-control form-control-lg text-center text-${
+              isWeekend || isHoliday ? 'light' : 'primary'
+            } bg-transparent p-1 no-spinners border-0`"
+            :readonly="!canEdit"
+            :placeholder="extraHourNumber"
+            :disabled="!canEdit"
+            @focusout="handleLostFocus"
           />
         </div>
-      </div>
-      <div class="form-check mt-2" v-if="!isWeekend">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          v-model="isHoliday"
-          @onSelect="isHoliday = !isHoliday"
-          id="flexCheckDefault"
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          <small>feriado</small>
-        </label>
+        <div class="col-12" v-if="!isWeekend">
+          <div class="form-check">
+            <input
+              class="form-check-input pl-1"
+              type="checkbox"
+              id="flexCheckDefault"
+              v-model="isHoliday"
+              @onSelect="isHoliday = !isHoliday"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              <small
+                :class="`text-${isWeekend || isHoliday ? 'light' : 'primary'}`"
+                >feriado</small
+              >
+            </label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -85,7 +83,7 @@ export default {
     return {
       canEdit: false,
       newValue: this.extraHour?.amount ?? Number(0).toFixed(1),
-      isHoliday: this.checkIsHoliday(this.day?.getDate()),
+      isHoliday: this.checkIsHoliday(),
     };
   },
   computed: {
@@ -103,15 +101,24 @@ export default {
     extraHourNumber() {
       return this.extraHour?.amount.toFixed(1) ?? 0;
     },
+    reference() {
+      return `day${this.day?.getDate()}`;
+    },
   },
   methods: {
-    checkIsHoliday(day?: number) {
+    checkIsHoliday() {
       const actualMonthReference = this.getHolidayReferenceMonth();
-      return actualMonthReference && day
-        ? includes(day, actualMonthReference.days)
+      return actualMonthReference && this.day
+        ? includes(this.day.getDate(), actualMonthReference.days)
         : false;
     },
-    handleEditClick() {
+    toggleEdit() {
+      this.canEdit = !this.canEdit;
+    },
+    handleToggleEdit() {
+      if (!this.canEdit) this.toggleEdit();
+    },
+    handleLostFocus() {
       if (this.canEdit) {
         const payload = {
           _id: this.extraHour?._id ?? undefined,
@@ -120,8 +127,8 @@ export default {
           amount: this.newValue,
         };
         this.$emit("addToModified", payload);
+        this.toggleEdit();
       }
-      this.canEdit = !this.canEdit;
     },
     getHolidayMonths(): CalendarHolidayStorage {
       return JSON.parse(
@@ -179,6 +186,7 @@ export default {
   watch: {
     extraHour() {
       this.newValue = this.extraHour?.amount ?? Number(0).toFixed(1);
+      this.isHoliday=  this.checkIsHoliday();
     },
     isHoliday() {
       if (this.isHoliday) {
@@ -193,19 +201,18 @@ export default {
 
 <style scoped>
 .dayItem {
-  height: 205px;
+  height: 160px;
   border-radius: 15px;
   box-shadow: 1px 1px 12px 1px rgba(58, 58, 58, 0.3);
   overflow: hidden;
 }
 .dayItem.invalidDay {
-  border: 1px solid rgba(0, 0, 255, 0.2);
   border-radius: 15px;
-  box-shadow: 1px 1px 22px 1px rgba(58, 58, 58, 0.3);
+  box-shadow: 1px 1px 22px 1px rgba(209, 47, 47, 0.3);
   overflow: hidden;
 }
 .dayItem:hover {
-  box-shadow: 1px 1px 22px 3px rgb(128, 128, 128);
+  box-shadow: 1px 1px 8px 1px rgb(128, 128, 128);
   border: 1px solid rgba(131, 131, 255, 0.3);
 }
 .dayItemHeader {
@@ -239,14 +246,15 @@ export default {
   cursor: pointer;
 }
 .isHoliday {
-  background-color: #aaa !important;
+  background-color: #e64444 !important;
 }
 .form-check {
   cursor: pointer;
   font-size: 12px;
   text-align: left;
 }
-.form-control{
+.form-control {
   font-size: 32px;
+  cursor: pointer;
 }
 </style>

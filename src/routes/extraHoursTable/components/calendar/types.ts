@@ -14,7 +14,7 @@ type CalendarMatrixConfig = {
   totalDays: number;
   week: number;
   weekArray: CalendarDayType[];
-};
+};  
 
 type CalendarDayData = {
   canEdit: boolean;

@@ -16,4 +16,12 @@ query ExtraHours($extraHourInput: ExtraHourInput) {
 }
 `;
 
-export { extraHoursQuery };
+const referenceQuery = `
+query ReferenceExtraHourQuery{
+  extraHours{
+    reference
+  }
+}
+`
+
+export { extraHoursQuery, referenceQuery };

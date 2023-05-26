@@ -5,7 +5,7 @@ import {
   updateExtraHourMutation,
 } from "./mutation";
 import type { ExtraHourFetch, ExtraHourInput } from "./types";
-import { extraHoursQuery } from "./query";
+import { extraHoursQuery, referenceQuery } from "./query";
 import { buildExtraHoursWithRangeVariables } from "./utils";
 
 const getExtraHoursWithRange = async (
@@ -43,9 +43,16 @@ const deleteExtraHour = async (_id: string): Promise<ExtraHourFetch> =>
     label: "deleteExtraHour",
   });
 
+const extraHoursReferences = async (): Promise<ExtraHourFetch> =>
+  runQuery({
+    query: referenceQuery,
+    label: "ExtraHourReferences",
+  });
+
 export {
   getExtraHoursWithRange,
   createExtraHour,
   updateExtraHour,
   deleteExtraHour,
+  extraHoursReferences,
 };

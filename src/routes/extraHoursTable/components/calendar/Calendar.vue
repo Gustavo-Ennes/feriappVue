@@ -1,12 +1,20 @@
 <template>
+  <div class="row justify-content-center align-items-center">
+    <div class="col-12">
+      <p class="h4 pb-3 text-secondary">
+        Total:
+        <span class="h2 text-primary ml-4">{{ workerHoursSum }}</span>
+      </p>
+    </div>
+  </div>
   <div
     class="row g-2 text-center bg-primary text-light rounded align-items-center"
   >
-    <div v-for="day in days" class="col h-100 pb-2">
+    <div v-for="day in days" :class="`col h-100 pb-2 text-${['Sábado', 'Domingo'].includes(day) ? 'warning' : 'light'}`">
       {{ day }}
     </div>
   </div>
-  <div class="row gap-1 mt-3 align-items-center">
+  <div class="row gap-3 g-5 mt-3 align-items-center justify-content-center">
     <CalendarWeek
       v-for="week in calendarMatrix"
       :days="week"
@@ -17,11 +25,13 @@
 </template>
 
 <script lang="ts">
-import { getDaysInMonth, getWeekOfMonth, isSameDay, set } from "date-fns";
+import { format, getDaysInMonth, getWeekOfMonth, isSameDay, set } from "date-fns";
 
 import CalendarWeek from "./components/CalendarWeek.vue";
 import type { CalendarMatrixConfig, ExtraHourCalendarData } from "./types";
 import type { ExtraHourInput, ExtraHour } from "../../types";
+import { sum } from "ramda";
+import { capitalizeName } from "@/routes/utils";
 
 export default {
   name: "ExtraHourCalendar",
@@ -39,7 +49,7 @@ export default {
       default: null,
     },
   },
-  emits: ["addToModified"],
+  emits: ["addToModified", "cleanModified"],
   data(): ExtraHourCalendarData {
     return {
       calendarMatrix: [],
@@ -47,6 +57,18 @@ export default {
     };
   },
   computed: {
+    capitalizedWorkerName() {
+      return capitalizeName(this.worker.name);
+    },
+    workerHoursSum() {
+      const extraHours: number[] = [];
+      this.calendarMatrix.forEach((week) => {
+        week.forEach((day) => {
+          extraHours.push(day.extraHour?.amount ?? 0);
+        });
+      });
+      return sum(extraHours);
+    },
     days() {
       return [
         "Domingo",
@@ -103,6 +125,9 @@ export default {
         );
       })?.[0];
     },
+    weekDayName(day: Date) {
+      return format(day, "EEEE")
+    },
     handleAddToModified(extraHour: ExtraHourInput) {
       this.$emit("addToModified", extraHour);
     },
@@ -110,9 +135,13 @@ export default {
   watch: {
     worker() {
       this.getMatrix();
+      this.$emit("cleanModified")
     },
-    extraHours() {
-      this.getMatrix();
+    extraHours: {
+      handler() {
+        this.getMatrix();
+      },
+      deep: true,
     },
   },
   components: { CalendarWeek },

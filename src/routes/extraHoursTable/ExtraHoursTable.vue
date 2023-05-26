@@ -16,9 +16,11 @@
         </button>
       </div>
       <div class="col-12 text-center">
-        <WorkerSelect
+        <SelectSection
           :workers="workers"
+          :references="references"
           @update-selected-worker="handleUpdateWorker"
+          @update-reference="handleUpdateReference"
         />
       </div>
       <div v-if="reference && selectedWorker" class="col-12">
@@ -28,6 +30,7 @@
             :extra-hours="extraHours"
             :worker="selectedWorker"
             @add-to-modified="handleCalendarModification"
+            @clean-modified="handleCleanModified"
           />
         </div>
       </div>
@@ -41,14 +44,15 @@
 </template>
 
 <script lang="ts">
-import { format, getDaysInMonth, isSameDay, set } from "date-fns";
+import { format, getDaysInMonth, isSameDay, parse, set } from "date-fns";
 
 import Calendar from "./components/calendar/Calendar.vue";
-import WorkerSelect from "./components/WorkerSelect.vue";
+import SelectSection from "./components/SelectSection.vue";
 import {
   createExtraHour,
   getExtraHoursWithRange,
   updateExtraHour,
+  extraHoursReferences,
 } from "./fetch";
 import type {
   ExtraHourTableParam,
@@ -58,7 +62,7 @@ import type {
   ExtraHourWorker,
   ExtraHourInput,
 } from "./types";
-import { getReference } from "./utils";
+import { pluck, uniq } from "ramda";
 
 export default {
   name: "ExtraHoursTable",
@@ -69,6 +73,7 @@ export default {
       workers: [],
       selectedWorker: undefined,
       reference: undefined,
+      references: [],
       hasModifications: false,
     };
   },
@@ -87,17 +92,31 @@ export default {
     },
   },
   async beforeMount() {
-    await this.fetchExtraHours();
+    await this.fetchReferences();
   },
   methods: {
+    async fetchReferences() {
+      const { data }: ExtraHourFetch = await extraHoursReferences();
+      if (data?.extraHours) {
+        const pluckedRefs = pluck("reference", data.extraHours);
+        const monthYearRef = pluckedRefs.map((value) =>
+          format(new Date(value), "MM/yyyy")
+        );
+        const uniqueRefs = uniq(monthYearRef);
+        this.references = uniqueRefs.map((ref) =>
+          parse(ref, "MM/yyyy", new Date())
+        );
+      }
+    },
     async fetchExtraHours() {
-      this.reference = getReference();
-      const { data }: ExtraHourFetch = await getExtraHoursWithRange(
-        this.reference
-      );
-      if (data?.extraHours && data?.workers) {
-        this.extraHours = data.extraHours;
-        this.workers = data.workers;
+      if (this.reference) {
+        const { data }: ExtraHourFetch = await getExtraHoursWithRange(
+          this.reference
+        );
+        if (data?.extraHours && data?.workers) {
+          this.extraHours = data.extraHours;
+          this.workers = data.workers;
+        }
       }
     },
     findExtraHour({ worker: _worker, day }: ExtraHourTableParam) {
@@ -118,6 +137,19 @@ export default {
       this.hasModifications = true;
       this.modified.push(extraHour);
     },
+    handleCleanModified() {
+      this.modified.splice(0, this.modified.length);
+      this.hasModifications = false;
+    },
+    async handleUpdateReference(reference: Date) {
+      this.reference = reference;
+      await this.resetExtraHour;
+    },
+    async resetExtraHour() {
+      this.modified = [];
+      this.hasModifications = false;
+      await this.fetchExtraHours();
+    },
     async handleSaveExtraHours() {
       if (this.modified.length) {
         this.modified.forEach(async (payload: ExtraHourInput) => {
@@ -127,13 +159,19 @@ export default {
             await createExtraHour(payload);
           }
         });
-        this.modified = [];
-        this.hasModifications = false;
-        await this.fetchExtraHours();
+        await this.resetExtraHour();
       }
     },
   },
-  components: { Calendar, WorkerSelect },
+  components: { Calendar, SelectSection },
+  watch: {
+    reference: {
+      async handler() {
+        await this.fetchExtraHours()
+      },
+      deep: true,
+    },
+  },
 };
 </script>
 

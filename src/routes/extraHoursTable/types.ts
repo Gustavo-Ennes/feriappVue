@@ -20,6 +20,7 @@ type ExtraHourData = {
   workers: ExtraHourWorker[];
   selectedWorker?: ExtraHourWorker;
   reference?: Date;
+  references?: Date[];
   hasModifications: boolean;
 };
 
@@ -50,13 +51,13 @@ type ExtraHourInputWrapper = {
 
 type ExtraHoutWorkerSelectData = {
   worker?: ExtraHourWorker;
+  reference?: Date;
 };
 
 type ExtraHourWorker = {
   _id: string;
   name: string;
 };
-
 
 export type {
   ExtraHour,
