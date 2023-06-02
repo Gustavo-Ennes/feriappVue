@@ -114,7 +114,12 @@ export default {
           this.reference
         );
         if (data?.extraHours && data?.workers) {
-          this.extraHours = data.extraHours;
+          this.extraHours = data.extraHours.sort(
+            (
+              { worker: { name: __name } }: ExtraHour,
+              { worker: { name: _name } }: ExtraHour
+            ) => (_name < __name ? 1 : -1)
+          );
           this.workers = data.workers;
         }
       }
@@ -167,7 +172,7 @@ export default {
   watch: {
     reference: {
       async handler() {
-        await this.fetchExtraHours()
+        await this.fetchExtraHours();
       },
       deep: true,
     },
