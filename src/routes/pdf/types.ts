@@ -5,7 +5,9 @@ export type PdfDataParams = {
 
 export type Params = {
   _id?: string | string[];
-  type?: string | string[];
+  type?: string;
+  reference?: Date;
+  justification?: string;
 };
 
 export type Height = {
