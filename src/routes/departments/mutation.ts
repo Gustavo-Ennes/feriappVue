@@ -3,6 +3,7 @@ mutation CreateDepartment($departmentInput: DepartmentInput!){
   createDepartment(departmentInput: $departmentInput){
     _id
     name
+    responsible
   }
 }
 `;

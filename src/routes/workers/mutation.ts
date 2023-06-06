@@ -6,7 +6,6 @@ mutation CreateWorkers($workerInput: WorkerInput){
     role
     registry
     matriculation
-    
   }
 }
 `;

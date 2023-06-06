@@ -3,6 +3,7 @@ query Department($_id: ID!){
   department(_id: $_id){
     _id
     name
+    responsible
   }
 }
 `;
@@ -12,6 +13,7 @@ query Departments{
   departments{
     _id
     name
+    responsible
   }
 }
 `;

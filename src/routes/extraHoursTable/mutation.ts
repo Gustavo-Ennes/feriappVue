@@ -8,6 +8,7 @@ mutation ($extraHourInput: ExtraHourInput!) {
     }
     reference
     amount
+    nightlyAmount
   }
 }
 `;

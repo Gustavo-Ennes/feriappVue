@@ -5,13 +5,16 @@ query ExtraHours($extraHourInput: ExtraHourInput) {
     worker {
       _id
       name
+      justification
     }
     reference
     amount
+    nightlyAmount
   }
   workers{
     _id
     name
+    justification
   }
 }
 `;

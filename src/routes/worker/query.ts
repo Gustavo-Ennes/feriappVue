@@ -8,6 +8,7 @@ query WorkerQuery($_id: ID!){
     status
     role
     admissionDate
+    justification
     department{
       _id
       name

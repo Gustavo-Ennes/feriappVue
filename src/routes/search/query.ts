@@ -4,6 +4,7 @@ query SearchQuery($searchTerm: String!){
     departments{
       _id
       name
+      responsible
     }
 
     vacations{
@@ -13,9 +14,11 @@ query SearchQuery($searchTerm: String!){
         role
         name
         matriculation
+        justification
         department{
           _id
           name
+          responsible
         }
       }
       daysQtd
@@ -35,9 +38,11 @@ query SearchQuery($searchTerm: String!){
       status
       role
       admissionDate
+      justification
       department{
         _id
         name
+        responsible
       }
     }
   }
