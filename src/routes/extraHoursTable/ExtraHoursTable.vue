@@ -102,6 +102,7 @@ export default {
         const monthYearRef = pluckedRefs.map((value) =>
           format(new Date(value), "MM/yyyy")
         );
+        monthYearRef.push(format(new Date(), "MM/yyyy"));
         const uniqueRefs = uniq(monthYearRef);
         this.references = uniqueRefs.map((ref) =>
           parse(ref, "MM/yyyy", new Date())
