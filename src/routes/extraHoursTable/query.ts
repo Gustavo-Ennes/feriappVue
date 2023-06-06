@@ -5,7 +5,10 @@ query ExtraHours($extraHourInput: ExtraHourInput) {
     worker {
       _id
       name
-      justification
+      department {
+        _id
+        name      
+      }
     }
     reference
     amount
@@ -14,7 +17,10 @@ query ExtraHours($extraHourInput: ExtraHourInput) {
   workers{
     _id
     name
-    justification
+    department {
+      _id
+      name      
+    }
   }
 }
 `;

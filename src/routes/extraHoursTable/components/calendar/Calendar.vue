@@ -1,16 +1,39 @@
 <template>
-  <div class="row justify-content-center align-items-center">
-    <div class="col-12">
-      <p class="h4 pb-3 text-secondary">
+  <div class="row align-items-center">
+    <div class="col-4 d-flex justify-content-start align-items-center">
+      <p class="h4 m-2 text-secondary">
         Total:
         <span class="h2 text-primary ml-4">{{ workerHoursSum }}</span>
       </p>
+    </div>
+    <div class="col-4 d-flex align-items-center justify-content-center">
+      <button
+        :disabled="!reference || !worker"
+        class="btn btn-lg mb-3 btn-outline-primary"
+        @click="handleSeeReport"
+      >
+        Ver relatório
+      </button>
+    </div>
+    <div class="col-4 d-flex align-items-center justify-content-end">
+      <button
+        :disabled="!reference || !worker"
+        class="btn btn-lg mb-3 btn-outline-primary"
+        @click="handleSeeAuthorization"
+      >
+        Imprimir autorização de hora extra
+      </button>
     </div>
   </div>
   <div
     class="row g-2 text-center bg-primary text-light rounded align-items-center"
   >
-    <div v-for="day in days" :class="`col h-100 pb-2 text-${['Sábado', 'Domingo'].includes(day) ? 'warning' : 'light'}`">
+    <div
+      v-for="day in days"
+      :class="`col h-100 pb-2 text-${
+        ['Sábado', 'Domingo'].includes(day) ? 'warning' : 'light'
+      }`"
+    >
       {{ day }}
     </div>
   </div>
@@ -25,7 +48,13 @@
 </template>
 
 <script lang="ts">
-import { format, getDaysInMonth, getWeekOfMonth, isSameDay, set } from "date-fns";
+import {
+  format,
+  getDaysInMonth,
+  getWeekOfMonth,
+  isSameDay,
+  set,
+} from "date-fns";
 
 import CalendarWeek from "./components/CalendarWeek.vue";
 import type { CalendarMatrixConfig, ExtraHourCalendarData } from "./types";
@@ -85,6 +114,29 @@ export default {
     this.getMatrix();
   },
   methods: {
+    handleSeeReport() {
+        console.log("here");
+      if (this.worker && this.reference) {
+        this.$router.push({
+          name: "pdf",
+          params: {
+            type: "report",
+            _id: this.worker?.department._id,
+            reference: format(this.reference, "MM-yyyy"),
+          },
+        });
+      }
+    },
+    handleSeeAuthorization() {
+      this.$router.push({
+        name: "pdf",
+        params: {
+          type: "authorization",
+          _id: this.worker._id,
+          reference: format(this.reference, "MM-yyyy"),
+        },
+      });
+    },
     getMatrix() {
       const matrix: {
         day: Date;
@@ -126,7 +178,7 @@ export default {
       })?.[0];
     },
     weekDayName(day: Date) {
-      return format(day, "EEEE")
+      return format(day, "EEEE");
     },
     handleAddToModified(extraHour: ExtraHourInput) {
       this.$emit("addToModified", extraHour);
@@ -135,7 +187,7 @@ export default {
   watch: {
     worker() {
       this.getMatrix();
-      this.$emit("cleanModified")
+      this.$emit("cleanModified");
     },
     extraHours: {
       handler() {

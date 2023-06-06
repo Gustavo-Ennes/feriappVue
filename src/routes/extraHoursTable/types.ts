@@ -1,7 +1,10 @@
+import type { Department } from "../workers/types";
+
 type ExtraHour = {
   _id: string;
   worker: ExtraHourWorker;
   amount: number;
+  nightAmount: number;
   reference: Date;
 };
 
@@ -9,6 +12,7 @@ type ExtraHourInput = {
   _id?: string;
   worker?: string;
   amount?: number;
+  nightAmount?: number;
   reference?: Date;
   to?: string;
   from?: string;
@@ -57,6 +61,7 @@ type ExtraHoutWorkerSelectData = {
 type ExtraHourWorker = {
   _id: string;
   name: string;
+  department: Department
 };
 
 export type {

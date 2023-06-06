@@ -11,8 +11,8 @@ query JustificationPdf($workerId: ID!){
 `;
 
 export const authorizationPdfQuery = `
-query AuthorizationPdf($workerId: ID!, $reference: Date!, $justification: String!){
-  authorizationPdf(workerId: $workerId, reference: $reference, justification: $justification)
+query AuthorizationPdf($workerId: ID!, $reference: Date!){
+  authorizationPdf(workerId: $workerId, reference: $reference)
 }
 `;
 

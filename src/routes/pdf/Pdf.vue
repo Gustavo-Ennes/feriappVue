@@ -63,11 +63,11 @@ export default {
       }
     },
     async getAuthorizationPdfBinary() {
-      const { _id: workerId, reference, justification } = this.params;
+      const { _id: workerId, reference } = this.params;
       const { data } = await runQuery({
         query: authorizationPdfQuery,
         label: "autorizationPdfQuery",
-        variables: { workerId, reference, justification },
+        variables: { workerId, reference },
       });
 
       this.buffer = data.authorizationPdf;
