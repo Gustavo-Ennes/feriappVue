@@ -39,6 +39,7 @@ interface DepartmentModalDataInterface {
 
 interface DepartmentFormInterface {
   name?: string;
+  responsible?: string;
 }
 interface DepartmentModalFormDataInterface {
   form: DepartmentFormInterface;

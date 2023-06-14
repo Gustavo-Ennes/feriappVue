@@ -12,6 +12,12 @@ const departmentFormSchema: Schema = object({
     .transform((value: string, _: any): string => {
       return !!value ? value.toLowerCase() : value;
     }),
+  responsible: string()
+    .required("O nome do responsável é obrigatório")
+    .min(3, "tamanho mínimo de nome: 3")
+    .transform((value: string, _: any): string => {
+      return !!value ? value.toLowerCase() : value;
+    }),
 });
 
 
