@@ -9,10 +9,13 @@
       <div class="col-2 text-center">
         <button
           v-if="hasModifications"
-          class="btn btn-primary"
+          class="btn btn-primary btn"
           @click="handleSaveExtraHours"
         >
-          Salvar Modificações
+          <p class="pt-2">
+            <i class="fa-regular fa-floppy-disk h3 text-warning mr-2" /> Salvar
+            Modificações
+          </p>
         </button>
       </div>
       <div class="col-12 text-center">
@@ -29,6 +32,7 @@
             :reference="reference"
             :extra-hours="extraHours"
             :worker="selectedWorker"
+            :modified-qtd="modifiedQtd"
             @add-to-modified="handleCalendarModification"
             @clean-modified="handleCleanModified"
           />
@@ -62,7 +66,7 @@ import type {
   ExtraHourWorker,
   ExtraHourInput,
 } from "./types";
-import { pluck, uniq } from "ramda";
+import { pluck, prop, uniq, uniqBy } from "ramda";
 
 export default {
   name: "ExtraHoursTable",
@@ -78,6 +82,9 @@ export default {
     };
   },
   computed: {
+    modifiedQtd() {
+      return this.modified.length;
+    },
     modificationButtonLabel() {
       return "editar";
     },
@@ -133,15 +140,14 @@ export default {
         );
       })?.[0];
     },
-    handleAddToModified(extraHour?: ExtraHourInput) {
-      if (extraHour) this.modified.push(extraHour);
-    },
     handleUpdateWorker(worker: ExtraHourWorker) {
       this.selectedWorker = worker;
     },
     handleCalendarModification(extraHour: ExtraHourInput) {
-      this.hasModifications = true;
-      this.modified.push(extraHour);
+      if (extraHour) {
+        this.hasModifications = true;
+        this.modified = uniqBy(prop("_id"), [...this.modified, extraHour]);
+      }
     },
     handleCleanModified() {
       this.modified.splice(0, this.modified.length);

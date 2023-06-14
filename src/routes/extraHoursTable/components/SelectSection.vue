@@ -74,10 +74,6 @@ export default {
   methods: {
     capitalizeName,
     formatReference(selectedReference: Date) {
-      console.log(
-        "🚀 ~ file: WorkerSelect.vue:72 ~ methods:{capitalizeName,formatReference ~ selectedReference:",
-        selectedReference
-      );
       return format(selectedReference, "MM/yyyy");
     },
   },

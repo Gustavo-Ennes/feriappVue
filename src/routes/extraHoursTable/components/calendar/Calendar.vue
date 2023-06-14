@@ -3,24 +3,40 @@
     <div class="col-4 d-flex justify-content-start align-items-center">
       <p class="h4 m-2 text-secondary">
         Total:
-        <span class="h2 text-primary ml-4">{{ workerHoursSum }}</span>
+        <span class="h4 text-primary ml-5">
+          <i class="fa-regular fa-sun h3 text-warning" />
+          {{ workerHoursSum }}
+          <i class="fa-solid fa-moon h3 text-dark" />
+          {{ workerNightlyHourSum }}
+          <small
+            :class="`ml-5 text-${
+              modifications ? 'warning' : 'secondary'
+            }`"
+          >
+            {{
+              modifications ? `Há modificações!` : `Nenhuma modificação`
+            }}</small
+          >
+        </span>
       </p>
     </div>
     <div class="col-4 d-flex align-items-center justify-content-center">
       <button
         :disabled="!reference || !worker"
-        class="btn btn-lg mb-3 btn-outline-primary"
+        class="btn btn-lg mb-3 btn-primary"
         @click="handleSeeReport"
       >
+        <i class="fa-solid fa-magnifying-glass text-warning" />
         Ver relatório
       </button>
     </div>
     <div class="col-4 d-flex align-items-center justify-content-end">
       <button
         :disabled="!reference || !worker"
-        class="btn btn-lg mb-3 btn-outline-primary"
+        class="btn btn-lg mb-3 btn-primary"
         @click="handleSeeAuthorization"
       >
+        <i class="fa-solid fa-print text-warning" />
         Imprimir autorização de hora extra
       </button>
     </div>
@@ -77,17 +93,32 @@ export default {
       type: Object,
       default: null,
     },
+    modifiedQtd: {
+      type: Number,
+      default: 0,
+    },
   },
   emits: ["addToModified", "cleanModified"],
   data(): ExtraHourCalendarData {
     return {
       calendarMatrix: [],
-      modified: [],
     };
   },
   computed: {
+    modifications() {
+      return this.modifiedQtd;
+    },
     capitalizedWorkerName() {
       return capitalizeName(this.worker.name);
+    },
+    workerNightlyHourSum() {
+      const extraHours: number[] = [];
+      this.calendarMatrix.forEach((week) => {
+        week.forEach((day) => {
+          extraHours.push(day.extraHour?.nightlyAmount ?? 0);
+        });
+      });
+      return sum(extraHours);
     },
     workerHoursSum() {
       const extraHours: number[] = [];
@@ -115,7 +146,6 @@ export default {
   },
   methods: {
     handleSeeReport() {
-        console.log("here");
       if (this.worker && this.reference) {
         this.$router.push({
           name: "pdf",
@@ -199,3 +229,9 @@ export default {
   components: { CalendarWeek },
 };
 </script>
+
+<style>
+small {
+  font-size: 17px;
+}
+</style>

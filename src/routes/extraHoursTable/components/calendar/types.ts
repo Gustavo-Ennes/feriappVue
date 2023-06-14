@@ -2,7 +2,6 @@ import type { ExtraHour, ExtraHourInput } from "../../types";
 
 type ExtraHourCalendarData = {
   calendarMatrix: CalendarDayType[][];
-  modified: ExtraHourInput[];
 };
 
 type CalendarDayType = {
@@ -14,11 +13,12 @@ type CalendarMatrixConfig = {
   totalDays: number;
   week: number;
   weekArray: CalendarDayType[];
-};  
+};
 
 type CalendarDayData = {
   canEdit: boolean;
   newValue?: number;
+  newNightlyValue?: number;
   isHoliday: boolean;
 };
 

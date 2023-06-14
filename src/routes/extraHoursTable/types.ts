@@ -4,7 +4,7 @@ type ExtraHour = {
   _id: string;
   worker: ExtraHourWorker;
   amount: number;
-  nightAmount: number;
+  nightlyAmount: number;
   reference: Date;
 };
 
@@ -12,7 +12,7 @@ type ExtraHourInput = {
   _id?: string;
   worker?: string;
   amount?: number;
-  nightAmount?: number;
+  nightlyAmount?: number;
   reference?: Date;
   to?: string;
   from?: string;

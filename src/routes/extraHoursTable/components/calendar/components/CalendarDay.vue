@@ -17,22 +17,18 @@
             {{ day?.getDate() }}
           </p>
         </div>
-        <div class="col-12" @click="handleToggleEdit">
-          <input
-            type="number"
-            min="0"
-            max="16"
-            step=".5"
-            v-model="newValue"
-            :class="`form-control form-control-lg text-center text-${
-              isWeekend || isHoliday ? 'light' : 'primary'
-            } bg-transparent p-1 no-spinners border-0`"
-            :readonly="!canEdit"
-            :placeholder="extraHourNumber"
-            :disabled="!canEdit"
-            @focusout="handleLostFocus"
-          />
-        </div>
+        <CalendarInputs
+          :canEdit="canEdit"
+          :extraHour="extraHour"
+          :handleLostFocus="handleLostFocus"
+          :handleToggleEdit="handleToggleEdit"
+          :isHoliday="isHoliday"
+          :isWeekend="isWeekend"
+          @new-value-changed="(newvalue) => (newValue = newvalue)"
+          @new-nightly-value-changed="
+            (newvalue) => (newNightlyValue = newvalue)
+          "
+        />
         <div class="col-12" v-if="!isWeekend">
           <div class="form-check">
             <input
@@ -57,6 +53,8 @@
 
 <script lang="ts">
 import { format, isSameMonth, isSameYear } from "date-fns";
+
+import CalendarInputs from "./CalendarInputs.vue";
 import type {
   CalendarDayData,
   CalendarHolidayStorage,
@@ -84,6 +82,7 @@ export default {
       canEdit: false,
       newValue: this.extraHour?.amount ?? Number(0).toFixed(1),
       isHoliday: this.checkIsHoliday(),
+      newNightlyValue: this.extraHour?.nightlyAmount ?? Number(0).toFixed(1),
     };
   },
   computed: {
@@ -125,6 +124,7 @@ export default {
           worker: this.extraHour?.worker._id ?? this.worker._id,
           reference: this.extraHour?.day ?? this.day,
           amount: this.newValue,
+          nightlyAmount: this.newNightlyValue,
         };
         this.$emit("addToModified", payload);
         this.toggleEdit();
@@ -186,7 +186,7 @@ export default {
   watch: {
     extraHour() {
       this.newValue = this.extraHour?.amount ?? Number(0).toFixed(1);
-      this.isHoliday=  this.checkIsHoliday();
+      this.isHoliday = this.checkIsHoliday();
     },
     isHoliday() {
       if (this.isHoliday) {
@@ -196,12 +196,13 @@ export default {
       }
     },
   },
+  components: { CalendarInputs },
 };
 </script>
 
 <style scoped>
 .dayItem {
-  height: 160px;
+  height: 200px;
   border-radius: 15px;
   box-shadow: 1px 1px 12px 1px rgba(58, 58, 58, 0.3);
   overflow: hidden;
@@ -254,7 +255,11 @@ export default {
   text-align: left;
 }
 .form-control {
-  font-size: 32px;
+  font-size: 28px;
   cursor: pointer;
+}
+
+.moonGroup .form-control {
+  font-size: 22px;
 }
 </style>
