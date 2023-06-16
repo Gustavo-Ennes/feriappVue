@@ -25,9 +25,9 @@
 </template>
 
 <script lang="ts">
+import { format, add } from "date-fns";
 import type { Worker } from "@/routes/workers/types";
 import { capitalizeName } from "@/routes/utils";
-import { format } from "date-fns";
 import type { Vacation } from "@/routes/vacation/types";
 import { getWorkerStatus } from "../utils";
 
@@ -49,7 +49,7 @@ export default {
     format,
     formatedDate(vacation: Vacation): string {
       const stringDate =
-        this.period === "start" ? vacation.startDate : vacation.endDate;
+        this.period === "start" ? vacation.startDate : add(new Date(vacation?.endDate as string), { days: 1});
       return format(new Date(stringDate as string), "dd/MM/yyyy");
     },
     finalText(vacation: Vacation) {
