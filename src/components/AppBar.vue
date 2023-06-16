@@ -62,7 +62,7 @@
               to="/workers"
               @click="forceClose"
             >
-              Trabalhador
+              Trabalhadores
             </router-link>
           </li>
           <li class="nav-item">
@@ -74,10 +74,19 @@
               Setores
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link
+              class="nav-link text-light"
+              to="/extraHoursTable"
+              @click="forceClose"
+            >
+              H.E.
+            </router-link>
+          </li>
         </ul>
         <div class="d-flex" role="search">
           <input
-            class="form-control me-2"
+            class="form-control form-control-sm"
             placeholder="Procure alguma coisa"
             aria-label="Search"
             v-model="searchTerm"
