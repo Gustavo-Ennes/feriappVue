@@ -2,7 +2,7 @@ import type { Modal } from "bootstrap";
 import type { InferType } from "yup";
 import type { PropType } from "vue";
 
-import type { workerCreateFormSchema } from "./components/WorkerModal/components/WorkerModalForm/form";
+import type { workerCreateFormSchema } from "../../components/WorkerModal/components/WorkerModalForm/form";
 
 interface Worker {
   _id?: string;
@@ -13,6 +13,7 @@ interface Worker {
   department: { _id: string; name: string };
   registry: string;
   matriculation: string;
+  justification: string;
 }
 
 interface WorkerResponseInterface {
@@ -67,6 +68,7 @@ interface WorkerCreatePayloadInterface {
   departmentId?: string | null;
   department?: string | null;
   admissionDate: string;
+  justification?: string;
   _id?: string;
 }
 interface WorkerModalInterface extends WorkerModalDataInterface {

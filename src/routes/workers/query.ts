@@ -8,6 +8,7 @@ query Workers{
     status
     role
     admissionDate
+    justification
     department{
       _id
       name
@@ -16,13 +17,4 @@ query Workers{
 }
 `;
 
-const departmentQuery: string = `
-query Departments{
-  departments{
-    _id
-    name
-  }
-}
-`;
-
-export { workersQuery, departmentQuery };
+export { workersQuery };

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row justify-content-center align-items-baseline">
       <div class="col-12">
-        <WorkerForm
+        <WorkerSearch
           class="py-4"
           @searchTermUpdated="updateWorkers"
           @selectWorker="handleSelectWorker"
@@ -30,10 +30,10 @@
   />
   <DrasticConfirmationModal
     _id="workerConfirmationModal"
-    @hide="confirmationModal?.hide()"
-    :confirmationCallback="() => handleDeleteWorker(selectedWorker?._id as string)"
     text="Observe que ao deletar o trabalhador, todas as suas férias serão deletadas permanentemente."
     confirm-drastic-action-button-label="Deletar assim mesmo"
+    @hide="confirmationModal?.hide()"
+    :confirmationCallback="() => handleDeleteWorker(selectedWorker?._id as string)"
   />
 </template>
 
@@ -42,8 +42,8 @@ import { Modal } from "bootstrap";
 
 import DrasticConfirmationModal from "../../components/DrasticConfirmationModal.vue";
 import WorkerTable from "./components/WorkerTable/WorkerTable.vue";
-import WorkerForm from "./components/WorkerForm/WorkerForm.vue";
-import WorkerModal from "./components/WorkerModal/WorkerModal.vue";
+import WorkerSearch from "./components/WorkerSearch/WorkerSearch.vue";
+import WorkerModal from "../../components/WorkerModal/WorkerModal.vue";
 import { deleteWorker, getWorkers } from "./fetch";
 import type { WorkerResponseInterface, WorkersDataInterface } from "./types";
 
@@ -86,7 +86,7 @@ export default {
       this.modal?.show();
     },
     instantiateModal(): void {
-      const modalHTML = document.getElementById("exampleModal");
+      const modalHTML = document.getElementById(`worker-modal`);
       const confirmationModalHTML = document.getElementById(
         "workerConfirmationModal"
       );
@@ -111,7 +111,7 @@ export default {
   },
   components: {
     WorkerTable,
-    WorkerForm,
+    WorkerSearch,
     WorkerModal,
     DrasticConfirmationModal,
   },
