@@ -1,7 +1,7 @@
 import { store } from "@/store/store";
 import { object, string, type Schema } from "yup";
 
-import type { WorkerFormType } from "../../../../types";
+import type { WorkerFormType } from "../../../../routes/workers/types";
 
 const workerCreateFormSchema: Schema = object({
   name: string()
@@ -33,6 +33,7 @@ const workerCreateFormSchema: Schema = object({
     ),
   status: string().default("active"),
   _id: string(),
+  justification: string().min(10, "Tamanho mínimo de justificativa: 10"),
 });
 
 const validateForm = async (

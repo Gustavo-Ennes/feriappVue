@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal fade"
-    id="exampleModal"
+    id="worker-modal"
     tabindex="-1"
     role="dialog"
     aria-labelledby="exampleModalLabel"
@@ -35,14 +35,14 @@
 </template>
 
 <script lang="ts">
-import GeneralToast from "../../../../components/GeneralToast.vue";
+import GeneralToast from "../GeneralToast.vue";
 import type {
   WorkerFormType,
   WorkerModalDataInterface,
   WorkerModalFormDataInterface,
   WorkerCreatePayloadInterface,
-} from "../../types";
-import { getDepartments, createWorker, updateWorker } from "../../fetch";
+} from "./types";
+import { getDepartments, createWorker, updateWorker } from "./fetch";
 import { validateForm } from "./components/WorkerModalForm/form";
 import WorkerModalForm from "./components/WorkerModalForm/WorkerModalForm.vue";
 import WorkerErrorsCollpase from "./components/WorkerErrorsCollapse/WorkerErrorsCollapse.vue";

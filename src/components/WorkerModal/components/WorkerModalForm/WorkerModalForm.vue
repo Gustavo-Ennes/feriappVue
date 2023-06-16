@@ -40,6 +40,15 @@
         required
       />
     </div>
+    <div class="col-xs-12 my-2">
+      <label class="form-label">Justificativa(H.E.)</label>
+      <input
+        class="form-control"
+        placeholder="Justificativa"
+        v-model="form.justification"
+        required
+      />
+    </div>
     <div class="col-xs-12 col-sm-8 my-2">
       <label class="form-label">Departamento</label
       ><select
@@ -72,7 +81,7 @@
 
 <script lang="ts">
 import { format } from "date-fns";
-import type { WorkerModalFormDataInterface } from "../../../../types";
+import type { WorkerModalFormDataInterface } from "../../types";
 import { capitalizeName } from "@/routes/utils";
 
 export default {
@@ -87,6 +96,7 @@ export default {
         registry: this.worker?.registry || "",
         admissionDate: this.worker?.admissionDate || "",
         departmentId: this.worker?.department?._id || null,
+        justification: this.worker?.justification,
       },
     };
   },
