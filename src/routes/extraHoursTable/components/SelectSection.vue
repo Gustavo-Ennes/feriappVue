@@ -71,18 +71,39 @@ export default {
       reference: undefined,
     };
   },
+  mounted() {
+    if (this.$store.state.calendarTemp?.worker) {
+      this.worker = JSON.parse(this.$store.state.calendarTemp?.worker || "");
+    }
+    if (this.$store.state.calendarTemp?.reference) {
+      this.reference = new Date(
+        this.$store.state.calendarTemp?.reference as string
+      );
+    }
+  },
   methods: {
     capitalizeName,
     formatReference(selectedReference: Date) {
       return format(selectedReference, "MM/yyyy");
     },
+    saveCalendarSettings() {
+      if (this.worker && this.reference) {
+        const data = {
+          worker: JSON.stringify(this.worker),
+          reference: this.reference.toISOString(),
+        };
+        this.$store.dispatch("saveCalendar", data);
+      }
+    },
   },
   watch: {
     worker() {
       this.$emit("updateSelectedWorker", this.worker);
+      this.saveCalendarSettings();
     },
     reference() {
       this.$emit("updateReference", this.reference);
+      this.saveCalendarSettings();
     },
   },
 };

@@ -3,7 +3,7 @@ import type { User } from "firebase/auth";
 import { createStore, Store } from "vuex";
 import type { InjectionKey } from "vue";
 
-import type { State, StoreComponents, ToastParams } from "./store.d";
+import type { CalendarTemp, State, StoreComponents, ToastParams } from "./store.d";
 import VuexPersistence from "vuex-persist";
 import { Modal } from "bootstrap";
 
@@ -20,6 +20,7 @@ const store = createStore<State>({
       user: null,
       toast: undefined,
       justificationModal: undefined,
+      calendarTemp: undefined
     };
   },
   mutations: {
@@ -39,6 +40,9 @@ const store = createStore<State>({
       const modalHTML = document.getElementById("justificationModal");
       state.justificationModal = new Modal(modalHTML as HTMLElement);
     },
+    setCalendarTemp(state: State, calendarTemp: CalendarTemp): void {
+      state.calendarTemp = calendarTemp
+    }
   },
   actions: {
     login({ commit }: StoreComponents, user: User) {
@@ -73,6 +77,9 @@ const store = createStore<State>({
         (state.justificationModal as unknown as Modal).hide();
       }
     },
+    saveCalendar({commit }: StoreComponents, calendarTemp: CalendarTemp): void {
+      commit("setCalendarTemp", calendarTemp)
+    }
   },
   plugins: [vuexLocal.plugin],
 });
