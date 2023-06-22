@@ -5,6 +5,7 @@
         :extra-hour="getData(dayName)"
         :day="getDay(dayName)"
         :worker="worker"
+        :departments="departments"
         @add-to-modified="handleAddToModified"
       />
     </div>
@@ -20,6 +21,7 @@ import type {
   ExtraHourInput,
 } from "../../../types";
 import type { CalendarDayType } from "../types";
+import type { Department } from "@/routes/departments/types";
 
 export default {
   name: "ExtraHourCalendarWeek",
@@ -32,6 +34,10 @@ export default {
       type: Object,
       default: null,
     },
+    departments: {
+      type: Array<Department>,
+      default: []
+    }
   },
   emits: ["addToModified"],
   computed: {
@@ -60,6 +66,7 @@ export default {
       )?.[0]?.day;
     },
     handleAddToModified(extraHour: ExtraHourInput) {
+      console.log("🚀 ~ file: CalendarWeek.vue:69 ~ handleAddToModified ~ extraHour:", extraHour)
       this.$emit("addToModified", extraHour);
     },
   },

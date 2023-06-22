@@ -33,6 +33,7 @@
             :extra-hours="extraHours"
             :worker="selectedWorker"
             :modified-qtd="modifiedQtd"
+            :departments="departments"
             @add-to-modified="handleCalendarModification"
             @clean-modified="handleCleanModified"
           />
@@ -79,6 +80,7 @@ export default {
       reference: undefined,
       references: [],
       hasModifications: false,
+      departments: [],
     };
   },
   computed: {
@@ -129,6 +131,7 @@ export default {
             ) => (_name < __name ? 1 : -1)
           );
           this.workers = data.workers;
+          this.departments = data.departments;
         }
       }
     },
@@ -146,7 +149,7 @@ export default {
     handleCalendarModification(extraHour: ExtraHourInput) {
       if (extraHour) {
         this.hasModifications = true;
-        this.modified = uniqBy(prop("_id"), [...this.modified, extraHour]);
+        this.modified = uniqBy(prop("_id"), [extraHour, ...this.modified]);
       }
     },
     handleCleanModified() {
@@ -155,7 +158,7 @@ export default {
     },
     async handleUpdateReference(reference: Date) {
       this.reference = reference;
-      await this.resetExtraHour;
+      this.resetExtraHour;
     },
     async resetExtraHour() {
       this.modified = [];

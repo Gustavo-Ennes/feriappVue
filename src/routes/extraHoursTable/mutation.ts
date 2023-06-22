@@ -9,6 +9,10 @@ mutation ($extraHourInput: ExtraHourInput!) {
     reference
     amount
     nightlyAmount
+    department {
+      _id
+      name
+    }
   }
 }
 `;

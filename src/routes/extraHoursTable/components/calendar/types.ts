@@ -1,7 +1,10 @@
-import type { ExtraHour, ExtraHourInput } from "../../types";
+import type { Department } from "@/routes/departments/types";
+import type { ExtraHour } from "../../types";
+import type { Dropdown } from "bootstrap";
 
 type ExtraHourCalendarData = {
   calendarMatrix: CalendarDayType[][];
+  dropdown?: Dropdown
 };
 
 type CalendarDayType = {
@@ -19,6 +22,7 @@ type CalendarDayData = {
   canEdit: boolean;
   newValue?: number;
   newNightlyValue?: number;
+  newDepartment?: Department;
   isHoliday: boolean;
 };
 

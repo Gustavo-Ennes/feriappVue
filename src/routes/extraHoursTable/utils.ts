@@ -1,8 +1,12 @@
-import { parse, getDaysInMonth, format, set, sub } from "date-fns";
+import { getDaysInMonth, set } from "date-fns";
+import { uniqBy, prop } from "ramda";
+
 import type {
   BuildExtraHoursWithRangeVariables,
+  ExtraHour,
   ExtraHourInputWrapper,
 } from "./types";
+import type { Department } from "../workers/types";
 
 const buildExtraHoursWithRangeVariables = ({
   reference,
@@ -39,4 +43,14 @@ const buildExtraHoursWithRangeVariables = ({
 
 const getReference = () => new Date();
 
-export { buildExtraHoursWithRangeVariables, getReference };
+const extractDepartments = (extraHours: ExtraHour[]): Department[] => {
+  const departments: Department[] = [];
+  extraHours.forEach((extraHour: ExtraHour) => {
+    if (extraHour.department) {
+      departments.push(extraHour.department as Department);
+    }
+  });
+  return uniqBy(prop("_id"), departments);
+};
+
+export { buildExtraHoursWithRangeVariables, getReference, extractDepartments };

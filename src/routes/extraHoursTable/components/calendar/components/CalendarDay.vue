@@ -24,13 +24,16 @@
           :handleToggleEdit="handleToggleEdit"
           :isHoliday="isHoliday"
           :isWeekend="isWeekend"
-          @new-value-changed="(newvalue) => (newValue = newvalue)"
+          :departments="departments"
+          :worker="worker"
+          @new-value-changed="(newvalue: number) => (newValue = newvalue)"
           @new-nightly-value-changed="
-            (newvalue) => (newNightlyValue = newvalue)
+            (newvalue: number) => (newNightlyValue = newvalue)
           "
+          @department-changed="(newvalue: Department) => newDepartment = newvalue"
         />
         <div class="col-12" v-if="!isWeekend">
-          <div class="form-check">
+          <div class="form-check mt-2">
             <input
               class="form-check-input pl-1"
               type="checkbox"
@@ -61,6 +64,7 @@ import type {
   CalendarHolidayMonth,
 } from "../types";
 import { includes, without } from "ramda";
+import type { Department } from "@/routes/departments/types";
 
 export default {
   name: "ExtraHourCalendarDay",
@@ -75,14 +79,19 @@ export default {
       type: Object,
       default: null,
     },
+    departments: {
+      type: Array<Department>,
+      default: [],
+    },
   },
   emits: ["addToModified"],
   data(): CalendarDayData {
     return {
       canEdit: false,
-      newValue: this.extraHour?.amount ?? Number(0).toFixed(1),
+      newValue: undefined,
       isHoliday: this.checkIsHoliday(),
-      newNightlyValue: this.extraHour?.nightlyAmount ?? Number(0).toFixed(1),
+      newNightlyValue: undefined,
+      newDepartment: undefined,
     };
   },
   computed: {
@@ -123,8 +132,9 @@ export default {
           _id: this.extraHour?._id ?? undefined,
           worker: this.extraHour?.worker._id ?? this.worker._id,
           reference: this.extraHour?.day ?? this.day,
-          amount: this.newValue,
-          nightlyAmount: this.newNightlyValue,
+          amount: Number(this.newValue),
+          department: this.newDepartment?._id,
+          nightlyAmount: Number(this.newNightlyValue),
         };
         this.$emit("addToModified", payload);
         this.toggleEdit();
@@ -184,10 +194,6 @@ export default {
     },
   },
   watch: {
-    extraHour() {
-      this.newValue = this.extraHour?.amount ?? Number(0).toFixed(1);
-      this.isHoliday = this.checkIsHoliday();
-    },
     isHoliday() {
       if (this.isHoliday) {
         this.addToLocalStorage();
@@ -202,7 +208,7 @@ export default {
 
 <style scoped>
 .dayItem {
-  height: 200px;
+  height: 250px;
   border-radius: 15px;
   box-shadow: 1px 1px 12px 1px rgba(58, 58, 58, 0.3);
   overflow: hidden;
@@ -249,17 +255,21 @@ export default {
 .isHoliday {
   background-color: #e64444 !important;
 }
-.form-check {
-  cursor: pointer;
-  font-size: 12px;
-  text-align: left;
-}
 .form-control {
   font-size: 28px;
   cursor: pointer;
 }
-
 .moonGroup .form-control {
   font-size: 22px;
+}
+
+.form-check,
+.form-check-label small {
+  cursor: pointer;
+  font-size: 10px !important;
+  text-align: left;
+}
+small {
+  margin-top: 10px;
 }
 </style>

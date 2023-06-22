@@ -1,10 +1,11 @@
-import type { Department } from "../workers/types";
+import type { Department } from "../departments/types";
 
 type ExtraHour = {
   _id: string;
   worker: ExtraHourWorker;
   amount: number;
   nightlyAmount: number;
+  department: Department;
   reference: Date;
 };
 
@@ -13,6 +14,7 @@ type ExtraHourInput = {
   worker?: string;
   amount?: number;
   nightlyAmount?: number;
+  department?: string;
   reference?: Date;
   to?: string;
   from?: string;
@@ -26,6 +28,7 @@ type ExtraHourData = {
   reference?: Date;
   references?: Date[];
   hasModifications: boolean;
+  departments?: Department[];
 };
 
 type ExtraHourFetch = {
@@ -36,6 +39,7 @@ type ExtraHourFetch = {
     updateExtraHour?: boolean;
     deleteExtraHour?: boolean;
     workers: ExtraHourWorker[];
+    departments: Department[];
   };
   errors?: any;
 };
@@ -61,7 +65,7 @@ type ExtraHoutWorkerSelectData = {
 type ExtraHourWorker = {
   _id: string;
   name: string;
-  department: Department
+  department: Department;
 };
 
 export type {

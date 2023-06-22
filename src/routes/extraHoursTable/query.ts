@@ -13,6 +13,10 @@ query ExtraHours($extraHourInput: ExtraHourInput) {
     reference
     amount
     nightlyAmount
+    department {
+      _id
+      name
+    }
   }
   workers{
     _id
@@ -21,6 +25,10 @@ query ExtraHours($extraHourInput: ExtraHourInput) {
       _id
       name      
     }
+  }
+  departments {
+    _id
+    name
   }
 }
 `;

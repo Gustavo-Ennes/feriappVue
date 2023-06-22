@@ -1,63 +1,43 @@
 <template>
-  <div class="row align-items-center">
+  <div class="row align-items-end">
     <div class="col-4 d-flex justify-content-start align-items-center">
-      <p class="h4 m-2 text-secondary">
-        Total:
-        <span class="h4 text-primary ml-5">
-          <i class="fa-regular fa-sun h3 text-warning" />
-          {{ workerHoursSum }}
-          <i class="fa-solid fa-moon h3 text-dark" />
-          {{ workerNightlyHourSum }}
-          <small
-            :class="`ml-5 text-${
-              modifications ? 'warning' : 'secondary'
-            }`"
-          >
-            {{
-              modifications ? `Há modificações!` : `Nenhuma modificação`
-            }}</small
-          >
-        </span>
-      </p>
+      <CalendarInfo
+        :worker-hours-sum="workerHoursSum"
+        :worker-nightly-hours-sum="workerNightlyHourSum"
+        :extracted-departments="extractedDepartments"
+        :worker="worker"
+      />
     </div>
-    <div class="col-4 d-flex align-items-center justify-content-center">
-      <button
-        :disabled="!reference || !worker"
-        class="btn btn-lg mb-3 btn-primary"
-        @click="handleSeeReport"
-      >
-        <i class="fa-solid fa-magnifying-glass text-warning" />
-        Ver relatório
-      </button>
-    </div>
+    <div class="col-4 d-flex align-items-center justify-content-center"></div>
     <div class="col-4 d-flex align-items-center justify-content-end">
-      <button
-        :disabled="!reference || !worker"
-        class="btn btn-lg mb-3 btn-primary"
-        @click="handleSeeAuthorization"
-      >
-        <i class="fa-solid fa-print text-warning" />
-        Imprimir autorização de hora extra
-      </button>
+      <div class="row justify-content-center align-items-center text-center">
+        <div class="col-12">
+          <CalendarDropdown
+            :dropdown="dropdown"
+            :extracted-departments="extractedDepartments"
+            :reference="reference"
+          />
+        </div>
+        <div class="col-12">
+          <button
+            :disabled="!reference || !worker"
+            class="btn mb-3 btn-primary"
+            @click="handleSeeAuthorization"
+          >
+            <i class="fa-solid fa-print text-warning" />
+            Imprimir autorização de hora extra
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-  <div
-    class="row g-2 text-center bg-primary text-light rounded align-items-center"
-  >
-    <div
-      v-for="day in days"
-      :class="`col h-100 pb-2 text-${
-        ['Sábado', 'Domingo'].includes(day) ? 'warning' : 'light'
-      }`"
-    >
-      {{ day }}
-    </div>
-  </div>
+  <CalendarHeader :days="days" />
   <div class="row gap-3 g-5 mt-3 align-items-center justify-content-center">
     <CalendarWeek
       v-for="week in calendarMatrix"
       :days="week"
       :worker="worker"
+      :departments="departments"
       @add-to-modified="handleAddToModified"
     />
   </div>
@@ -71,12 +51,18 @@ import {
   isSameDay,
   set,
 } from "date-fns";
+import { Dropdown } from "bootstrap";
 
 import CalendarWeek from "./components/CalendarWeek.vue";
+import CalendarInfo from "./components/CalendarInfo.vue";
+import CalendarDropdown from "./components/CalendarDropdown.vue";
+import CalendarHeader from "./components/CalendarHeader.vue";
 import type { CalendarMatrixConfig, ExtraHourCalendarData } from "./types";
 import type { ExtraHourInput, ExtraHour } from "../../types";
 import { sum } from "ramda";
+import { extractDepartments } from "../../utils";
 import { capitalizeName } from "@/routes/utils";
+import type { Department } from "@/routes/departments/types";
 
 export default {
   name: "ExtraHourCalendar",
@@ -97,6 +83,10 @@ export default {
       type: Number,
       default: 0,
     },
+    departments: {
+      type: Array<Department>,
+      default: [],
+    },
   },
   emits: ["addToModified", "cleanModified"],
   data(): ExtraHourCalendarData {
@@ -105,6 +95,10 @@ export default {
     };
   },
   computed: {
+    extractedDepartments() {
+      const departments = extractDepartments(this.extraHours);
+      return departments;
+    },
     modifications() {
       return this.modifiedQtd;
     },
@@ -144,7 +138,15 @@ export default {
   beforeMount() {
     this.getMatrix();
   },
+  mounted() {
+    const dropdown: HTMLElement | null =
+      document.querySelector(".dropdown-toggle");
+    if (dropdown) {
+      this.dropdown = new Dropdown(dropdown as HTMLElement);
+    }
+  },
   methods: {
+    format,
     handleSeeReport() {
       if (this.worker && this.reference) {
         this.$router.push({
@@ -226,7 +228,7 @@ export default {
       deep: true,
     },
   },
-  components: { CalendarWeek },
+  components: { CalendarWeek, CalendarInfo, CalendarDropdown, CalendarHeader },
 };
 </script>
 
