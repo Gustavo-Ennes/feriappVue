@@ -11,7 +11,7 @@ describe("ExtraHour utils functions tests", () => {
       })
     ).to.deep.equals({
       extraHourInput: {
-        to: "2023-04-30T03:00:00.000Z",
+        to: "2023-05-01T02:59:59.999Z",
         from: "2023-04-01T03:00:00.000Z",
       },
     });
@@ -21,7 +21,7 @@ describe("ExtraHour utils functions tests", () => {
       })
     ).to.deep.equals({
       extraHourInput: {
-        to: "2023-05-31T03:00:00.000Z",
+        to: "2023-06-01T02:59:59.999Z",
         from: "2023-05-01T03:00:00.000Z",
       },
     });
@@ -31,7 +31,7 @@ describe("ExtraHour utils functions tests", () => {
       })
     ).to.deep.equals({
       extraHourInput: {
-        to: "2023-02-28T03:00:00.000Z",
+        to: "2023-03-01T02:59:59.999Z",
         from: "2023-02-01T03:00:00.000Z",
       },
     });

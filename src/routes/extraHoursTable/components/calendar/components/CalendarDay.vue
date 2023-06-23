@@ -32,39 +32,21 @@
           "
           @department-changed="(newvalue: Department) => newDepartment = newvalue"
         />
-        <div class="col-12" v-if="!isWeekend">
-          <div class="form-check mt-2">
-            <input
-              class="form-check-input pl-1"
-              type="checkbox"
-              id="flexCheckDefault"
-              v-model="isHoliday"
-              @onSelect="isHoliday = !isHoliday"
-            />
-            <label class="form-check-label" for="flexCheckDefault">
-              <small
-                :class="`text-${isWeekend || isHoliday ? 'light' : 'primary'}`"
-                >feriado</small
-              >
-            </label>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { format, isSameMonth, isSameYear } from "date-fns";
+import { format, isWeekend } from "date-fns";
 
 import CalendarInputs from "./CalendarInputs.vue";
-import type {
-  CalendarDayData,
-  CalendarHolidayStorage,
-  CalendarHolidayMonth,
-} from "../types";
-import { includes, without } from "ramda";
+import type { CalendarDayData } from "../types";
+import { includes } from "ramda";
 import type { Department } from "@/routes/departments/types";
+import {
+  checkIsHoliday,
+} from "@/routes/extraHoursTable/utils";
 
 export default {
   name: "ExtraHourCalendarDay",
@@ -89,10 +71,18 @@ export default {
     return {
       canEdit: false,
       newValue: undefined,
-      isHoliday: this.checkIsHoliday(),
+      isHoliday: undefined,
       newNightlyValue: undefined,
       newDepartment: undefined,
     };
+  },
+  mounted() {
+    setInterval(() => {
+      if (this.day) {
+        console.log("passei aqui");
+        this.isHoliday = checkIsHoliday({ day: this.day });
+      }
+    }, 500);
   },
   computed: {
     isWeekend() {
@@ -114,12 +104,6 @@ export default {
     },
   },
   methods: {
-    checkIsHoliday() {
-      const actualMonthReference = this.getHolidayReferenceMonth();
-      return actualMonthReference && this.day
-        ? includes(this.day.getDate(), actualMonthReference.days)
-        : false;
-    },
     toggleEdit() {
       this.canEdit = !this.canEdit;
     },
@@ -140,66 +124,10 @@ export default {
         this.toggleEdit();
       }
     },
-    getHolidayMonths(): CalendarHolidayStorage {
-      return JSON.parse(
-        localStorage.getItem("calendarHolidays") ?? '{"months": []}'
-      );
-    },
-    getHolidayReferenceMonth(): CalendarHolidayMonth | void {
-      return this.getHolidayMonths().months.filter(
-        ({ reference }: CalendarHolidayMonth) =>
-          isSameMonth(new Date(reference), this.day as Date) &&
-          isSameYear(new Date(reference), this.day as Date)
-      )?.[0];
-    },
-    writeHolidayMonths(months: CalendarHolidayMonth[]) {
-      localStorage.setItem("calendarHolidays", JSON.stringify({ months }));
-    },
-    addToLocalStorage() {
-      const { months } = this.getHolidayMonths();
-      const thisReferenceMonth = this.getHolidayReferenceMonth();
-      const newMonths = without([thisReferenceMonth], months);
-      const dayNumber = this.day?.getDate() ?? 0;
-
-      if (
-        thisReferenceMonth &&
-        dayNumber &&
-        !(dayNumber in thisReferenceMonth.days)
-      ) {
-        thisReferenceMonth.days.push(dayNumber);
-        newMonths.push(thisReferenceMonth);
-      } else if (!thisReferenceMonth && dayNumber) {
-        newMonths.push({
-          reference: this.day?.toISOString() as string,
-          days: [dayNumber],
-        });
-      }
-      this.writeHolidayMonths(newMonths);
-    },
-    removeFromLocalStorage() {
-      const referenceMonth = this.getHolidayReferenceMonth();
-      const { months } = this.getHolidayMonths();
-      if (!referenceMonth) return;
-      else {
-        const newMonths = without([referenceMonth], months);
-        referenceMonth.days.splice(
-          referenceMonth.days.indexOf(this.day?.getDate() as number),
-          1
-        );
-        if (referenceMonth.days) {
-          newMonths.push(referenceMonth);
-        }
-        this.writeHolidayMonths(newMonths);
-      }
-    },
   },
   watch: {
-    isHoliday() {
-      if (this.isHoliday) {
-        this.addToLocalStorage();
-      } else {
-        this.removeFromLocalStorage();
-      }
+    day() {
+      if (this.day) this.isHoliday = checkIsHoliday({ day: this.day });
     },
   },
   components: { CalendarInputs },
@@ -207,7 +135,7 @@ export default {
 </script>
 
 <style scoped>
-.dayItem {
+z.dayItem {
   height: 250px;
   border-radius: 15px;
   box-shadow: 1px 1px 12px 1px rgba(58, 58, 58, 0.3);

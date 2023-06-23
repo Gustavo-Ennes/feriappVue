@@ -1,5 +1,5 @@
-import { getDaysInMonth, set } from "date-fns";
-import { uniqBy, prop } from "ramda";
+import { getDaysInMonth, isSameMonth, isSameYear, set } from "date-fns";
+import { uniqBy, prop, without, includes } from "ramda";
 
 import type {
   BuildExtraHoursWithRangeVariables,
@@ -7,6 +7,10 @@ import type {
   ExtraHourInputWrapper,
 } from "./types";
 import type { Department } from "../workers/types";
+import type {
+  CalendarHolidayStorage,
+  CalendarHolidayMonth,
+} from "./components/calendar/types";
 
 const buildExtraHoursWithRangeVariables = ({
   reference,
@@ -53,4 +57,79 @@ const extractDepartments = (extraHours: ExtraHour[]): Department[] => {
   return uniqBy(prop("_id"), departments);
 };
 
-export { buildExtraHoursWithRangeVariables, getReference, extractDepartments };
+const getHolidayMonths = (): CalendarHolidayStorage => {
+  return JSON.parse(
+    localStorage.getItem("calendarHolidays") ?? '{"months": []}'
+  );
+};
+const getHolidayReferenceMonth = ({
+  day,
+}: {
+  day: Date;
+}): CalendarHolidayMonth | void => {
+  return getHolidayMonths().months.filter(
+    ({ reference }: CalendarHolidayMonth) =>
+      isSameMonth(new Date(reference), day as Date) &&
+      isSameYear(new Date(reference), day as Date)
+  )?.[0];
+};
+const writeHolidayMonths = (months: CalendarHolidayMonth[]) => {
+  localStorage.setItem("calendarHolidays", JSON.stringify({ months }));
+};
+const addToLocalStorage = ({ day }: { day: Date }) => {
+  const { months } = getHolidayMonths();
+  const thisReferenceMonth = getHolidayReferenceMonth({ day });
+  const newMonths = without([thisReferenceMonth], months);
+  const dayNumber = day?.getDate() ?? 0;
+
+  if (
+    thisReferenceMonth &&
+    dayNumber &&
+    !thisReferenceMonth.days.includes(dayNumber)
+  ) {
+    thisReferenceMonth.days.push(dayNumber);
+    newMonths.push(thisReferenceMonth);
+  } else if (!thisReferenceMonth && dayNumber) {
+    newMonths.push({
+      reference: day?.toISOString() as string,
+      days: [dayNumber],
+    });
+  }
+  writeHolidayMonths(newMonths);
+};
+const removeFromLocalStorage = ({ day }: { day: Date }) => {
+  const referenceMonth = getHolidayReferenceMonth({ day });
+  const { months } = getHolidayMonths();
+  if (!referenceMonth) return;
+  else {
+    const newMonths = without([referenceMonth], months);
+    referenceMonth.days.splice(
+      referenceMonth.days.indexOf(day?.getDate() as number),
+      1
+    );
+    newMonths.push(referenceMonth);
+    writeHolidayMonths(newMonths);
+  }
+};
+
+const checkIsHoliday = ({ day }: { day: Date }) => {
+  if (day) {
+    const actualMonthReference = getHolidayReferenceMonth({
+      day,
+    });
+    return actualMonthReference && day
+      ? includes(day.getDate(), actualMonthReference.days)
+      : false;
+  }
+  return false;
+};
+
+export {
+  buildExtraHoursWithRangeVariables,
+  getReference,
+  extractDepartments,
+  getHolidayReferenceMonth,
+  addToLocalStorage,
+  removeFromLocalStorage,
+  checkIsHoliday,
+};

@@ -23,7 +23,7 @@ type CalendarDayData = {
   newValue?: number;
   newNightlyValue?: number;
   newDepartment?: Department;
-  isHoliday: boolean;
+  isHoliday?: boolean;
 };
 
 type CalendarHolidayMonth = {

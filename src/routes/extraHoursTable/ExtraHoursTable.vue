@@ -4,7 +4,10 @@
       <div class="col-2" />
       <div class="col-8 text-center">
         <h1>Horas Extras</h1>
-        <p v-if="reference">Referência {{ formatedRef }}</p>
+        <p>
+          Referência
+          {{ formatedRef ?? "Defina uma referência na lista abaixo" }}
+        </p>
       </div>
       <div class="col-2 text-center">
         <button

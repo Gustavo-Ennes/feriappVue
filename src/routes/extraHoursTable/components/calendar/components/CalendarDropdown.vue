@@ -1,13 +1,13 @@
 <template>
   <div class="dropdown mb-3">
     <button
-      class="btn btn-primary dropdown-toggle"
+      class="mt-3 btn btn-primary dropdown-toggle"
       type="button"
       id="dropdownMenuButton2"
       aria-expanded="false"
       @click="dropdown?.toggle"
     >
-      Imprimir relatório
+      <i class="fa-regular fa-folder-open text-warning" /> Imprimir relatório
     </button>
     <ul
       class="dropdown-menu dropdown-menu-light"

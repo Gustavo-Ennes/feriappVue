@@ -5,7 +5,7 @@
     <div
       v-for="day in days"
       :class="`col h-100 pb-2 text-${
-        ['Sábado', 'Domingo'].includes(day) ? 'warning' : 'light'
+        ['Sábado', 'Domingo'].includes(day) ? 'danger' : 'light'
       }`"
     >
       {{ day }}

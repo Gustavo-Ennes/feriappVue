@@ -1,6 +1,6 @@
 <template>
-  <div class="row align-items-end">
-    <div class="col-4 d-flex justify-content-start align-items-center">
+  <div class="row align-items-baseline">
+    <div class="col-4 d-flex justify-content-stretch align-items-stretch">
       <CalendarInfo
         :worker-hours-sum="workerHoursSum"
         :worker-nightly-hours-sum="workerNightlyHourSum"
@@ -8,30 +8,19 @@
         :worker="worker"
       />
     </div>
-    <div class="col-4 d-flex align-items-center justify-content-center"></div>
+    <div class="col-4 d-flex align-items-center justify-content-center">
+      <CalendarHolidays :calendar-matrix="calendarMatrix" />
+    </div>
     <div class="col-4 d-flex align-items-center justify-content-end">
-      <div class="row justify-content-center align-items-center text-center">
-        <div class="col-12">
-          <CalendarDropdown
-            :dropdown="dropdown"
-            :extracted-departments="extractedDepartments"
-            :reference="reference"
-          />
-        </div>
-        <div class="col-12">
-          <button
-            :disabled="!reference || !worker"
-            class="btn mb-3 btn-primary"
-            @click="handleSeeAuthorization"
-          >
-            <i class="fa-solid fa-print text-warning" />
-            Imprimir autorização de hora extra
-          </button>
-        </div>
-      </div>
+      <CalendarButtons
+        :dropdown="dropdown"
+        :extracted-departments="extractedDepartments"
+        :worker="worker"
+        :reference="reference"
+      />
     </div>
   </div>
-  <CalendarHeader :days="days" />
+  <CalendarHeader :days="days" class="mt-3" />
   <div class="row gap-3 g-5 mt-3 align-items-center justify-content-center">
     <CalendarWeek
       v-for="week in calendarMatrix"
@@ -55,8 +44,9 @@ import { Dropdown } from "bootstrap";
 
 import CalendarWeek from "./components/CalendarWeek.vue";
 import CalendarInfo from "./components/CalendarInfo.vue";
-import CalendarDropdown from "./components/CalendarDropdown.vue";
 import CalendarHeader from "./components/CalendarHeader.vue";
+import CalendarHolidays from "./components/CalendarHolidays.vue";
+import CalendarButtons from "./components/CalendarButtons.vue";
 import type { CalendarMatrixConfig, ExtraHourCalendarData } from "./types";
 import type { ExtraHourInput, ExtraHour } from "../../types";
 import { sum } from "ramda";
@@ -147,28 +137,6 @@ export default {
   },
   methods: {
     format,
-    handleSeeReport() {
-      if (this.worker && this.reference) {
-        this.$router.push({
-          name: "pdf",
-          params: {
-            type: "report",
-            _id: this.worker?.department._id,
-            reference: format(this.reference, "MM-yyyy"),
-          },
-        });
-      }
-    },
-    handleSeeAuthorization() {
-      this.$router.push({
-        name: "pdf",
-        params: {
-          type: "authorization",
-          _id: this.worker._id,
-          reference: format(this.reference, "MM-yyyy"),
-        },
-      });
-    },
     getMatrix() {
       const matrix: {
         day: Date;
@@ -228,7 +196,13 @@ export default {
       deep: true,
     },
   },
-  components: { CalendarWeek, CalendarInfo, CalendarDropdown, CalendarHeader },
+  components: {
+    CalendarWeek,
+    CalendarInfo,
+    CalendarHeader,
+    CalendarHolidays,
+    CalendarButtons,
+  },
 };
 </script>
 

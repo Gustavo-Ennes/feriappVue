@@ -16,10 +16,7 @@
 import { format } from "date-fns";
 
 import CalendarDay from "./CalendarDay.vue";
-import type {
-  ExtraHour,
-  ExtraHourInput,
-} from "../../../types";
+import type { ExtraHour, ExtraHourInput } from "../../../types";
 import type { CalendarDayType } from "../types";
 import type { Department } from "@/routes/departments/types";
 
@@ -36,8 +33,8 @@ export default {
     },
     departments: {
       type: Array<Department>,
-      default: []
-    }
+      default: [],
+    },
   },
   emits: ["addToModified"],
   computed: {
@@ -66,7 +63,6 @@ export default {
       )?.[0]?.day;
     },
     handleAddToModified(extraHour: ExtraHourInput) {
-      console.log("🚀 ~ file: CalendarWeek.vue:69 ~ handleAddToModified ~ extraHour:", extraHour)
       this.$emit("addToModified", extraHour);
     },
   },

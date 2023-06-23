@@ -1,15 +1,20 @@
 <template>
   <div class="row justify-content-center align-items-center text-center">
+    <div class="col-12"><h4 class="rounded bg-primary text-light mb-3">H.E</h4></div>
     <div class="col-6">
-      <h5><i class="fa-regular fa-sun h3 text-warning mx-2" />Diurnas</h5>
       <span class="badge rounded-pill bg-primary"
-        ><div class="h5 m-1 p-1">{{ workerHoursSum }}</div></span
+        ><div class="h5 m-1 p-1">
+          <i class="fa-regular fa-sun h3 text-warning mx-2" />
+          {{ workerHoursSum }}
+        </div></span
       >
     </div>
     <div class="col-6">
-      <h5><i class="fa-regular fa-moon h3 text-primary mx-2" />Noturnas</h5>
-      <span class="badge rounded-pill bg-primary"
-        ><div class="h5 m-1 p-1">{{ workerNightlyHoursSum }}</div></span
+      <span class="badge rounded-pill bg-secondary"
+        ><div class="h5 m-1 p-1">
+          <i class="fa-regular fa-moon h3 text-light mx-2" />
+          {{ workerNightlyHoursSum }}
+        </div></span
       >
     </div>
     <div class="col-12" v-if="extractedDepartments.length">
@@ -21,7 +26,13 @@
             v-for="extractedDepartment in extractedDepartments"
             :key="extractedDepartment._id"
           >
-            <div :class="`py-2 badge rounded-pill bg-${worker.department._id === extractedDepartment._id?.toString() ? 'primary' : 'secondary'}`">
+            <div
+              :class="`py-2 badge rounded-pill bg-${
+                worker.department._id === extractedDepartment._id?.toString()
+                  ? 'primary'
+                  : 'secondary'
+              }`"
+            >
               {{ extractedDepartment.name }}
             </div>
           </div>
@@ -51,14 +62,14 @@ export default {
     },
     worker: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
 };
 </script>
 
 <style scoped>
-p .badge {
-  font-size: 20px !important;
+div .h5 {
+  font-size: 30px !important;
 }
 </style>
