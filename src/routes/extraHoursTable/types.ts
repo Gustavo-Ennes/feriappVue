@@ -23,6 +23,7 @@ type ExtraHourInput = {
 type ExtraHourData = {
   extraHours: ExtraHour[];
   modified: ExtraHourInput[];
+  created: ExtraHourInput[];
   workers: ExtraHourWorker[];
   selectedWorker?: ExtraHourWorker;
   reference?: Date;

@@ -1,15 +1,15 @@
 <template>
   <div v-if="$store.state.loading" class="loading">
-    <LoadingAirplane />
+    <OrbitLoading />
   </div>
 </template>
 
 <script lang="ts">
-import LoadingAirplane from "./LoadingAirplane.vue";
+import OrbitLoading from "./OrbitLoading.vue";
 
 export default {
   name: "LoadingFrame",
-  components: { LoadingAirplane },
+  components: { OrbitLoading },
 };
 </script>
 

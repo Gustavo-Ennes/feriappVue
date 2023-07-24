@@ -82,6 +82,7 @@ export default {
   data(): ExtraHourCalendarData {
     return {
       calendarMatrix: [],
+      dropdown: undefined,
     };
   },
   computed: {

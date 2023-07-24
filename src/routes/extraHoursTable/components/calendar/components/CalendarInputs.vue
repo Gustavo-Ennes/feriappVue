@@ -5,7 +5,8 @@
         <span
           class="input-group-text text-warning border-0 bg-transparent"
           id="basic-addon1"
-          ><i class="fa-regular fa-sun"
+        >
+          <i class="fa-regular fa-sun"
         /></span>
         <input
           type="number"
@@ -109,9 +110,9 @@ export default {
   },
   watch: {
     extraHour() {
-      this.value = this.extraHour.amount;
-      this.nightlyValue = this.extraHour.nightlyAmount;
-      this.department = this.extraHour.department;
+      this.value = this.extraHour?.amount ?? 0;
+      this.nightlyValue = this.extraHour?.nightlyAmount ?? 0;
+      this.department = this.extraHour?.department ?? this.worker.department;
     },
     value() {
       this.$emit("newValueChanged", this.value);
@@ -132,6 +133,7 @@ export default {
   font-size: 10px;
   text-align: left;
 }
+
 .form-control {
   font-size: 28px;
   cursor: pointer;
@@ -140,6 +142,7 @@ export default {
 .moonGroup .form-control {
   font-size: 22px;
 }
+
 .form-label,
 .form-select {
   font-size: 10px;

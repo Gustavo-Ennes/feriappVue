@@ -78,6 +78,7 @@ export default {
     return {
       extraHours: [],
       modified: [],
+      created: [],
       workers: [],
       selectedWorker: undefined,
       reference: undefined,
@@ -152,7 +153,11 @@ export default {
     handleCalendarModification(extraHour: ExtraHourInput) {
       if (extraHour) {
         this.hasModifications = true;
-        this.modified = uniqBy(prop("_id"), [extraHour, ...this.modified]);
+        if (extraHour._id) {
+          this.modified = uniqBy(prop("_id"), [extraHour, ...this.modified]);
+        } else {
+          this.created.push(extraHour);
+        }
       }
     },
     handleCleanModified() {
@@ -169,14 +174,20 @@ export default {
       await this.fetchExtraHours();
     },
     async handleSaveExtraHours() {
-      if (this.modified.length) {
-        this.modified.forEach(async (payload: ExtraHourInput) => {
-          if (payload._id) {
-            await updateExtraHour(payload);
-          } else {
-            await createExtraHour(payload);
+      if (this.modified.length || this.created.length) {
+        const arrayWithCreationsAndUpdates = [
+          ...this.modified,
+          ...this.created,
+        ];
+        arrayWithCreationsAndUpdates.forEach(
+          async (payload: ExtraHourInput) => {
+            if (payload._id) {
+              await updateExtraHour(payload);
+            } else {
+              await createExtraHour(payload);
+            }
           }
-        });
+        );
         await this.resetExtraHour();
       }
     },
@@ -197,6 +208,7 @@ export default {
 td {
   min-width: 100px;
 }
+
 .no-spinners::-webkit-inner-spin-button,
 .no-spinners::-webkit-outer-spin-button {
   -webkit-appearance: none;
