@@ -1,4 +1,5 @@
 import type { Department } from "../departments/types";
+import type { Worker } from "../workers/types";
 
 type ExtraHour = {
   _id: string;
@@ -20,10 +21,18 @@ type ExtraHourInput = {
   from?: string;
 };
 
+type ExtraHourProcessData = {
+  _id?: string;
+  worker?: string | ExtraHourWorker;
+  amount?: number;
+  nightlyAmount?: number;
+  department?: string | Department;
+  reference?: Date;
+};
 type ExtraHourData = {
   extraHours: ExtraHour[];
-  modified: ExtraHourInput[];
-  created: ExtraHourInput[];
+  modified: ExtraHourProcessData[];
+  created: ExtraHourProcessData[];
   workers: ExtraHourWorker[];
   selectedWorker?: ExtraHourWorker;
   reference?: Date;
@@ -36,9 +45,7 @@ type ExtraHourFetch = {
   data?: {
     extraHour?: ExtraHour | null;
     extraHours?: ExtraHour[];
-    createExtraHour?: ExtraHour | null;
-    updateExtraHour?: boolean;
-    deleteExtraHour?: boolean;
+    processExtraHours: { created: number; updated: number; deleted: number };
     workers: ExtraHourWorker[];
     departments: Department[];
   };
@@ -69,6 +76,30 @@ type ExtraHourWorker = {
   department: Department;
 };
 
+type FakeThis = {
+  departments?: any[];
+  workers?: any[];
+  extraHours?: any[];
+  references?: string[];
+  reference?: Date;
+  modified?: any[];
+  created?: any[];
+  hasModifications?: boolean;
+};
+type FakeFetchResponse = {
+  data: {
+    workers?: any[];
+    departments?: any[];
+    extraHours?: any[];
+    reference?: string;
+  };
+};
+type GetMockedExtraHoursParam = {
+  extraHours?: any[];
+  departments?: any[];
+  workers?: any[];
+};
+
 export type {
   ExtraHour,
   BuildExtraHoursWithRangeVariables,
@@ -79,4 +110,8 @@ export type {
   ExtraHourTableParam,
   ExtraHoutWorkerSelectData,
   ExtraHourWorker,
+  ExtraHourProcessData,
+  FakeThis,
+  FakeFetchResponse,
+  GetMockedExtraHoursParam,
 };

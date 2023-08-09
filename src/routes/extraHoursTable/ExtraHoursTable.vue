@@ -52,25 +52,26 @@
 </template>
 
 <script lang="ts">
-import { format, getDaysInMonth, isSameDay, parse, set } from "date-fns";
+import { format, getDaysInMonth } from "date-fns";
 
 import Calendar from "./components/calendar/Calendar.vue";
 import SelectSection from "./components/SelectSection.vue";
 import {
-  createExtraHour,
-  getExtraHoursWithRange,
-  updateExtraHour,
-  extraHoursReferences,
-} from "./fetch";
+  _fetchReferences,
+  _fetchExtraHours,
+  _findExtraHour,
+  _getUpdatedExtraHour,
+  _handleCalendarModification,
+  _preProcessExtraHours,
+  _handleSaveExtraHours,
+} from "./extraHourTable";
 import type {
   ExtraHourTableParam,
-  ExtraHourFetch,
   ExtraHourData,
-  ExtraHour,
   ExtraHourWorker,
   ExtraHourInput,
+  ExtraHourProcessData,
 } from "./types";
-import { pluck, prop, uniq, uniqBy } from "ramda";
 
 export default {
   name: "ExtraHoursTable",
@@ -109,56 +110,22 @@ export default {
   },
   methods: {
     async fetchReferences() {
-      const { data }: ExtraHourFetch = await extraHoursReferences();
-      if (data?.extraHours) {
-        const pluckedRefs = pluck("reference", data.extraHours);
-        const monthYearRef = pluckedRefs.map((value) =>
-          format(new Date(value), "MM/yyyy")
-        );
-        monthYearRef.push(format(new Date(), "MM/yyyy"));
-        const uniqueRefs = uniq(monthYearRef);
-        this.references = uniqueRefs.map((ref) =>
-          parse(ref, "MM/yyyy", new Date())
-        );
-      }
+      await _fetchReferences(this);
     },
     async fetchExtraHours() {
-      if (this.reference) {
-        const { data }: ExtraHourFetch = await getExtraHoursWithRange(
-          this.reference
-        );
-        if (data?.extraHours && data?.workers) {
-          this.extraHours = data.extraHours.sort(
-            (
-              { worker: { name: __name } }: ExtraHour,
-              { worker: { name: _name } }: ExtraHour
-            ) => (_name < __name ? 1 : -1)
-          );
-          this.workers = data.workers;
-          this.departments = data.departments;
-        }
-      }
+      await _fetchExtraHours(this);
     },
-    findExtraHour({ worker: _worker, day }: ExtraHourTableParam) {
-      return this.extraHours.filter(({ worker, reference }: ExtraHour) => {
-        return (
-          worker._id === _worker._id &&
-          isSameDay(set(reference, { date: day }), reference)
-        );
-      })?.[0];
+    findExtraHour(extraHourTableParam: ExtraHourTableParam) {
+      return _findExtraHour(this, extraHourTableParam);
     },
     handleUpdateWorker(worker: ExtraHourWorker) {
       this.selectedWorker = worker;
     },
+    getUpdatedExtraHour(extraHour: ExtraHourInput) {
+      return _getUpdatedExtraHour(this, extraHour);
+    },
     handleCalendarModification(extraHour: ExtraHourInput) {
-      if (extraHour) {
-        this.hasModifications = true;
-        if (extraHour._id) {
-          this.modified = uniqBy(prop("_id"), [extraHour, ...this.modified]);
-        } else {
-          this.created.push(extraHour);
-        }
-      }
+      _handleCalendarModification(this, extraHour);
     },
     handleCleanModified() {
       this.modified.splice(0, this.modified.length);
@@ -173,23 +140,11 @@ export default {
       this.hasModifications = false;
       await this.fetchExtraHours();
     },
+    preProcessExtraHours(): ExtraHourProcessData[] {
+      return _preProcessExtraHours(this);
+    },
     async handleSaveExtraHours() {
-      if (this.modified.length || this.created.length) {
-        const arrayWithCreationsAndUpdates = [
-          ...this.modified,
-          ...this.created,
-        ];
-        arrayWithCreationsAndUpdates.forEach(
-          async (payload: ExtraHourInput) => {
-            if (payload._id) {
-              await updateExtraHour(payload);
-            } else {
-              await createExtraHour(payload);
-            }
-          }
-        );
-        await this.resetExtraHour();
-      }
+      await _handleSaveExtraHours(this);
     },
   },
   components: { Calendar, SelectSection },

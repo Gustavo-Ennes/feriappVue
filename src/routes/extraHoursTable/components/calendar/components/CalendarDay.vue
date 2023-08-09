@@ -131,7 +131,7 @@ export default {
 </script>
 
 <style scoped>
-z.dayItem {
+.dayItem {
   height: 250px;
   border-radius: 15px;
   box-shadow: 1px 1px 12px 1px rgba(58, 58, 58, 0.3);

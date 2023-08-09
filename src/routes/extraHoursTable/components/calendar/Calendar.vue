@@ -33,26 +33,21 @@
 </template>
 
 <script lang="ts">
-import {
-  format,
-  getDaysInMonth,
-  getWeekOfMonth,
-  isSameDay,
-  set,
-} from "date-fns";
+import { format } from "date-fns";
 import { Dropdown } from "bootstrap";
+import { sum } from "ramda";
 
 import CalendarWeek from "./components/CalendarWeek.vue";
 import CalendarInfo from "./components/CalendarInfo.vue";
 import CalendarHeader from "./components/CalendarHeader.vue";
 import CalendarHolidays from "./components/CalendarHolidays.vue";
 import CalendarButtons from "./components/CalendarButtons.vue";
-import type { CalendarMatrixConfig, ExtraHourCalendarData } from "./types";
+import type { ExtraHourCalendarData } from "./types";
 import type { ExtraHourInput, ExtraHour } from "../../types";
-import { sum } from "ramda";
 import { extractDepartments } from "../../utils";
 import { capitalizeName } from "@/routes/utils";
 import type { Department } from "@/routes/departments/types";
+import { _getMatrix } from "./calendar";
 
 export default {
   name: "ExtraHourCalendar",
@@ -139,44 +134,7 @@ export default {
   methods: {
     format,
     getMatrix() {
-      const matrix: {
-        day: Date;
-        extraHour?: ExtraHour;
-      }[][] = [];
-      const config: CalendarMatrixConfig = {
-        totalDays: getDaysInMonth(this.reference),
-        week: 1,
-        weekArray: [],
-      };
-
-      for (let day = 1; day <= config.totalDays; day++) {
-        const dayInstance: Date = set(this.reference, { date: day });
-        const weekOfMonth = getWeekOfMonth(dayInstance);
-        if (weekOfMonth === config.week) {
-          config.weekArray.push({
-            day: dayInstance,
-            extraHour: this.getExtraHour(day),
-          });
-        } else {
-          config.week++;
-          day--;
-          matrix.push(config.weekArray);
-          config.weekArray = [];
-        }
-        if (day === config.totalDays && weekOfMonth === config.week) {
-          matrix.push(config.weekArray);
-        }
-      }
-      this.calendarMatrix = matrix;
-    },
-    getExtraHour(day: number): ExtraHour {
-      const dayDate = set(this.reference, { date: day });
-      return this.extraHours.filter(({ reference, worker: _worker }) => {
-        return (
-          isSameDay(dayDate, new Date(reference)) &&
-          this.worker._id === _worker._id
-        );
-      })?.[0];
+      _getMatrix(this);
     },
     weekDayName(day: Date) {
       return format(day, "EEEE");
@@ -212,3 +170,4 @@ small {
   font-size: 17px;
 }
 </style>
+./calendar

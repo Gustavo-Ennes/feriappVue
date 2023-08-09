@@ -1,10 +1,6 @@
 import { runQuery } from "@/graphql/graphql";
-import {
-  createExtraHourMutation,
-  deleteExtraHourMutation,
-  updateExtraHourMutation,
-} from "./mutation";
-import type { ExtraHourFetch, ExtraHourInput } from "./types";
+import { processExtraHoursMutation } from "./mutation";
+import type { ExtraHourFetch, ExtraHourProcessData } from "./types";
 import { extraHoursQuery, referenceQuery } from "./query";
 import { buildExtraHoursWithRangeVariables } from "./utils";
 
@@ -18,29 +14,13 @@ const getExtraHoursWithRange = async (
   });
 };
 
-const createExtraHour = async (
-  extraHourInput: ExtraHourInput
+const processExtraHours = async (
+  extraHourInput: ExtraHourProcessData[]
 ): Promise<ExtraHourFetch> =>
   runQuery({
-    query: createExtraHourMutation,
+    query: processExtraHoursMutation,
     variables: { extraHourInput },
-    label: "createExtraHour",
-  });
-
-const updateExtraHour = async (
-  extraHourInput: ExtraHourInput
-): Promise<ExtraHourFetch> =>
-  runQuery({
-    query: updateExtraHourMutation,
-    variables: { extraHourInput },
-    label: "updateExtraHour",
-  });
-
-const deleteExtraHour = async (_id: string): Promise<ExtraHourFetch> =>
-  runQuery({
-    query: deleteExtraHourMutation,
-    variables: { _id },
-    label: "deleteExtraHour",
+    label: "processExtraHour",
   });
 
 const extraHoursReferences = async (): Promise<ExtraHourFetch> =>
@@ -49,10 +29,4 @@ const extraHoursReferences = async (): Promise<ExtraHourFetch> =>
     label: "ExtraHourReferences",
   });
 
-export {
-  getExtraHoursWithRange,
-  createExtraHour,
-  updateExtraHour,
-  deleteExtraHour,
-  extraHoursReferences,
-};
+export { getExtraHoursWithRange, processExtraHours, extraHoursReferences };

@@ -124,6 +124,17 @@ const checkIsHoliday = ({ day }: { day: Date }) => {
   return false;
 };
 
+const getRandomMockedRefs = () => {
+  const qtd = 8;
+  const arr = [];
+  for (let i = 0; i < qtd; i++) {
+    arr.push({
+      reference: set(new Date(), { month: Math.floor(Math.random() * 11) }),
+    });
+  }
+  return arr;
+};
+
 export {
   buildExtraHoursWithRangeVariables,
   getReference,
@@ -132,4 +143,5 @@ export {
   addToLocalStorage,
   removeFromLocalStorage,
   checkIsHoliday,
+  getRandomMockedRefs,
 };

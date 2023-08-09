@@ -78,8 +78,8 @@ export default {
   name: "CalendarDayInputs",
   data() {
     return {
-      value: this.extraHour?.amount || 0,
-      nightlyValue: this.extraHour?.nightlyAmount || 0,
+      value: this.extraHour?.amount ?? 0,
+      nightlyValue: this.extraHour?.nightlyAmount ?? 0,
       department: this.extraHour?.department || this.worker.department,
     };
   },
