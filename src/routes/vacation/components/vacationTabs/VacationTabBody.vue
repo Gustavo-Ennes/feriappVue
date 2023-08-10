@@ -10,20 +10,12 @@
         class="row justify-content-center align-items-start g-1"
         v-if="vacations.length"
       >
-        <div
-          v-for="vacation in vacations"
-          :key="vacation._id"
-          class="col-xs-8 col-sm-8 col-md-4 col-lg-3"
-        >
-          <div class="d-flex justify-content-center">
-            <VacationCard
-              :title="title"
-              :vacation="vacation"
-              :handleEdit="handleEdit"
-              :handleDelete="handleDelete"
-            />
-          </div>
-        </div>
+        <VacationTable
+          :title="title"
+          :vacations="vacations"
+          :handle-edit="handleEdit"
+          :handle-delete="handleDelete"
+        />
       </div>
       <h4 class="text-center" v-else>Não há {{ model }} {{ time }}.</h4>
     </div>
@@ -31,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import VacationCard from "./VacationCard.vue";
+import VacationTable from "./VacationTable.vue";
 
 export default {
   name: "VacationTabBody",
@@ -56,6 +48,6 @@ export default {
       else if (this.type === "future") return "futuras(os)";
     },
   },
-  components: { VacationCard },
+  components: { VacationTable },
 };
 </script>
