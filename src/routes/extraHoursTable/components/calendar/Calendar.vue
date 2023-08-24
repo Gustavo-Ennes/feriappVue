@@ -27,15 +27,16 @@
       :days="week"
       :worker="worker"
       :departments="departments"
+      :key="JSON.stringify(week)"
       @add-to-modified="handleAddToModified"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { format } from "date-fns";
+import { format, isSameMonth } from "date-fns";
 import { Dropdown } from "bootstrap";
-import { sum } from "ramda";
+import { filter, sum } from "ramda";
 
 import CalendarWeek from "./components/CalendarWeek.vue";
 import CalendarInfo from "./components/CalendarInfo.vue";
@@ -82,7 +83,11 @@ export default {
   },
   computed: {
     extractedDepartments() {
-      const departments = extractDepartments(this.extraHours);
+      const extraHourFilter = (he: ExtraHour) =>
+        he.worker._id === this.worker._id &&
+        isSameMonth(new Date(this.reference), new Date(he.reference));
+      const filteredExtraHours = filter(extraHourFilter, this.extraHours);
+      const departments = extractDepartments(filteredExtraHours);
       return departments;
     },
     modifications() {

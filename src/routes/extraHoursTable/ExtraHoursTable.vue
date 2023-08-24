@@ -38,7 +38,7 @@
             :modified-qtd="modifiedQtd"
             :departments="departments"
             @add-to-modified="handleCalendarModification"
-            @clean-modified="handleCleanModified"
+            @clean-modified="resetExtraHour"
           />
         </div>
       </div>
@@ -127,16 +127,13 @@ export default {
     handleCalendarModification(extraHour: ExtraHourInput) {
       _handleCalendarModification(this, extraHour);
     },
-    handleCleanModified() {
-      this.modified.splice(0, this.modified.length);
-      this.hasModifications = false;
-    },
     async handleUpdateReference(reference: Date) {
       this.reference = reference;
       this.resetExtraHour;
     },
     async resetExtraHour() {
       this.modified = [];
+      this.created = [];
       this.hasModifications = false;
       await this.fetchExtraHours();
     },
