@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { format, isWeekend } from "date-fns";
+import { format } from "date-fns";
 
 import CalendarInputs from "./CalendarInputs.vue";
 import type { CalendarDayData } from "../types";
@@ -98,6 +98,20 @@ export default {
     reference() {
       return `day${this.day?.getDate()}`;
     },
+    actualAmount() {
+      if (this.extraHour?.amount !== undefined) {
+        return this.newValue ?? this.extraHour?.amount;
+      } else {
+        return this.extraHour?.amount ?? 0;
+      }
+    },
+    actualNighlyAmount() {
+      if (this.extraHour?.nightlyAmount !== undefined) {
+        return this.newNightlyValue ?? this.extraHour?.nightlyAmount;
+      } else {
+        return this.extraHour?.nightlyAmount ?? 0;
+      }
+    },
   },
   methods: {
     toggleEdit() {
@@ -112,9 +126,9 @@ export default {
           _id: this.extraHour?._id ?? undefined,
           worker: this.extraHour?.worker._id ?? this.worker._id,
           reference: this.extraHour?.day ?? this.day,
-          amount: Number(this.newValue),
+          amount: this.actualAmount,
           department: this.newDepartment?._id,
-          nightlyAmount: Number(this.newNightlyValue),
+          nightlyAmount: this.actualNighlyAmount,
         };
         this.$emit("addToModified", payload);
         this.toggleEdit();

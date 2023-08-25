@@ -73,6 +73,7 @@
 <script lang="ts">
 import type { Department } from "@/routes/departments/types";
 import { capitalizeName } from "@/routes/utils";
+import { isWeekend } from "date-fns";
 
 export default {
   name: "CalendarDayInputs",
