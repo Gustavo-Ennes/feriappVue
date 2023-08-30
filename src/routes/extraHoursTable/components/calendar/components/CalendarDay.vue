@@ -102,14 +102,14 @@ export default {
       if (this.extraHour?.amount !== undefined) {
         return this.newValue ?? this.extraHour?.amount;
       } else {
-        return this.extraHour?.amount ?? 0;
+        return this.newValue ?? 0;
       }
     },
     actualNighlyAmount() {
       if (this.extraHour?.nightlyAmount !== undefined) {
         return this.newNightlyValue ?? this.extraHour?.nightlyAmount;
       } else {
-        return this.extraHour?.nightlyAmount ?? 0;
+        return this.newNightlyValue ?? 0;
       }
     },
   },
