@@ -19,7 +19,6 @@ type CalendarMatrixConfig = {
 };
 
 type CalendarDayData = {
-  canEdit: boolean;
   newValue?: number;
   newNightlyValue?: number;
   newDepartment?: Department;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="col-12" @click="handleToggleEdit">
+    <div class="col-12">
       <div class="input-group sunGroup">
         <span
           class="input-group-text text-warning border-0 bg-transparent"
@@ -17,14 +17,12 @@
           :class="`form-control form-control-sm text-center text-${
             isWeekend || isHoliday ? 'light' : 'primary'
           } bg-transparent p-1 no-spinners border-0`"
-          :readonly="!canEdit"
           :placeholder="EHNumber"
-          :disabled="!canEdit"
           @focusout="handleLostFocus"
         />
       </div>
     </div>
-    <div class="col-12" @click="handleToggleEdit">
+    <div class="col-12">
       <div class="input-group mb-3 moonGroup">
         <span
           class="input-group-text text-dark border-0 bg-transparent"
@@ -40,22 +38,20 @@
           :class="`form-control form-control-sm text-center text-${
             isWeekend || isHoliday ? 'light' : 'primary'
           } bg-transparent p-1 no-spinners border-0`"
-          :readonly="!canEdit"
           :placeholder="NightlyEHNumber"
-          :disabled="!canEdit"
           @focusout="handleLostFocus"
         />
       </div>
     </div>
-    <div class="col-12" @click="handleToggleEdit">
+    <div class="col-12">
       <label class="form-label">Departamento</label>
       <select
         class="form-select"
         aria-label="department select"
         v-model="department"
         required
-        :disabled="!canEdit || (value === 0 && nightlyValue === 0)"
-        :readonly="!canEdit || (value === 0 && nightlyValue === 0)"
+        :disabled="value === 0 && nightlyValue === 0"
+        :readonly="value === 0 && nightlyValue === 0"
         @focusout="handleLostFocus"
       >
         <option
@@ -86,14 +82,12 @@ export default {
   },
   emits: ["newValueChanged", "newNightlyValueChanged", "departmentChanged"],
   props: [
-    "handleToggleEdit",
-    "canEdit",
     "isWeekend",
     "isHoliday",
-    "handleLostFocus",
     "extraHour",
     "departments",
     "worker",
+    "handleLostFocus",
   ],
   computed: {
     computedName() {

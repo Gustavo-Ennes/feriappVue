@@ -18,17 +18,14 @@
           </p>
         </div>
         <CalendarInputs
-          :canEdit="canEdit"
           :extraHour="extraHour"
-          :handleLostFocus="handleLostFocus"
-          :handleToggleEdit="handleToggleEdit"
           :isHoliday="isHoliday"
           :isWeekend="isWeekend"
           :departments="departments"
           :worker="worker"
+          :handleLostFocus="handleLostFocus"
           @new-value-changed="(newvalue: number) => (newValue = newvalue)"
-          @new-nightly-value-changed="(newvalue: number) => (newNightlyValue = newvalue)
-            "
+          @new-nightly-value-changed="(newvalue: number) => (newNightlyValue = newvalue)"
           @department-changed="(newvalue: Department) => newDepartment = newvalue"
         />
       </div>
@@ -66,7 +63,6 @@ export default {
   emits: ["addToModified"],
   data(): CalendarDayData {
     return {
-      canEdit: false,
       newValue: undefined,
       isHoliday: undefined,
       newNightlyValue: undefined,
@@ -114,25 +110,16 @@ export default {
     },
   },
   methods: {
-    toggleEdit() {
-      this.canEdit = !this.canEdit;
-    },
-    handleToggleEdit() {
-      if (!this.canEdit) this.toggleEdit();
-    },
     handleLostFocus() {
-      if (this.canEdit) {
-        const payload = {
-          _id: this.extraHour?._id ?? undefined,
-          worker: this.extraHour?.worker._id ?? this.worker._id,
-          reference: this.extraHour?.day ?? this.day,
-          amount: this.actualAmount,
-          department: this.newDepartment?._id,
-          nightlyAmount: this.actualNighlyAmount,
-        };
-        this.$emit("addToModified", payload);
-        this.toggleEdit();
-      }
+      const payload = {
+        _id: this.extraHour?._id ?? undefined,
+        worker: this.extraHour?.worker._id ?? this.worker._id,
+        reference: this.extraHour?.day ?? this.day,
+        amount: this.actualAmount,
+        department: this.newDepartment?._id,
+        nightlyAmount: this.actualNighlyAmount,
+      };
+      this.$emit("addToModified", payload);
     },
   },
   watch: {
