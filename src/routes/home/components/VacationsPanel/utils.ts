@@ -6,7 +6,7 @@ const nextVacations = (vacations: Vacation[]): Vacation[] => {
   return vacations.filter((vacation) =>
     isWithinInterval(new Date(vacation.startDate), {
       start: new Date(),
-      end: add(new Date(), { days: 5 }),
+      end: add(new Date(), { days: 5 })
     })
   );
 };
@@ -14,7 +14,7 @@ const pastVacations = (vacations: Vacation[]): Vacation[] =>
   vacations.filter((vacation) =>
     isWithinInterval(new Date(vacation.endDate as string), {
       start: new Date(),
-      end: add(new Date(), { days: 5 }),
+      end: add(new Date(), { days: 5 })
     })
   );
 

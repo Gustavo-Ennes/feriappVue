@@ -70,8 +70,8 @@ export default {
         worker: this.vacation?.worker._id ?? null,
         type: this.vacation?.type ?? this.type,
         startDate: this.vacation?.startDate ?? format(new Date(), "yyyy-MM-dd"),
-        _id: undefined,
-      },
+        _id: undefined
+      }
     };
   },
   methods: { capitalizeName },
@@ -84,14 +84,14 @@ export default {
     },
     computedForm() {
       return this.form;
-    },
+    }
   },
   watch: {
     form: {
       handler() {
         this.$emit("formUpdated", { ...this.form, type: this.type });
       },
-      deep: true,
+      deep: true
     },
     vacation: {
       handler() {
@@ -105,20 +105,20 @@ export default {
             startDate,
             worker: this.vacation.worker._id,
             type: this.vacation.type,
-            _id: this.vacation._id,
+            _id: this.vacation._id
           };
         } else {
           this.form = {
             daysQtd: null,
             type: this.type,
             startDate: format(new Date(), "yyyy-MM-dd"),
-            worker: null,
+            worker: null
           };
         }
       },
-      deep: true,
-    },
-  },
+      deep: true
+    }
+  }
 };
 </script>
 

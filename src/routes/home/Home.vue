@@ -44,8 +44,14 @@
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4">
       <MainButton
-        label="Horas extras"
-        :action="() => $router.push('/extraHoursTable')"
+        label="Relatório de uso de veículo"
+        :action="
+          () =>
+            $router.push({
+              name: 'pdf',
+              params: { type: 'vehicleUsageReport' }
+            })
+        "
         icon-class="table"
       />
     </div>
@@ -64,13 +70,13 @@ export default {
   components: { MainButton, VacationsPanel },
   data(): HomeDataType {
     return {
-      offcanvas: undefined,
+      offcanvas: undefined
     };
   },
   mounted() {
     const el = document.getElementById("offcanvasVacations");
     this.offcanvas = new Offcanvas(el as HTMLElement);
-  },
+  }
 };
 </script>
 

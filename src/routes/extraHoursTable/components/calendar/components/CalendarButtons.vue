@@ -1,6 +1,8 @@
 <template>
   <div class="row justify-content-center align-items-center text-center">
-    <div class="col-12"><h4 class="rounded bg-primary text-light">Ações</h4></div>
+    <div class="col-12">
+      <h4 class="rounded bg-primary text-light">Ações</h4>
+    </div>
     <div class="col-12">
       <CalendarDropdown
         :dropdown="dropdown"
@@ -35,11 +37,11 @@ export default {
         params: {
           type: "authorization",
           _id: this.worker._id,
-          reference: format(this.reference, "MM-yyyy"),
-        },
+          reference: format(this.reference, "MM-yyyy")
+        }
       });
-    },
+    }
   },
-  components: { CalendarDropdown },
+  components: { CalendarDropdown }
 };
 </script>

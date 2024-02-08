@@ -21,3 +21,9 @@ query ReportPdf($departmentId: ID!, $reference: Date!){
   reportPdf(reference: $reference, departmentId: $departmentId)
 }
 `;
+
+export const vehicleUsageReportQuery = `
+query VehicleUsageReportPdf{
+  vehicleUsageReportPdf
+}
+`;

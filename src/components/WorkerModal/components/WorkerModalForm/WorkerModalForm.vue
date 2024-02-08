@@ -96,21 +96,21 @@ export default {
         registry: this.worker?.registry || "",
         admissionDate: this.worker?.admissionDate || "",
         departmentId: this.worker?.department?._id || null,
-        justification: this.worker?.justification,
-      },
+        justification: this.worker?.justification
+      }
     };
   },
   computed: {
     computedForm() {
       return { ...this.form, department: this.form.departmentId };
-    },
+    }
   },
   watch: {
     form: {
       handler() {
         this.$emit("formUpdated", this.computedForm);
       },
-      deep: true,
+      deep: true
     },
     worker: {
       handler() {
@@ -122,7 +122,7 @@ export default {
           this.form = {
             ...this.worker,
             admissionDate,
-            departmentId: this.worker.department._id,
+            departmentId: this.worker.department._id
           };
         } else {
           this.form = {
@@ -131,13 +131,13 @@ export default {
             matriculation: "",
             registry: "",
             admissionDate: "",
-            departmentId: null,
+            departmentId: null
           };
         }
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
-  methods: { capitalizeName },
+  methods: { capitalizeName }
 };
 </script>

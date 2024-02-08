@@ -2,15 +2,15 @@ import { vi } from "vitest";
 
 const fetchMockJson = vi.fn();
 const fetchMock = vi.fn(() => ({
-  json: fetchMockJson,
+  json: fetchMockJson
 }));
 const getReferenceMock = vi.fn();
 vi.stubGlobal("fetch", fetchMock);
 
 const storeDispatchFn = {
   store: {
-    dispatch: vi.fn(),
-  },
+    dispatch: vi.fn()
+  }
 };
 vi.mock(
   "@/store/store",
@@ -22,7 +22,7 @@ vi.mock("./@/routes/utils", async () => {
   );
   return {
     ...mod,
-    getReference: getReferenceMock,
+    getReference: getReferenceMock
   };
 });
 

@@ -33,7 +33,7 @@ const workerCreateFormSchema: Schema = object({
     ),
   status: string().default("active"),
   _id: string(),
-  justification: string().min(10, "Tamanho mínimo de justificativa: 10"),
+  justification: string().min(10, "Tamanho mínimo de justificativa: 10")
 });
 
 const validateForm = async (
@@ -48,7 +48,7 @@ const validateForm = async (
     const validatedForm: WorkerFormType = await workerCreateFormSchema.validate(
       payload,
       {
-        abortEarly: false,
+        abortEarly: false
       }
     );
     response.validatedForm = validatedForm;

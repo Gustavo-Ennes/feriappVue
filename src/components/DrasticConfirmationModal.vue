@@ -65,7 +65,7 @@ export default {
     "text",
     "answer",
     "cancelButtonLabel",
-    "confirmDrasticActionButtonLabel",
+    "confirmDrasticActionButtonLabel"
   ],
   emits: ["hide"],
   data() {
@@ -75,8 +75,8 @@ export default {
         text: "Você está prestes a deletar algo permanentemente.",
         answer: "Tem certeza que quer continuar?",
         cancelButtonLabel: "Cancelar",
-        confirmDrasticActionButtonLabel: "Deletar",
-      },
+        confirmDrasticActionButtonLabel: "Deletar"
+      }
     };
   },
   computed: {
@@ -97,7 +97,7 @@ export default {
         this.confirmDrasticActionButtonLabel ??
         this.modal.confirmDrasticActionButtonLabel
       );
-    },
+    }
   },
   methods: {
     async sendDeleteConfirmation(): Promise<void> {
@@ -119,7 +119,7 @@ export default {
         this.$store.dispatch("showToast", toastPayload);
         this.$emit("hide");
       }
-    },
-  },
+    }
+  }
 };
 </script>

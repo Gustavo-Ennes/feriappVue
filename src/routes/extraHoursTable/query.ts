@@ -39,6 +39,6 @@ query ReferenceExtraHourQuery{
     reference
   }
 }
-`
+`;
 
 export { extraHoursQuery, referenceQuery };

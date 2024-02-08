@@ -29,13 +29,15 @@ export default {
   props: ["errors"],
   data(): { collapse: null | Collapse } {
     return {
-      collapse: null,
+      collapse: null
     };
   },
   mounted() {
     const collapseHTML = document.getElementById("errorsCollapse");
-    this.collapse = new Collapse(collapseHTML as HTMLElement, {toggle: false});
+    this.collapse = new Collapse(collapseHTML as HTMLElement, {
+      toggle: false
+    });
     this.collapse.hide();
-  },
+  }
 };
 </script>

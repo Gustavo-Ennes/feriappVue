@@ -47,7 +47,7 @@ import DrasticConfirmationModal from "@/components/DrasticConfirmationModal.vue"
 import type {
   Vacation,
   VacationDataInterface,
-  VacationFetchInterface,
+  VacationFetchInterface
 } from "./types";
 import VacationTabs from "./components/vacationTabs/VacationTabs.vue";
 import { deleteVacation, getVacationsByType } from "./fetch";
@@ -63,13 +63,13 @@ export default {
       modalType: undefined,
       vacation: undefined,
       workers: undefined,
-      confirmationModal: undefined,
+      confirmationModal: undefined
     };
   },
   watch: {
     async type(): Promise<void> {
       await this.getAllVacations();
-    },
+    }
   },
   computed: {
     computedTitle() {
@@ -83,7 +83,7 @@ export default {
       if (this.type === "dayOff") return "novo abono";
       else if (this.type === "vacation") return "novas férias";
       else if (this.type === "license") return "nova licença-prêmio";
-    },
+    }
   },
   methods: {
     async getAllVacations(): Promise<void> {
@@ -118,7 +118,7 @@ export default {
     },
     async handleVacationChanged(): Promise<void> {
       await this.getAllVacations();
-    },
+    }
   },
   async beforeMount(): Promise<void> {
     await this.getAllVacations();
@@ -127,7 +127,7 @@ export default {
   components: {
     VacationTabs,
     VacationModal,
-    DrasticConfirmationModal,
-  },
+    DrasticConfirmationModal
+  }
 };
 </script>

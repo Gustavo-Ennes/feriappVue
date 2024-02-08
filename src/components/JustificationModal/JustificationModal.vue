@@ -44,7 +44,7 @@ export default {
   data(): JustificationModalData {
     return {
       selectedWorker: null,
-      workers: null,
+      workers: null
     };
   },
   mounted() {
@@ -60,12 +60,12 @@ export default {
   methods: {
     handleSetSelectedWorker(worker: Worker) {
       this.selectedWorker = worker;
-    },
+    }
   },
   components: {
     JustificationModalButtons,
     JustificationModalForm,
-    JustificationModalHeader,
-  },
+    JustificationModalHeader
+  }
 };
 </script>

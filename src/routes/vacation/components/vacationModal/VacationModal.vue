@@ -49,7 +49,7 @@ import type {
   VacationFetchInterface,
   VacationFormType,
   VacationModalDataInterface,
-  VacationModalFormDataInterface,
+  VacationModalFormDataInterface
 } from "../../types";
 import { getWorkers, createVacation, updateVacation } from "../../fetch";
 import { validateForm } from "./components/form";
@@ -64,7 +64,7 @@ export default {
   emits: ["vacationChanged"],
   async beforeMount() {
     const {
-      data: { workers },
+      data: { workers }
     } = await getWorkers();
     this.workers = workers;
   },
@@ -74,7 +74,7 @@ export default {
     async prepareToastPayload({
       type,
       success,
-      date,
+      date
     }: {
       type: string;
       success: boolean;
@@ -95,7 +95,7 @@ export default {
               type === "create" ? "criado" : "modificado"
             } com sucesso.`
           : `Verifique se o(a) ${this.title.toLowerCase()} não converge com qualquer outro tipo de folga do trabalhador.`,
-        type: success ? "info" : "danger",
+        type: success ? "info" : "danger"
       };
     },
     async processForm(data: VacationModalFormDataInterface): Promise<void> {
@@ -123,10 +123,13 @@ export default {
           error: errors?.[0],
           date: format(new Date(validatedForm.startDate), "dd-MM-yyyy"),
           type: "create",
-          success: !!data?.createVacation,
+          success: !!data?.createVacation
         });
         this.$store.dispatch("showToast", this.toastPayload);
-        this.$router.push({name: 'pdf', params: { _id: data?.createVacation?._id, type: 'vacation'}})
+        this.$router.push({
+          name: "pdf",
+          params: { _id: data?.createVacation?._id, type: "vacation" }
+        });
       }
     },
     async handleUpdate(payload: VacationModalFormDataInterface): Promise<void> {
@@ -153,10 +156,10 @@ export default {
         error: errors?.[0],
         date: format(new Date(validatedForm.startDate), "dd-MM-yyyy"),
         type: "info",
-        success: response.success,
+        success: response.success
       });
       this.$store.dispatch("showToast", this.toastPayload);
-    },
+    }
   },
   data(): VacationModalDataInterface {
     return {
@@ -164,21 +167,21 @@ export default {
       dataToSend: undefined,
       errors: undefined,
       formModified: false,
-      toastPayload: undefined,
+      toastPayload: undefined
     };
   },
   computed: {
     computedVacation() {
       return this.vacation;
-    },
+    }
   },
   components: {
     VacationModalForm,
     VacationErrorsCollpase,
     VacationModalButtons,
     VacationModalHeader,
-    GeneralToast,
-  },
+    GeneralToast
+  }
 };
 </script>
 

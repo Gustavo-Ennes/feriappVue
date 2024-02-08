@@ -9,7 +9,7 @@ const deleteWorker = async (_id: string) =>
   runQuery({
     query: deleteWorkerMutation,
     label: "deleteWorker",
-    variables: { _id },
+    variables: { _id }
   });
 
 export { getWorkers, deleteWorker };

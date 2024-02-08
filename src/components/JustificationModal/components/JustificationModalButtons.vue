@@ -27,6 +27,6 @@
 export default {
   name: "JustificationModalButtons",
   emits: ["close"],
-  props: ["worker"],
+  props: ["worker"]
 };
 </script>

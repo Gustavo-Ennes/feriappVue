@@ -46,19 +46,19 @@ export default {
   name: "ExtraHourCalendarDay",
   props: {
     extraHour: {
-      type: Object,
+      type: Object
     },
     day: {
-      type: Date,
+      type: Date
     },
     worker: {
       type: Object,
-      default: null,
+      default: null
     },
     departments: {
       type: Array<Department>,
-      default: [],
-    },
+      default: []
+    }
   },
   emits: ["addToModified"],
   data(): CalendarDayData {
@@ -66,7 +66,7 @@ export default {
       newValue: undefined,
       isHoliday: undefined,
       newNightlyValue: undefined,
-      newDepartment: this.extraHour?.department || this.worker.department,
+      newDepartment: this.extraHour?.department || this.worker.department
     };
   },
   mounted() {
@@ -107,7 +107,7 @@ export default {
       } else {
         return this.newNightlyValue ?? 0;
       }
-    },
+    }
   },
   methods: {
     handleLostFocus() {
@@ -117,17 +117,17 @@ export default {
         reference: this.extraHour?.day ?? this.day,
         amount: this.actualAmount,
         department: this.newDepartment?._id,
-        nightlyAmount: this.actualNighlyAmount,
+        nightlyAmount: this.actualNighlyAmount
       };
       this.$emit("addToModified", payload);
-    },
+    }
   },
   watch: {
     day() {
       if (this.day) this.isHoliday = checkIsHoliday({ day: this.day });
-    },
+    }
   },
-  components: { CalendarInputs },
+  components: { CalendarInputs }
 };
 </script>
 

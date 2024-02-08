@@ -10,18 +10,18 @@ export interface ToastParams {
   type: "info" | "danger";
   timeout?: number;
   icon?: string;
-};
+}
 
 type CalendarTemp = {
-  worker?: string,
-  reference?: string,
-}
+  worker?: string;
+  reference?: string;
+};
 export interface State {
   loading: boolean;
   user: User | null;
   toast?: ToastParams;
   justificationModal?: Modal;
-  calendarTemp?: CalendarTemp
+  calendarTemp?: CalendarTemp;
 }
 export interface StoreComponents {
   state: State;

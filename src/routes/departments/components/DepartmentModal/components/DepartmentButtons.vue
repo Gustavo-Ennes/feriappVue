@@ -29,7 +29,7 @@ export default {
   computed: {
     buttonTitle() {
       return this.type === "create" ? "Criar" : "Salvar";
-    },
-  },
+    }
+  }
 };
 </script>

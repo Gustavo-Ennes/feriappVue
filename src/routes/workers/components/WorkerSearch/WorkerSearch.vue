@@ -36,18 +36,18 @@ export default {
   emits: ["openModal", "searchTermUpdated"],
   data(): WorkerFormDataInterface {
     return {
-      searchTerm: "",
+      searchTerm: ""
     };
   },
   methods: {
     handleCreate() {
       this.$emit("openModal", "create");
-    },
+    }
   },
   watch: {
     searchTerm() {
       this.$emit("searchTermUpdated", this.searchTerm);
-    },
-  },
+    }
+  }
 };
 </script>

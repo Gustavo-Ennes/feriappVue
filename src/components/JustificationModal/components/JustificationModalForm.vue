@@ -36,14 +36,14 @@ export default {
   data(): { form: { worker: string | null } } {
     return {
       form: {
-        worker: null,
-      },
+        worker: null
+      }
     };
   },
   computed: {
     computedForm() {
       return this.form;
-    },
+    }
   },
   watch: {
     "form.worker": function () {
@@ -51,7 +51,7 @@ export default {
         ({ _id }: Worker) => _id === this.form.worker
       )[0];
       this.$emit("setWorker", worker);
-    },
+    }
   },
   methods: {
     nameCapitalized(name: string): string {
@@ -65,7 +65,7 @@ export default {
           window.location.port
         }/pdf/justification/${worker}`;
       }
-    },
-  },
+    }
+  }
 };
 </script>

@@ -74,7 +74,7 @@ export default {
     return {
       worker: undefined,
       workerVacations: undefined,
-      modal: undefined,
+      modal: undefined
     };
   },
   async beforeMount(): Promise<void> {
@@ -91,7 +91,7 @@ export default {
       return this.worker?.admissionDate
         ? format(new Date(this.worker.admissionDate), "dd/MM/yyyy")
         : "";
-    },
+    }
   },
   methods: {
     capitalizeName,
@@ -106,8 +106,8 @@ export default {
     instantiateModal(): void {
       const modalHTML = document.getElementById(`worker-modal`);
       this.modal = new Modal(modalHTML as HTMLElement, {});
-    },
+    }
   },
-  components: { WorkerVacations, WorkerModal, DrasticConfirmationModal },
+  components: { WorkerVacations, WorkerModal, DrasticConfirmationModal }
 };
 </script>

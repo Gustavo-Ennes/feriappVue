@@ -2,7 +2,7 @@ import { runQuery } from "@/graphql/graphql";
 import {
   createDepartmentMutation,
   deleteDepartmentMutation,
-  updateDepartmentMutation,
+  updateDepartmentMutation
 } from "./mutation";
 import { departmentQuery, departmentsQuery } from "./query";
 import type { Department, DepartmentFetchResponse } from "./types";
@@ -11,13 +11,13 @@ const getDepartment = async (_id: string): Promise<DepartmentFetchResponse> =>
   runQuery({
     query: departmentQuery,
     label: "department",
-    variables: { _id },
+    variables: { _id }
   });
 
 const getDepartments = async (): Promise<DepartmentFetchResponse> =>
   runQuery({
     query: departmentsQuery,
-    label: "departments",
+    label: "departments"
   });
 
 const createDepartment = async (
@@ -26,7 +26,7 @@ const createDepartment = async (
   runQuery({
     query: createDepartmentMutation,
     label: "createDepartment",
-    variables: { departmentInput },
+    variables: { departmentInput }
   });
 
 const updateDepartment = async (
@@ -35,14 +35,14 @@ const updateDepartment = async (
   runQuery({
     query: updateDepartmentMutation,
     label: "updateDepartment",
-    variables: { departmentInput },
+    variables: { departmentInput }
   });
 
 const deleteDepartment = async (_id: string): Promise<boolean> =>
   runQuery({
     query: deleteDepartmentMutation,
     label: "deleteDepartment",
-    variables: { _id },
+    variables: { _id }
   });
 
 export {
@@ -50,5 +50,5 @@ export {
   getDepartments,
   createDepartment,
   updateDepartment,
-  deleteDepartment,
+  deleteDepartment
 };

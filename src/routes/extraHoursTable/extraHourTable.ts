@@ -4,7 +4,7 @@ import { clone, concat, find, pluck, uniq, update } from "ramda";
 import {
   extraHoursReferences,
   getExtraHoursWithRange,
-  processExtraHours,
+  processExtraHours
 } from "./fetch";
 import type {
   ExtraHour,
@@ -12,7 +12,7 @@ import type {
   ExtraHourInput,
   ExtraHourProcessData,
   ExtraHourTableParam,
-  ExtraHourWorker,
+  ExtraHourWorker
 } from "./types";
 import type { Department } from "../departments/types";
 
@@ -75,7 +75,7 @@ const _getUpdatedExtraHour = (_this: any, extraHour: ExtraHourInput) => {
   const newExtraHour = {
     ...(extraHourToUpdate ? extraHourToUpdate : extraHour),
     amount: calculateAmount(extraHour.amount),
-    nightlyAmount: calculateAmount(extraHour.nightlyAmount),
+    nightlyAmount: calculateAmount(extraHour.nightlyAmount)
   };
   return { original: extraHourToUpdate, updated: newExtraHour };
 };
@@ -100,7 +100,7 @@ const _handleCalendarModification = (_this: any, extraHour: ExtraHourInput) => {
 };
 
 // just transform all extraHours in created and modified array from it's object
-// to just it's reference _id 
+// to just it's reference _id
 const _preProcessExtraHours = (_this: any): ExtraHourProcessData[] => {
   const arrayWithCreationsAndUpdates = [..._this.modified, ..._this.created];
   return arrayWithCreationsAndUpdates.map((arrItem) => {
@@ -130,5 +130,5 @@ export {
   _getUpdatedExtraHour,
   _handleCalendarModification,
   _preProcessExtraHours,
-  _handleSaveExtraHours,
+  _handleSaveExtraHours
 };

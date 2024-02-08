@@ -4,12 +4,12 @@ import { vacationsQuery, workerByIdQuery } from "./query";
 import {
   vacationCreateMutation,
   vacationUpdateMutation,
-  vacationDeleteMutation,
+  vacationDeleteMutation
 } from "./mutation";
 import type {
   VacationFetchInterface,
   VacationModalFormInterface,
-  WorkerFetchInterface,
+  WorkerFetchInterface
 } from "./types";
 import type { VacationType } from "../workers/types";
 
@@ -17,25 +17,25 @@ const getDayOffs = async (): Promise<VacationFetchInterface> =>
   runQuery({
     query: vacationsQuery,
     label: "dayOffs",
-    variables: { type: "dayOff" },
+    variables: { type: "dayOff" }
   });
 
 const getVacations = async (): Promise<VacationFetchInterface> =>
   runQuery({
     query: vacationsQuery,
     label: "vacations",
-    variables: { type: "vacation" },
+    variables: { type: "vacation" }
   });
 
 const getPremiumLicenses = async (): Promise<VacationFetchInterface> =>
   runQuery({
     query: vacationsQuery,
     label: "premiumLicenses",
-    variables: { type: "license" },
+    variables: { type: "license" }
   });
 
 const getWorkerById = async ({
-  _id,
+  _id
 }: {
   _id: string;
 }): Promise<WorkerFetchInterface> =>
@@ -47,7 +47,7 @@ const createVacation = async (
   runQuery({
     query: vacationCreateMutation,
     variables: { vacationInput },
-    label: "createVacation",
+    label: "createVacation"
   });
 
 const updateVacation = async (
@@ -56,14 +56,14 @@ const updateVacation = async (
   runQuery({
     query: vacationUpdateMutation,
     variables: { vacationInput },
-    label: "updateVacation",
+    label: "updateVacation"
   });
 
 const deleteVacation = async (_id: string): Promise<VacationFetchInterface> =>
   runQuery({
     query: vacationDeleteMutation,
     variables: { _id },
-    label: "deleteVacation",
+    label: "deleteVacation"
   });
 
 const getVacationsByType = async (
@@ -82,5 +82,5 @@ export {
   getWorkers,
   createVacation,
   deleteVacation,
-  updateVacation,
+  updateVacation
 };

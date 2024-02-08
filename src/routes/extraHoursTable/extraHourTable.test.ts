@@ -8,20 +8,20 @@ import {
   _findExtraHour,
   _getUpdatedExtraHour,
   _handleCalendarModification,
-  _preProcessExtraHours,
+  _preProcessExtraHours
 } from "./extraHourTable";
 import { fetchMockJson } from "@/testUtils/mock";
 import type {
   ExtraHourInput,
   FakeFetchResponse,
   FakeThis,
-  GetMockedExtraHoursParam,
+  GetMockedExtraHoursParam
 } from "./types";
 import { getRandomMockedRefs } from "./utils";
 
 const _this: FakeThis = {
   reference: new Date(),
-  modified: [],
+  modified: []
 };
 
 const extraHours = [
@@ -30,42 +30,42 @@ const extraHours = [
     reference: set(new Date(), { date: 1 }),
     amount: 1,
     nightlyAmount: 0,
-    department: { _id: "12" },
+    department: { _id: "12" }
   },
   {
     worker: { name: "Toninho Paucomprégo", _id: "2" },
     reference: set(new Date(), { date: 1 }),
     amount: 2,
     nightlyAmount: 0,
-    department: { _id: "12" },
+    department: { _id: "12" }
   },
   {
     worker: { name: "Elias Maluco", _id: "3" },
     reference: set(new Date(), { date: 1 }),
     amount: 2,
     nightlyAmount: 0,
-    department: { _id: "12" },
+    department: { _id: "12" }
   },
   {
     worker: { name: "Willian Bonner", _id: "1" },
     reference: set(new Date(), { date: 2 }),
     amount: 4,
     nightlyAmount: 0,
-    department: { _id: "13" },
-  },
+    department: { _id: "13" }
+  }
 ];
 
 const getMockedExtraHours = ({
   extraHours = [],
   workers = [],
-  departments = [],
+  departments = []
 }: GetMockedExtraHoursParam): FakeFetchResponse => ({
   data: {
     extraHours,
     workers,
     departments,
-    reference: new Date().toDateString(),
-  },
+    reference: new Date().toDateString()
+  }
 });
 
 describe("ExtraHourTable methods tests", () => {
@@ -84,7 +84,9 @@ describe("ExtraHourTable methods tests", () => {
   });
 
   it("should fetch extraHours", async () => {
-    fetchMockJson.mockReturnValueOnce({ data: { extraHours, workers:[], departments:[] } });
+    fetchMockJson.mockReturnValueOnce({
+      data: { extraHours, workers: [], departments: [] }
+    });
     await _fetchExtraHours(_this);
     expect(_this).toHaveProperty("extraHours");
     expect(_this?.extraHours).to.not.be.empty;

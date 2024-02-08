@@ -34,7 +34,7 @@ export default {
     "handleEdit",
     "handleDelete",
     "title",
-    "vacationType",
+    "vacationType"
   ],
   computed: {
     model() {
@@ -46,8 +46,8 @@ export default {
       if (this.type === "present") return "em andamento";
       else if (this.type === "past") return "fruídas(os)";
       else if (this.type === "future") return "futuras(os)";
-    },
+    }
   },
-  components: { VacationTable },
+  components: { VacationTable }
 };
 </script>

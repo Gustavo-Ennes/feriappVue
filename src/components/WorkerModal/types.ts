@@ -37,5 +37,5 @@ export type {
   WorkerCreatePayloadInterface,
   WorkerFormType,
   WorkerModalFormDataInterface,
-  WorkerModalDataInterface,
+  WorkerModalDataInterface
 };

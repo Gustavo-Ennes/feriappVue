@@ -6,7 +6,12 @@
     aria-labelledby="offcanvasVacationsLabel"
   >
     <div class="offcanvas-header w-100">
-      <h3 class="offcanvas-title text-primary text-center w-100" id="offcanvasVacationsLabel">Retornos e saídas</h3>
+      <h3
+        class="offcanvas-title text-primary text-center w-100"
+        id="offcanvasVacationsLabel"
+      >
+        Retornos e saídas
+      </h3>
     </div>
     <div class="offcanvas-body text-center">
       <div class="row g-2 justify-content-center align-items-start">
@@ -45,7 +50,7 @@ export default {
   name: "VacationsPanel",
   data(): VacationDataType {
     return {
-      vacations: [],
+      vacations: []
     };
   },
   async beforeMount(): Promise<void> {
@@ -66,9 +71,9 @@ export default {
     },
     vacationsInPresent() {
       return this.vacations ? presentVacations(this.vacations) : [];
-    },
+    }
   },
   methods: { format },
-  components: { NextVacationsSection },
+  components: { NextVacationsSection }
 };
 </script>

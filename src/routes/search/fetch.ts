@@ -8,7 +8,7 @@ const getSearchResults = async (
   runQuery({
     query: searchQuery,
     variables: { searchTerm },
-    label: "searchQuery",
+    label: "searchQuery"
   });
 
 export { getSearchResults };

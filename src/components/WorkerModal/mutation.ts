@@ -17,4 +17,4 @@ mutation UpdateWorker($workerInput: WorkerInput){
 }
 `;
 
-export { createWorkerMutation, updateWorkerMutation}
+export { createWorkerMutation, updateWorkerMutation };

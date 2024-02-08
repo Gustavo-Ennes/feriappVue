@@ -32,5 +32,5 @@ mutation VacationDelete($_id: ID!){
 export {
   vacationCreateMutation,
   vacationUpdateMutation,
-  vacationDeleteMutation,
+  vacationDeleteMutation
 };

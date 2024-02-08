@@ -1,8 +1,12 @@
 <template>
-  <button type="button" class="btn btn-secondary" 
+  <button
+    type="button"
+    class="btn btn-secondary"
     data-bs-toggle="tooltip"
     data-bs-placement="top"
-    :title="`Cancele a ação`" @click="modal?.hide">
+    :title="`Cancele a ação`"
+    @click="modal?.hide"
+  >
     Cancelar
   </button>
   <button
@@ -21,6 +25,6 @@
 <script lang="ts">
 export default {
   name: "WorkerModalButtons",
-  props: ["modal", "errors", "formModified", "type"],
+  props: ["modal", "errors", "formModified", "type"]
 };
 </script>

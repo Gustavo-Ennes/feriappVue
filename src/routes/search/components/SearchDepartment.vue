@@ -30,6 +30,6 @@ import { capitalizeName } from "@/routes/utils";
 export default {
   name: "SearchDepartment",
   props: ["departments"],
-  methods: { capitalizeName },
+  methods: { capitalizeName }
 };
 </script>

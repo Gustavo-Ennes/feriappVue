@@ -21,7 +21,7 @@ export default {
       if (this.type === "vacation") return "Férias";
       else if (this.type === "license") return "Licenças-Prêmio";
       else if (this.type === "dayOff") return "Abonos";
-    },
+    }
   },
   methods: {
     abonoText(subtype?: string) {
@@ -31,7 +31,7 @@ export default {
       return `Saindo ${format(new Date(vacation.startDate), "dd/MM/yyyy")} ~ ${
         this.type !== "dayOff" ? vacation.daysQtd : ""
       } ${this.type !== "dayOff" ? "dias" : this.abonoText(vacation?.subType)}`;
-    },
-  },
+    }
+  }
 };
 </script>

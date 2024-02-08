@@ -42,21 +42,23 @@ export default {
         return "fa-solid fa-plane-arrival text-info";
       else if (this.period === "between")
         return "fa-solid fa-umbrella-beach text-info";
-    },
+    }
   },
   methods: {
     capitalizeName,
     format,
     formatedDate(vacation: Vacation): string {
       const stringDate =
-        this.period === "start" ? vacation.startDate : add(new Date(vacation?.endDate as string), { days: 1});
+        this.period === "start"
+          ? vacation.startDate
+          : add(new Date(vacation?.endDate as string), { days: 1 });
       return format(new Date(stringDate as string), "dd/MM/yyyy");
     },
     finalText(vacation: Vacation) {
       return this.period !== "between"
         ? this.formatedDate(vacation)
         : getWorkerStatus(vacation.worker as Worker);
-    },
-  },
+    }
+  }
 };
 </script>

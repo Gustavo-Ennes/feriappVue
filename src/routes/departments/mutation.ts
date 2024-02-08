@@ -23,5 +23,5 @@ mutation DeleteDepartment($_id: ID!){
 export {
   createDepartmentMutation,
   updateDepartmentMutation,
-  deleteDepartmentMutation,
+  deleteDepartmentMutation
 };

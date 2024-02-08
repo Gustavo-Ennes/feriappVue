@@ -1,8 +1,5 @@
 import type { WorkerCreatePayloadInterface } from "./types";
-import {
-  createWorkerMutation,
-  updateWorkerMutation,
-} from "./mutation";
+import { createWorkerMutation, updateWorkerMutation } from "./mutation";
 import { departmentQuery } from "./query";
 import { runQuery } from "@/graphql/graphql";
 
@@ -16,8 +13,8 @@ const createWorker = async (
     query: createWorkerMutation,
     label: "createWorker",
     variables: {
-      workerInput: workerPayload,
-    },
+      workerInput: workerPayload
+    }
   });
 
 const updateWorker = async (
@@ -26,7 +23,7 @@ const updateWorker = async (
   runQuery({
     query: updateWorkerMutation,
     label: "updateWorker",
-    variables: { workerInput: workerPayload },
+    variables: { workerInput: workerPayload }
   });
 
 export { createWorker, getDepartments, updateWorker };

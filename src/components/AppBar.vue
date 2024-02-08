@@ -74,7 +74,7 @@
               Setores
             </router-link>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link
               class="nav-link text-light"
               to="/extraHoursTable"
@@ -82,7 +82,7 @@
             >
               H.E.
             </router-link>
-          </li>
+          </li> -->
         </ul>
         <div class="d-flex" role="search">
           <input
@@ -120,7 +120,7 @@ export default {
   data(): { navEl: HTMLElement | null; searchTerm: string } {
     return {
       navEl: null,
-      searchTerm: "",
+      searchTerm: ""
     };
   },
   methods: {
@@ -144,11 +144,11 @@ export default {
         await animateCSS({
           elementId: "navbarSupportedContent",
           animation: "slideInLeft",
-          velocity: "faster",
+          velocity: "faster"
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

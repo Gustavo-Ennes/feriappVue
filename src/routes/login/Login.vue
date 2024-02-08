@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       email: "",
-      password: "",
+      password: ""
     };
   },
   methods: {
@@ -73,7 +73,7 @@ export default {
         title: "Usuário ou senha incorreta",
         type: "danger",
         text: "A infomação de usuário e/ou senha está incorreta. Verifique seu CAPS LOCK e tente novamente.",
-        icon: "lock",
+        icon: "lock"
       });
     },
     async login(): Promise<void> {
@@ -91,9 +91,9 @@ export default {
       } finally {
         this.$store.dispatch("stopLoading");
       }
-    },
+    }
   },
-  components: { LoadingFrame, GeneralToast },
+  components: { LoadingFrame, GeneralToast }
 };
 </script>
 

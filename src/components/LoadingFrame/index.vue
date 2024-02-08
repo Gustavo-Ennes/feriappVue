@@ -9,7 +9,7 @@ import OrbitLoading from "./OrbitLoading.vue";
 
 export default {
   name: "LoadingFrame",
-  components: { OrbitLoading },
+  components: { OrbitLoading }
 };
 </script>
 

@@ -120,5 +120,5 @@ export type {
   WorkerTableDataInterface,
   DepartmentResponseInterface,
   TranslatedStatusObject,
-  VacationType,
+  VacationType
 };

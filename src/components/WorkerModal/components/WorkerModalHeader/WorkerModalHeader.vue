@@ -8,6 +8,6 @@
 <script lang="ts">
 export default {
   name: "WorkerModalHeader",
-  props: ["type", "modal"],
+  props: ["type", "modal"]
 };
 </script>

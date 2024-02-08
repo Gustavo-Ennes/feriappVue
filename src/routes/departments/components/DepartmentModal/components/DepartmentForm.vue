@@ -36,21 +36,21 @@ export default {
     return {
       form: {
         name: this.department?.name || "",
-        responsible: this.department?.responsible || "",
-      },
+        responsible: this.department?.responsible || ""
+      }
     };
   },
   computed: {
     computedForm() {
       return this.form;
-    },
+    }
   },
   watch: {
     form: {
       handler() {
         this.$emit("formUpdated", this.computedForm);
       },
-      deep: true,
+      deep: true
     },
     department: {
       handler() {
@@ -59,12 +59,12 @@ export default {
         } else {
           this.form = {
             name: "",
-            responsible: "",
+            responsible: ""
           };
         }
       },
-      deep: true,
-    },
-  },
+      deep: true
+    }
+  }
 };
 </script>

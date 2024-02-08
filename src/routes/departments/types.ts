@@ -57,5 +57,5 @@ export type {
   DepartmentModalDataInterface,
   DepartmentModalFormDataInterface,
   DepartmentFormInterface,
-  ValidatedResponse,
+  ValidatedResponse
 };

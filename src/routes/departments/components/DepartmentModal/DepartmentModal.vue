@@ -21,9 +21,9 @@
         </div>
         <div class="modal-footer">
           <DepartmentButtons
-            :modal="modal"
             :errors="errors"
             :form-modified="formModified"
+            :modal="modal"
             :type="type"
           />
         </div>
@@ -36,7 +36,7 @@
 import type {
   DepartmentFormInterface,
   DepartmentModalDataInterface,
-  ValidatedResponse,
+  ValidatedResponse
 } from "../../types";
 import { validateForm } from "./components/form";
 import DepartmentHeader from "./components/DepartmentHeader.vue";
@@ -73,7 +73,7 @@ export default {
         this.prepareToastPayload({
           name: validatedForm?.name || "",
           type: "create",
-          success: !!data.createDepartment,
+          success: !!data.createDepartment
         });
         this.$store.dispatch("showToast", this.toastPayload);
       }
@@ -89,14 +89,14 @@ export default {
       this.prepareToastPayload({
         name: validatedForm?.name || "",
         type: "edit",
-        success: response.success,
+        success: response.success
       });
       this.$store.dispatch("showToast", this.toastPayload);
     },
     prepareToastPayload({
       type,
       success,
-      name,
+      name
     }: {
       type: string;
       success: boolean;
@@ -115,22 +115,22 @@ export default {
           : `algo deu errado na ${
               type === "create" ? "criação" : "modificação"
             } do setor ${name}.`,
-        type: success ? "info" : "danger",
+        type: success ? "info" : "danger"
       };
-    },
+    }
   },
   data(): DepartmentModalDataInterface {
     return {
       toastPayload: undefined,
       formModified: false,
       errors: undefined,
-      dataToSend: undefined,
+      dataToSend: undefined
     };
   },
   components: {
     DepartmentHeader,
     DepartmentButtons,
-    DepartmentForm,
-  },
+    DepartmentForm
+  }
 };
 </script>

@@ -17,6 +17,7 @@ import {
   justificationPdfQuery,
   authorizationPdfQuery,
   reportPdfPdfQuery,
+  vehicleUsageReportQuery
 } from "./query";
 
 export default {
@@ -28,8 +29,8 @@ export default {
         _id: undefined,
         type: undefined,
         reference: undefined,
-        justification: undefined,
-      },
+        justification: undefined
+      }
     };
   },
   computed: {
@@ -38,11 +39,11 @@ export default {
     },
     canShowPdf() {
       return this.buffer !== undefined && this.buffer !== null;
-    },
+    }
   },
   async beforeMount() {
     const {
-      params: { type, _id, reference, justification },
+      params: { type, _id, reference, justification }
     }: RouteLocationNormalizedLoaded = useRoute();
     this.params._id = _id;
     this.params.type = type.toString();
@@ -60,6 +61,19 @@ export default {
         await this.getAuthorizationPdfBinary();
       } else if (type === "report") {
         await this.getReportPdfBinary();
+      } else if (type === "vehicleUsageReport") {
+        await this.getVehivleUsageReportPdfBinary();
+      }
+    },
+    async getVehivleUsageReportPdfBinary() {
+      const { data } = await runQuery({
+        query: vehicleUsageReportQuery,
+        label: "vehicleUsageReportQuery"
+      });
+
+      this.buffer = data.vehicleUsageReportPdf;
+      if (this.buffer === null) {
+        this.$router.push("/notFound");
       }
     },
     async getAuthorizationPdfBinary() {
@@ -67,7 +81,7 @@ export default {
       const { data } = await runQuery({
         query: authorizationPdfQuery,
         label: "autorizationPdfQuery",
-        variables: { workerId, reference },
+        variables: { workerId, reference }
       });
 
       this.buffer = data.authorizationPdf;
@@ -80,7 +94,7 @@ export default {
       const { data } = await runQuery({
         query: reportPdfPdfQuery,
         label: "reportPdfQuery",
-        variables: { departmentId, reference },
+        variables: { departmentId, reference }
       });
 
       this.buffer = data.reportPdf;
@@ -93,7 +107,7 @@ export default {
       const { data } = await runQuery({
         query: justificationPdfQuery,
         label: "justificationPdfQuery",
-        variables: { workerId: _id },
+        variables: { workerId: _id }
       });
 
       this.buffer = data.justificationPdf;
@@ -106,14 +120,14 @@ export default {
       const { data } = await runQuery({
         query: vacationPdfQuery,
         label: "vacationPdfQuery",
-        variables: { vacationId: _id },
+        variables: { vacationId: _id }
       });
 
       this.buffer = data.vacationPdf;
       if (this.buffer === null) {
         this.$router.push("/notFound");
       }
-    },
-  },
+    }
+  }
 };
 </script>

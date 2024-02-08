@@ -113,5 +113,5 @@ export type {
   ExtraHourProcessData,
   FakeThis,
   FakeFetchResponse,
-  GetMockedExtraHoursParam,
+  GetMockedExtraHoursParam
 };

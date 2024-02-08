@@ -51,7 +51,7 @@ import { deleteDepartment, getDepartments } from "./fetch";
 import type {
   DepartmentsDataInterface,
   DepartmentFetchResponse,
-  Department,
+  Department
 } from "./types";
 import DepartmentCard from "./components/DepartmentCard.vue";
 import DepartmentModal from "./components/DepartmentModal/DepartmentModal.vue";
@@ -93,7 +93,7 @@ export default {
     async handleDeleteDepartment(_id: string): Promise<void> {
       await deleteDepartment(_id);
       await this.getAllDepartments();
-    },
+    }
   },
   data(): DepartmentsDataInterface {
     return {
@@ -101,9 +101,9 @@ export default {
       department: undefined,
       modal: undefined,
       modalType: undefined,
-      confirmationModal: undefined,
+      confirmationModal: undefined
     };
   },
-  components: { DepartmentCard, DepartmentModal, DrasticConfirmationModal },
+  components: { DepartmentCard, DepartmentModal, DrasticConfirmationModal }
 };
 </script>

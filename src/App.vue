@@ -43,8 +43,8 @@ export default {
           return tooltip;
         }
       });
-    },
+    }
   },
-  components: { LoadingFrame, AppBar, GeneralToast, JustificationModal },
+  components: { LoadingFrame, AppBar, GeneralToast, JustificationModal }
 };
 </script>

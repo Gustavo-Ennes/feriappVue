@@ -10,7 +10,7 @@ const _getMatrix = (_this: any) => {
   const config: CalendarMatrixConfig = {
     totalDays: getDaysInMonth(_this.reference),
     week: 1,
-    weekArray: [],
+    weekArray: []
   };
 
   for (let day = 1; day <= config.totalDays; day++) {
@@ -19,7 +19,7 @@ const _getMatrix = (_this: any) => {
     if (weekOfMonth === config.week) {
       config.weekArray.push({
         day: dayInstance,
-        extraHour: _getExtraHour(_this, day),
+        extraHour: _getExtraHour(_this, day)
       });
     } else {
       config.week++;

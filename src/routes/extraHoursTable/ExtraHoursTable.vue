@@ -63,14 +63,14 @@ import {
   _getUpdatedExtraHour,
   _handleCalendarModification,
   _preProcessExtraHours,
-  _handleSaveExtraHours,
+  _handleSaveExtraHours
 } from "./extraHourTable";
 import type {
   ExtraHourTableParam,
   ExtraHourData,
   ExtraHourWorker,
   ExtraHourInput,
-  ExtraHourProcessData,
+  ExtraHourProcessData
 } from "./types";
 
 export default {
@@ -85,7 +85,7 @@ export default {
       reference: undefined,
       references: [],
       hasModifications: false,
-      departments: [],
+      departments: []
     };
   },
   computed: {
@@ -103,7 +103,7 @@ export default {
     },
     formatedRef() {
       return this.reference ? format(this.reference, "MM/yyyy") : "";
-    },
+    }
   },
   async beforeMount() {
     await this.fetchReferences();
@@ -142,7 +142,7 @@ export default {
     },
     async handleSaveExtraHours() {
       await _handleSaveExtraHours(this);
-    },
+    }
   },
   components: { Calendar, SelectSection },
   watch: {
@@ -150,9 +150,9 @@ export default {
       async handler() {
         await this.fetchExtraHours();
       },
-      deep: true,
-    },
-  },
+      deep: true
+    }
+  }
 };
 </script>
 

@@ -4,7 +4,7 @@ const translatedStatusObject: TranslatedStatusObject = {
   active: "ativo",
   license: "de licença",
   vacation: "de férias",
-  dayOff: "abonando",
+  dayOff: "abonando"
 };
 
 const getTranslatedStatus = (

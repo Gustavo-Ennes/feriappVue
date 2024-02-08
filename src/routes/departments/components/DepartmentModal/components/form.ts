@@ -1,6 +1,6 @@
 import type {
   DepartmentFormInterface,
-  ValidatedResponse,
+  ValidatedResponse
 } from "@/routes/departments/types";
 import { store } from "@/store/store";
 import { object, string, type Schema } from "yup";
@@ -17,9 +17,8 @@ const departmentFormSchema: Schema = object({
     .min(3, "tamanho mínimo de nome: 3")
     .transform((value: string, _: any): string => {
       return !!value ? value.toLowerCase() : value;
-    }),
+    })
 });
-
 
 const validateForm = async (
   payload: DepartmentFormInterface
@@ -29,7 +28,7 @@ const validateForm = async (
     store.dispatch("startLoading");
     const validatedForm: DepartmentFormInterface =
       await departmentFormSchema.validate(payload, {
-        abortEarly: false,
+        abortEarly: false
       });
     response.validatedForm = validatedForm;
   } catch (error: any) {

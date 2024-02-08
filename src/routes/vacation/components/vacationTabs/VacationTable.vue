@@ -72,19 +72,19 @@ export default {
           Date.parse(b.startDate) - Date.parse(a.startDate)
       );
       return sortByStartDate(this.vacations);
-    },
+    }
   },
   methods: {
     capitalizeName,
     async handleDownloadPdf(vacation: Vacation): Promise<void> {
       this.$router.push({
         name: "pdf",
-        params: { _id: vacation._id, type: "vacation" },
+        params: { _id: vacation._id, type: "vacation" }
       });
     },
     formatVacationDate: (dateString: string) =>
-      format(new Date(dateString), "dd/MM/yyyy"),
-  },
+      format(new Date(dateString), "dd/MM/yyyy")
+  }
 };
 </script>
 

@@ -93,5 +93,5 @@ export type {
   VacationModalDataInterface,
   ToastPayloadInterface,
   VacationModalFormInterface,
-  DrawHalfPageParams,
+  DrawHalfPageParams
 };

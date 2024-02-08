@@ -1,6 +1,8 @@
 <template>
   <div class="row justify-content-center align-items-center text-center">
-    <div class="col-12"><h4 class="rounded bg-primary text-light mb-3">H.E</h4></div>
+    <div class="col-12">
+      <h4 class="rounded bg-primary text-light mb-3">H.E</h4>
+    </div>
     <div class="col-6">
       <span class="badge rounded-pill bg-primary"
         ><div class="h5 m-1 p-1">
@@ -50,21 +52,21 @@ export default {
   props: {
     workerHoursSum: {
       type: Number,
-      default: 0,
+      default: 0
     },
     workerNightlyHoursSum: {
       type: Number,
-      default: 0,
+      default: 0
     },
     extractedDepartments: {
       type: Array<Department>,
-      default: [],
+      default: []
     },
     worker: {
       type: Object,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 

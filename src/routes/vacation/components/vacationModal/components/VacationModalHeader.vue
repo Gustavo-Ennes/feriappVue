@@ -20,7 +20,7 @@ export default {
       return `${this.modalType === "create" ? "Criar" : "Editar"} ${
         this.title
       }`;
-    },
-  },
+    }
+  }
 };
 </script>

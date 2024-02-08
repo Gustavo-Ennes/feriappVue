@@ -4,16 +4,16 @@ import { uniqBy, prop, without, includes } from "ramda";
 import type {
   BuildExtraHoursWithRangeVariables,
   ExtraHour,
-  ExtraHourInputWrapper,
+  ExtraHourInputWrapper
 } from "./types";
 import type { Department } from "../workers/types";
 import type {
   CalendarHolidayStorage,
-  CalendarHolidayMonth,
+  CalendarHolidayMonth
 } from "./components/calendar/types";
 
 const buildExtraHoursWithRangeVariables = ({
-  reference,
+  reference
 }: BuildExtraHoursWithRangeVariables): ExtraHourInputWrapper | void => {
   try {
     const firstDay = set(reference, {
@@ -21,21 +21,21 @@ const buildExtraHoursWithRangeVariables = ({
       hours: 0,
       minutes: 0,
       seconds: 0,
-      milliseconds: 0,
+      milliseconds: 0
     });
     const lastDay = set(reference, {
       date: getDaysInMonth(reference),
       hours: 23,
       minutes: 59,
       seconds: 59,
-      milliseconds: 999,
+      milliseconds: 999
     });
 
     return {
       extraHourInput: {
         from: firstDay.toISOString(),
-        to: lastDay.toISOString(),
-      },
+        to: lastDay.toISOString()
+      }
     };
   } catch (err: any) {
     console.log(
@@ -63,7 +63,7 @@ const getHolidayMonths = (): CalendarHolidayStorage => {
   );
 };
 const getHolidayReferenceMonth = ({
-  day,
+  day
 }: {
   day: Date;
 }): CalendarHolidayMonth | void => {
@@ -92,7 +92,7 @@ const addToLocalStorage = ({ day }: { day: Date }) => {
   } else if (!thisReferenceMonth && dayNumber) {
     newMonths.push({
       reference: day?.toISOString() as string,
-      days: [dayNumber],
+      days: [dayNumber]
     });
   }
   writeHolidayMonths(newMonths);
@@ -115,7 +115,7 @@ const removeFromLocalStorage = ({ day }: { day: Date }) => {
 const checkIsHoliday = ({ day }: { day: Date }) => {
   if (day) {
     const actualMonthReference = getHolidayReferenceMonth({
-      day,
+      day
     });
     return actualMonthReference && day
       ? includes(day.getDate(), actualMonthReference.days)
@@ -129,7 +129,7 @@ const getRandomMockedRefs = () => {
   const arr = [];
   for (let i = 0; i < qtd; i++) {
     arr.push({
-      reference: set(new Date(), { month: Math.floor(Math.random() * 11) }),
+      reference: set(new Date(), { month: Math.floor(Math.random() * 11) })
     });
   }
   return arr;
@@ -143,5 +143,5 @@ export {
   addToLocalStorage,
   removeFromLocalStorage,
   checkIsHoliday,
-  getRandomMockedRefs,
+  getRandomMockedRefs
 };

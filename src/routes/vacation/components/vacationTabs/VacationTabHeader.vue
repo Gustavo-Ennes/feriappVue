@@ -26,8 +26,8 @@ export default {
         : this.type === "present"
         ? "Em andamento"
         : "Futuros";
-    },
-  },
+    }
+  }
 };
 </script>
 

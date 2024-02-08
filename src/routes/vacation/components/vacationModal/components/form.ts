@@ -11,17 +11,14 @@ const VacationCreateFormSchema: Schema = object({
   worker: string().required("O id do trabalhador é obrigatório"),
   type: string()
     .required("O registro é obrigatório")
-    .oneOf(
-      ["vacation", "license", "dayOff"],
-      "Tipo de férias é inválido"
-    ),
+    .oneOf(["vacation", "license", "dayOff"], "Tipo de férias é inválido"),
   startDate: string()
     .required("Data de início é obrigatória")
     .matches(
       /^\d{4}\-\d{2}\-\d{2}$/gm,
       "A data de início das férias precisa estar nesse formato: yyyy/MM/dd"
     ),
-  _id: string(),
+  _id: string()
 });
 
 const validateForm = async (
@@ -33,9 +30,10 @@ const validateForm = async (
   } = {};
   try {
     store.dispatch("startLoading");
-    const validatedForm: VacationFormType = await VacationCreateFormSchema.validate(payload, {
-      abortEarly: false,
-    });
+    const validatedForm: VacationFormType =
+      await VacationCreateFormSchema.validate(payload, {
+        abortEarly: false
+      });
     response.validatedForm = validatedForm;
   } catch (error: any) {
     console.log("Error validating form :", error);
