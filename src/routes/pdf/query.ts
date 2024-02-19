@@ -26,4 +26,10 @@ export const vehicleUsageReportQuery = `
 query VehicleUsageReportPdf{
   vehicleUsageReportPdf
 }
+`
+
+export const materialRequisitionQuery = `
+query MaterialRequisitionPdf{
+  materialRequisitionPdf
+}
 `;

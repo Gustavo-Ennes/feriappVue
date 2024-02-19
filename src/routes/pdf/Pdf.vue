@@ -17,7 +17,8 @@ import {
   justificationPdfQuery,
   authorizationPdfQuery,
   reportPdfPdfQuery,
-  vehicleUsageReportQuery
+  vehicleUsageReportQuery,
+  materialRequisitionQuery
 } from "./query";
 
 export default {
@@ -63,6 +64,8 @@ export default {
         await this.getReportPdfBinary();
       } else if (type === "vehicleUsageReport") {
         await this.getVehivleUsageReportPdfBinary();
+      } else if (type === "materialRequisition") {
+        await this.getMaterialRequisitionPdfBinary();
       }
     },
     async getVehivleUsageReportPdfBinary() {
@@ -72,6 +75,17 @@ export default {
       });
 
       this.buffer = data.vehicleUsageReportPdf;
+      if (this.buffer === null) {
+        this.$router.push("/notFound");
+      }
+    },
+    async getMaterialRequisitionPdfBinary() {
+      const { data } = await runQuery({
+        query: materialRequisitionQuery,
+        label: "materialRequisitionQuery"
+      });
+
+      this.buffer = data.materialRequisitionPdf;
       if (this.buffer === null) {
         this.$router.push("/notFound");
       }

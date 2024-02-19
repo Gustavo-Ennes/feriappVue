@@ -52,7 +52,20 @@
               params: { type: 'vehicleUsageReport' }
             })
         "
-        icon-class="table"
+        icon-class="car"
+      />
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <MainButton
+        label="Requisição de materiais"
+        :action="
+          () =>
+            $router.push({
+              name: 'pdf',
+              params: { type: 'materialRequisition' }
+            })
+        "
+        icon-class="box"
       />
     </div>
   </div>
