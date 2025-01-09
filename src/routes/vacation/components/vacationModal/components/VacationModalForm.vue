@@ -50,6 +50,26 @@
       </select>
       <p v-else>Não há trabalhadores. Você precisa criá-los primeiro.</p>
     </div>
+    <div class="col-xs-12 col-sm- my-2">
+      <label class="form-label">Chefe</label>
+      <select
+        class="form-select"
+        aria-label="Boss select"
+        v-model="form.boss"
+        required
+        v-if="bosses"
+      >
+        <option :value="null">Selecione quem autoriza</option>
+        <option
+          v-for="boss in bosses"
+          :key="`boss-${boss._id}`"
+          :value="boss._id"
+        >
+          {{ capitalizeName(boss.name) }}
+        </option>
+      </select>
+      <p v-else>Não há chefes. Você precisa criá-los primeiro.</p>
+    </div>
   </form>
 </template>
 
@@ -58,23 +78,62 @@ import { format } from "date-fns";
 import type { VacationModalFormDataInterface } from "../../../types";
 import { capitalizeName } from "../../../../utils";
 import { getDaysOptions, getVacationOptions } from "./options";
+import { getBoss, getBosses } from "@/routes/vacation/fetch";
 
 export default {
+  async beforeMount() {
+    const {
+      data: { bosses }
+    } = await getBosses();
+
+    this.bosses = bosses ?? [];
+  },
   name: "VacationModalForm",
   props: ["workers", "submitForm", "vacation", "type", "modalType"],
   emits: ["formUpdated"],
   data(): VacationModalFormDataInterface {
     return {
+      bosses: [],
       form: {
         daysQtd: this.vacation?.daysQtd ?? null,
         worker: this.vacation?.worker._id ?? null,
         type: this.vacation?.type ?? this.type,
         startDate: this.vacation?.startDate ?? format(new Date(), "yyyy-MM-dd"),
+        boss: this.vacation?.boss ?? null,
         _id: undefined
       }
     };
   },
-  methods: { capitalizeName },
+  methods: {
+    capitalizeName,
+    async setForm() {
+      if (this.modalType === "edit") {
+        const startDate = format(
+          new Date(this.vacation?.startDate),
+          "yyyy-MM-dd"
+        );
+        this.form = {
+          daysQtd: this.vacation.daysQtd,
+          startDate,
+          worker: this.vacation.worker._id,
+          type: this.vacation.type,
+          _id: this.vacation._id,
+          boss:
+            this.vacation?.boss?._id ??
+            (await getBoss({ isDirector: this.vacation.type === "vacation" }))
+              ?._id
+        };
+      } else {
+        this.form = {
+          daysQtd: null,
+          type: this.type,
+          startDate: format(new Date(), "yyyy-MM-dd"),
+          worker: null,
+          boss: (await getBoss({ isDirector: false }))?._id
+        };
+      }
+    }
+  },
   computed: {
     daysOptions() {
       return getDaysOptions(this.type);
@@ -94,32 +153,17 @@ export default {
       deep: true
     },
     vacation: {
-      handler() {
-        if (this.modalType === "edit") {
-          const startDate = format(
-            new Date(this.vacation?.startDate),
-            "yyyy-MM-dd"
-          );
-          this.form = {
-            daysQtd: this.vacation.daysQtd,
-            startDate,
-            worker: this.vacation.worker._id,
-            type: this.vacation.type,
-            _id: this.vacation._id
-          };
-        } else {
-          this.form = {
-            daysQtd: null,
-            type: this.type,
-            startDate: format(new Date(), "yyyy-MM-dd"),
-            worker: null
-          };
-        }
+      async handler() {
+        this.setForm();
+      },
+      deep: true
+    },
+    modalType: {
+      async handler() {
+        this.setForm();
       },
       deep: true
     }
   }
 };
 </script>
-
-// TODO delete functionality and check all changes before commitl

@@ -16,7 +16,7 @@ const presentVacations = (vacations: Vacation[]): Vacation[] => {
         const vacationEnd = new Date(vacation.endDate as string);
         return isWithinInterval(today, {
           start: vacationStart,
-          end: vacationEnd,
+          end: vacationEnd
         });
       })
     : [];
@@ -33,7 +33,7 @@ const getYesterday = (): Date => {
   return add(today, {
     hours: -today.getHours(),
     minutes: -today.getMinutes(),
-    seconds: -today.getSeconds() + 1,
+    seconds: -today.getSeconds() + 1
   });
 };
 const getTomorrow = (): Date => {
@@ -41,7 +41,7 @@ const getTomorrow = (): Date => {
   return add(today, {
     hours: 24 - today.getHours(),
     minutes: -today.getMinutes(),
-    seconds: -today.getSeconds() - 1,
+    seconds: -today.getSeconds() - 1
   });
 };
 

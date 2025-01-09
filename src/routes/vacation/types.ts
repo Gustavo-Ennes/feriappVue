@@ -19,6 +19,7 @@ interface Vacation {
   type: string;
   createdAt: string;
   updatedAt: string;
+  boss: Boss | string;
 }
 
 interface VacationFetchInterface {
@@ -39,6 +40,14 @@ interface WorkerFetchInterface {
   errors?: any;
 }
 
+interface BossFetchInterface {
+  data: {
+    bosses?: Boss[];
+    boss?: Boss;
+  };
+  error: any;
+}
+
 interface VacationDataInterface {
   vacations?: Vacation[];
   modal?: Modal;
@@ -48,15 +57,26 @@ interface VacationDataInterface {
   confirmationModal?: Modal;
 }
 
+type Boss = {
+  _id: string;
+  name: string;
+  role: string;
+  isDirector: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 interface VacationModalFormInterface {
   worker: string | null;
   daysQtd: number | null;
   type?: string;
   startDate?: string;
   _id?: string;
+  boss?: string | null;
 }
 
 interface VacationModalFormDataInterface {
+  bosses: Boss[];
   form: VacationModalFormInterface;
 }
 
@@ -84,6 +104,8 @@ type DrawHalfPageParams = {
   vacation: Vacation;
 };
 export type {
+  Boss,
+  BossFetchInterface,
   Vacation,
   VacationDataInterface,
   VacationFetchInterface,

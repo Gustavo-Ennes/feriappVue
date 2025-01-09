@@ -1,12 +1,14 @@
 import { runQuery } from "@/graphql/graphql";
 import { getWorkers } from "../workers/fetch";
-import { vacationsQuery, workerByIdQuery } from "./query";
+import { bossesQuery, vacationsQuery, workerByIdQuery } from "./query";
 import {
   vacationCreateMutation,
   vacationUpdateMutation,
   vacationDeleteMutation
 } from "./mutation";
 import type {
+  Boss,
+  BossFetchInterface,
   VacationFetchInterface,
   VacationModalFormInterface,
   WorkerFetchInterface
@@ -40,6 +42,20 @@ const getWorkerById = async ({
   _id: string;
 }): Promise<WorkerFetchInterface> =>
   runQuery({ query: workerByIdQuery, variables: { _id }, label: "workerById" });
+
+const getBosses = async () => runQuery({ query: bossesQuery, label: "bosses" });
+
+const getBoss = async ({
+  isDirector = false
+}: {
+  isDirector: boolean;
+}): Promise<Boss | undefined> => {
+  const {
+    data: { bosses }
+  }: BossFetchInterface = await getBosses();
+
+  return bosses?.filter((boss) => boss.isDirector === isDirector)?.[0];
+};
 
 const createVacation = async (
   vacationInput: VacationModalFormInterface
@@ -76,6 +92,8 @@ const getVacationsByType = async (
 };
 
 export {
+  getBoss,
+  getBosses,
   getVacationsByType,
   getVacations,
   getWorkerById,

@@ -12,6 +12,12 @@ query Vacations($type: String){
         name
       }
     }
+    boss {
+      _id
+      name
+      role
+      isDirector
+    }
     daysQtd
     type
     startDate
@@ -29,6 +35,19 @@ query WorkerById($_id: ID!){
     name
   }
 }
-`
+`;
 
-export { vacationsQuery, workerByIdQuery };
+const bossesQuery = `
+  query Bosses {
+    bosses {
+      _id
+      name
+      role
+      isDirector
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export { vacationsQuery, workerByIdQuery, bossesQuery };

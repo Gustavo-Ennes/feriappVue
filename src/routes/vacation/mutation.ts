@@ -14,6 +14,12 @@ mutation VacationCreate($vacationInput: VacationInput!){
         name
       }
     }
+    boss {
+      _id
+      name
+      role
+      isDirector
+    }
   }
 }
 `;

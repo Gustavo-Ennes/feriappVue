@@ -9,6 +9,7 @@ const VacationCreateFormSchema: Schema = object({
     .required("A quantidade de dias é obrigatória")
     .oneOf([90, 75, 60, 45, 30, 15, 1, 0.5], "Quantidade de dias inválida"),
   worker: string().required("O id do trabalhador é obrigatório"),
+  boss: string().required("O id do de quem autoriza é obrigatório"),
   type: string()
     .required("O registro é obrigatório")
     .oneOf(["vacation", "license", "dayOff"], "Tipo de férias é inválido"),
