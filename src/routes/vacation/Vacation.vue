@@ -106,6 +106,7 @@ export default {
     },
     handleOpenModal(type: string): void {
       this.modalType = type;
+      if (type === "create") this.vacation = undefined;
       this.modal?.show();
     },
     instantiateModal(): void {
