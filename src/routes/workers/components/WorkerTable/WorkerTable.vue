@@ -6,7 +6,7 @@
           <th scope="col">Nome</th>
           <th scope="col">Função</th>
           <th scope="col">Status</th>
-          <th scope="col">Data admissão</th>
+          <th scope="col">Matrícula</th>
           <th scope="col">Departamento</th>
           <th scope="col">Ações</th>
         </tr>
@@ -25,7 +25,7 @@
           </td>
           <td>{{ worker.role }}</td>
           <td>{{ getTranslatedStatus(worker.status) }}</td>
-          <td>{{ getAdmissionDate(worker) }}</td>
+          <td>{{ worker.matriculation }}</td>
           <td>{{ capitalizeName(worker?.department.name) }}</td>
           <td>
             <i
