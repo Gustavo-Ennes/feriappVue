@@ -1,14 +1,16 @@
 import { isAfter, isWithinInterval, isBefore, add } from "date-fns";
-import type { Vacation } from "./types";
+import type { Vacation, VacationPagination } from "./types";
 
-const futureVacations = (vacations: Vacation[]): Vacation[] => {
-  return (
-    vacations.filter((vacation: Vacation) => {
-      return isAfter(new Date(vacation.startDate), getTomorrow());
-    }) ?? []
-  );
+const futureVacations = (pagination: VacationPagination): Vacation[] => {
+  const vacations = pagination?.items;
+  return vacations?.length
+    ? vacations.filter((vacation: Vacation) => {
+        return isAfter(new Date(vacation.startDate), getTomorrow());
+      })
+    : [];
 };
-const presentVacations = (vacations: Vacation[]): Vacation[] => {
+const presentVacations = (pagination: VacationPagination): Vacation[] => {
+  const vacations = pagination?.items;
   return vacations?.length
     ? vacations.filter((vacation: Vacation) => {
         const today = new Date();
@@ -21,12 +23,13 @@ const presentVacations = (vacations: Vacation[]): Vacation[] => {
       })
     : [];
 };
-const pastVacations = (vacations?: Vacation[]): Vacation[] => {
-  return (
-    vacations?.filter((vacation: Vacation) =>
-      isBefore(new Date(vacation.endDate as string), getYesterday())
-    ) ?? []
-  );
+const pastVacations = (pagination: VacationPagination): Vacation[] => {
+  const vacations = pagination?.items;
+  return vacations?.length
+    ? vacations?.filter((vacation: Vacation) =>
+        isBefore(new Date(vacation.endDate as string), getYesterday())
+      )
+    : [];
 };
 const getYesterday = (): Date => {
   const today: Date = new Date();

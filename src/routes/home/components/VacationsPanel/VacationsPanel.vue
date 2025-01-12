@@ -55,7 +55,7 @@ export default {
   },
   async beforeMount(): Promise<void> {
     const { data } = await getVacations();
-    this.vacations = data.vacations;
+    this.vacations = data?.vacations?.items;
   },
   computed: {
     workerStatus(worker: Worker): string | void {

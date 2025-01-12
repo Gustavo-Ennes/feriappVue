@@ -22,9 +22,16 @@ interface Vacation {
   boss: Boss | string;
 }
 
+interface VacationPagination {
+  items: Vacation[];
+  totalPages: number;
+  pageNumber: number;
+  error?: string;
+}
+
 interface VacationFetchInterface {
   data?: {
-    vacations?: Vacation[];
+    vacations?: VacationPagination;
     createVacation?: Vacation;
     updateVacation?: boolean;
     deleteVacation?: boolean;
@@ -49,12 +56,13 @@ interface BossFetchInterface {
 }
 
 interface VacationDataInterface {
-  vacations?: Vacation[];
+  pagination?: VacationPagination;
   modal?: Modal;
   modalType?: string;
   vacation?: Vacation;
   workers?: Worker[];
   confirmationModal?: Modal;
+  page: number;
 }
 
 type Boss = {
@@ -113,6 +121,7 @@ export type {
   VacationFormType,
   VacationModalFormDataInterface,
   VacationModalDataInterface,
+  VacationPagination,
   ToastPayloadInterface,
   VacationModalFormInterface,
   DrawHalfPageParams

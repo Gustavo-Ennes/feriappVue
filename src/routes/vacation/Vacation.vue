@@ -17,10 +17,11 @@
         <VacationTabs
           :title="computedButtonLabel"
           :vacation-type="type"
-          :vacations="vacations"
+          :pagination="pagination"
           @deleteVacation="showConfirmationModal"
           @selectVacation="handleSelectVacation"
           @openModal="handleOpenModal"
+          @page-changed="handlePageChanged"
         />
       </div>
     </div>
@@ -58,12 +59,13 @@ export default {
   props: ["type"],
   data(): VacationDataInterface {
     return {
-      vacations: [],
+      pagination: undefined,
       modal: undefined,
       modalType: undefined,
       vacation: undefined,
       workers: undefined,
-      confirmationModal: undefined
+      confirmationModal: undefined,
+      page: 1
     };
   },
   watch: {
@@ -88,11 +90,16 @@ export default {
   methods: {
     async getAllVacations(): Promise<void> {
       const { data }: VacationFetchInterface = await getVacationsByType(
-        this.type
+        this.type,
+        this.page
       );
       if (data?.vacations) {
-        this.vacations = data.vacations;
+        this.pagination = data.vacations;
       }
+    },
+    async handlePageChanged(page: number): Promise<void> {
+      this.page = page;
+      await this.getAllVacations();
     },
     handleSelectVacation(vacation: Vacation) {
       this.vacation = vacation;

@@ -10,25 +10,31 @@
       type="future"
       :vacation-type="vacationType"
       :title="title"
-      :vacations="futureVacations(vacations)"
+      :vacations="futureVacations(pagination)"
+      :pagination="pagination"
       :active="true"
       :handleEdit="handleEdit"
       :handleDelete="handleDelete"
+      @page-changed="handlePageChanged"
     />
     <VacationTabBody
       type="present"
       :vacation-type="vacationType"
       :title="title"
-      :vacations="presentVacations(vacations)"
+      :vacations="presentVacations(pagination)"
+      :pagination="pagination"
       :handleEdit="handleEdit"
       :handleDelete="handleDelete"
+      @page-changed="handlePageChanged"
     />
     <VacationTabBody
       type="past"
       :vacation-type="vacationType"
-      :vacations="pastVacations(vacations)"
+      :vacations="pastVacations(pagination)"
+      :pagination="pagination"
       :handleEdit="handleEdit"
       :handleDelete="handleDelete"
+      @page-changed="handlePageChanged"
     />
   </div>
 </template>
@@ -41,8 +47,8 @@ import type { Vacation } from "../../types";
 
 export default {
   name: "VacationTabs",
-  props: ["vacations", "title", "vacationType"],
-  emits: ["selectVacation", "openModal", "deleteVacation"],
+  props: ["pagination", "title", "vacationType"],
+  emits: ["selectVacation", "openModal", "deleteVacation", "pageChanged"],
   components: { VacationTabHeader, VacationTabBody },
   methods: {
     pastVacations,
@@ -56,6 +62,9 @@ export default {
       this.$emit("selectVacation", vacation);
       this.$emit("deleteVacation", vacation._id);
     },
+    handlePageChanged(page: number) {
+      this.$emit('pageChanged', page)
+    }
   },
 };
 </script>
