@@ -2,12 +2,12 @@
   <li class="nav-item" role="presentation">
     <button
       :class="`nav-link ${active ? 'active' : ''}`"
-      :id="`${type}-tab`"
+      :id="`${period}-${type}-tab-body`"
       data-bs-toggle="tab"
-      :data-bs-target="`#${type}`"
+      :data-bs-target="`#tab-${period}-${type}`"
       type="button"
       role="tab"
-      :aria-controls="type"
+      :aria-controls="period"
       aria-selected="true"
     >
       {{ computedType }}
@@ -18,16 +18,16 @@
 <script lang="ts">
 export default {
   name: "VacationTabHeader",
-  props: ["type", "active"],
+  props: ["period", "active", "type"],
   computed: {
     computedType() {
-      return this.type === "past"
+      return this.period === "past"
         ? "fruídos"
-        : this.type === "present"
+        : this.period === "present"
         ? "Em andamento"
         : "Futuros";
     }
-  }
+  },
 };
 </script>
 

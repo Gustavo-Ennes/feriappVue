@@ -7,19 +7,27 @@
     data-bs-toggle="tooltip"
     data-bs-placement="top"
     title="Fechar o modal"
-    @click="modal.hide"
+    @click="computedModal?.hide"
   ></i>
 </template>
 
 <script lang="ts">
+import { useVacationModals } from "@/routes/vacation/composables/modals";
+
 export default {
   name: "VacationModalHeader",
-  props: ["title", "modal", "modalType"],
+  props: ["title", "modal"],
   computed: {
     computedTitle() {
-      return `${this.modalType === "create" ? "Criar" : "Editar"} ${
+      return `${this.computedModalType === "create" ? "Criar" : "Editar"} ${
         this.title
       }`;
+    },
+    computedModalType() {
+      return useVacationModals().createEditModalType.value;
+    },
+    computedModal() {
+      return useVacationModals().createEditModal.value;
     }
   }
 };

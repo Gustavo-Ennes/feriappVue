@@ -10,18 +10,13 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <VacationModalHeader
-            :title="title"
-            :modal="modal"
-            :modalType="modalType"
-          />
+          <VacationModalHeader :title="title" />
         </div>
         <div class="modal-body">
           <VacationModalForm
             @formUpdated="processForm"
-            :modalType="modalType"
             :workers="workers"
-            :submit-form="vacation ? handleUpdate : handleCreate"
+            :submit-form="computedVacation ? handleUpdate : handleCreate"
             :vacation="computedVacation"
             :type="type"
           />
@@ -29,8 +24,6 @@
         </div>
         <div class="modal-footer">
           <VacationModalButtons
-            :modal="modal"
-            :modalType="modalType"
             :errors="errors"
             :form-modified="formModified"
             :type="type"
@@ -57,10 +50,12 @@ import VacationModalForm from "./components/VacationModalForm.vue";
 import VacationErrorsCollpase from "./components/VacationModalErrorsCollapse.vue";
 import VacationModalButtons from "./components/VacationModalButtons.vue";
 import VacationModalHeader from "./components/VacationModalHeader.vue";
+import { useVacationModals } from "../../composables/modals";
+import { useVacations } from "../../composables/vacations";
 
 export default {
   name: "VacationModal",
-  props: ["type", "modal", "vacation", "title", "modalType"],
+  props: ["type", "modal", "title"],
   emits: ["vacationChanged"],
   async beforeMount() {
     const {
@@ -71,6 +66,12 @@ export default {
   methods: {
     createVacation,
     updateVacation,
+    handleSubmitForm(data: VacationModalFormDataInterface) {
+      const { selectedVacation } = useVacations();
+      return selectedVacation.value
+        ? this.handleUpdate(data)
+        : this.handleCreate(data);
+    },
     async prepareToastPayload({
       type,
       success,
@@ -104,7 +105,8 @@ export default {
       if (!this.formModified) this.formModified = true;
     },
     async handleCreate(payload: VacationModalFormDataInterface): Promise<void> {
-      const { validatedForm, errors } = await validateForm(payload);
+      const { validatedForm } = await validateForm(payload);
+      const { fetchVacations } = useVacations();
 
       validatedForm.startDate = set(
         parse(validatedForm.startDate, "yyyy-MM-dd", new Date()),
@@ -116,9 +118,9 @@ export default {
           validatedForm
         );
         if (!errors && data?.createVacation) {
-          this.$emit("vacationChanged");
+          await fetchVacations({type: this.type})
         }
-        this.modal?.hide();
+        this.computedModal?.hide();
         await this.prepareToastPayload({
           error: errors?.[0],
           date: format(new Date(validatedForm.startDate), "dd-MM-yyyy"),
@@ -133,6 +135,7 @@ export default {
       }
     },
     async handleUpdate(payload: VacationModalFormDataInterface): Promise<void> {
+      const { setSelectedVacation, fetchVacations } = useVacations();
       const { validatedForm, errors } = await validateForm(payload);
       const response = { success: false };
       delete validatedForm.subType;
@@ -148,10 +151,11 @@ export default {
         );
         if (!errors && data?.updateVacation) {
           response.success = true;
-          this.$emit("vacationChanged");
+          await fetchVacations({type: this.type})
+          setSelectedVacation(undefined);
         }
       }
-      this.modal?.hide();
+      this.computedModal?.hide();
       this.prepareToastPayload({
         error: errors?.[0],
         date: format(new Date(validatedForm.startDate), "dd-MM-yyyy"),
@@ -171,8 +175,11 @@ export default {
     };
   },
   computed: {
+    computedModal() {
+      return useVacationModals().createEditModal.value;
+    },
     computedVacation() {
-      return this.vacation;
+      return useVacations().selectedVacation.value;
     }
   },
   components: {

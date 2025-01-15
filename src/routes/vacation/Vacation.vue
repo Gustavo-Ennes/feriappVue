@@ -8,71 +8,40 @@
           data-bs-toggle="tooltip"
           data-bs-placement="top"
           :title="`Você criará um(a) ${computedTitle.toLowerCase()}`"
-          @click="handleOpenModal('create')"
+          @click="showModal"
         >
           <i class="fa-solid fa-plus" /> {{ computedButtonLabel }}
         </button>
       </h1>
       <div class="col-12">
         <VacationTabs
+          ref="tabs"
           :title="computedButtonLabel"
-          :vacation-type="type"
-          :pagination="pagination"
-          @deleteVacation="showConfirmationModal"
-          @selectVacation="handleSelectVacation"
-          @openModal="handleOpenModal"
-          @page-changed="handlePageChanged"
+          :type="type"
         />
       </div>
     </div>
   </div>
   <VacationModal
     :type="type"
-    :modalType="modalType"
-    :vacation="vacation"
-    :modal="modal"
     :title="computedTitle"
-    @vacationChanged="handleVacationChanged"
   />
   <DrasticConfirmationModal
-    @hide="() => confirmationModal?.hide()"
-    :confirmationCallback="() => handleDelete(vacation?._id as string)"
     _id="vacationConfirmationModal"
+    :type="type"
   />
 </template>
 
 <script lang="ts">
-import { Modal } from "bootstrap";
-
 import DrasticConfirmationModal from "@/components/DrasticConfirmationModal.vue";
-import type {
-  Vacation,
-  VacationDataInterface,
-  VacationFetchInterface
-} from "./types";
 import VacationTabs from "./components/vacationTabs/VacationTabs.vue";
-import { deleteVacation, getVacationsByType } from "./fetch";
 import VacationModal from "./components/vacationModal/VacationModal.vue";
+import { useVacations } from "./composables/vacations";
+import { useVacationModals } from "./composables/modals";
 
 export default {
   name: "Vacation",
   props: ["type"],
-  data(): VacationDataInterface {
-    return {
-      pagination: undefined,
-      modal: undefined,
-      modalType: undefined,
-      vacation: undefined,
-      workers: undefined,
-      confirmationModal: undefined,
-      page: 1
-    };
-  },
-  watch: {
-    async type(): Promise<void> {
-      await this.getAllVacations();
-    }
-  },
   computed: {
     computedTitle() {
       return this.type === "dayOff"
@@ -88,54 +57,27 @@ export default {
     }
   },
   methods: {
-    async getAllVacations(): Promise<void> {
-      const { data }: VacationFetchInterface = await getVacationsByType(
-        this.type,
-        this.page
-      );
-      if (data?.vacations) {
-        this.pagination = data.vacations;
-      }
-    },
-    async handlePageChanged(page: number): Promise<void> {
-      this.page = page;
-      await this.getAllVacations();
-    },
-    handleSelectVacation(vacation: Vacation) {
-      this.vacation = vacation;
-    },
     showConfirmationModal() {
-      if (!this.confirmationModal) {
-        const modalHTML = document.getElementById("vacationConfirmationModal");
-        this.confirmationModal = new Modal(modalHTML as HTMLElement);
-      }
-      this.confirmationModal.show();
+      const { deleteConfirmationModal } = useVacationModals();
+      deleteConfirmationModal.value?.show();
     },
-    handleOpenModal(type: string): void {
-      this.modalType = type;
-      if (type === "create") this.vacation = undefined;
-      this.modal?.show();
-    },
-    instantiateModal(): void {
-      const modalHTML = document.getElementById("vacationModal");
-      this.modal = new Modal(modalHTML as HTMLElement, {});
-    },
-    async handleDelete(_id: string): Promise<void> {
-      await deleteVacation(_id);
-      await this.getAllVacations();
-    },
-    async handleVacationChanged(): Promise<void> {
-      await this.getAllVacations();
+    showModal() {
+      const { createEditModal, setCreateEditModalType } = useVacationModals();
+      const { setSelectedVacation } = useVacations();
+
+      setSelectedVacation(undefined);
+      setCreateEditModalType("create");
+      createEditModal.value?.show();
     }
-  },
-  async beforeMount(): Promise<void> {
-    await this.getAllVacations();
-    this.instantiateModal();
   },
   components: {
     VacationTabs,
     VacationModal,
     DrasticConfirmationModal
-  }
+  },
+  mounted() {
+    const { instantiateModals } = useVacationModals();
+    instantiateModals();
+  },
 };
 </script>

@@ -1,6 +1,6 @@
 const vacationsQuery = `
-query Vacations($type: String, $page: Int){
-  vacations(deferred: true, type: $type, page: $page){
+query Vacations($type: String, $page: Int, $period: String){
+  vacations(deferred: true, type: $type, page: $page, period: $period){
     items {
       _id
       worker{

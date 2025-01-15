@@ -79,6 +79,7 @@ import type { VacationModalFormDataInterface } from "../../../types";
 import { capitalizeName } from "../../../../utils";
 import { getDaysOptions, getVacationOptions } from "./options";
 import { getBoss, getBosses } from "@/routes/vacation/fetch";
+import { useVacationModals } from "@/routes/vacation/composables/modals";
 
 export default {
   async beforeMount() {
@@ -89,7 +90,7 @@ export default {
     this.bosses = bosses ?? [];
   },
   name: "VacationModalForm",
-  props: ["workers", "submitForm", "vacation", "type", "modalType"],
+  props: ["workers", "submitForm", "vacation", "type"],
   emits: ["formUpdated"],
   data(): VacationModalFormDataInterface {
     return {
@@ -107,7 +108,7 @@ export default {
   methods: {
     capitalizeName,
     async setForm() {
-      if (this.modalType === "edit") {
+      if (this.computedModalType === "edit") {
         const startDate = format(
           new Date(this.vacation?.startDate),
           "yyyy-MM-dd"
@@ -143,6 +144,9 @@ export default {
     },
     computedForm() {
       return this.form;
+    },
+    computedModalType() {
+      return useVacationModals().createEditModalType.value;
     }
   },
   watch: {

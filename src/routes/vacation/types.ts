@@ -1,9 +1,8 @@
 import type { Height } from "@/routes/pdf/types";
-import type { Modal } from "bootstrap";
 import type { PDFDocument } from "pdf-lib";
 import type { InferType } from "yup";
 
-import type { Worker } from "../workers/types";
+import type { VacationType, Worker } from "../workers/types";
 import type { VacationCreateFormSchema } from "./components/vacationModal/components/form";
 
 interface Vacation {
@@ -57,11 +56,6 @@ interface BossFetchInterface {
 
 interface VacationDataInterface {
   pagination?: VacationPagination;
-  modal?: Modal;
-  modalType?: string;
-  vacation?: Vacation;
-  workers?: Worker[];
-  confirmationModal?: Modal;
   page: number;
 }
 
@@ -83,9 +77,18 @@ interface VacationModalFormInterface {
   boss?: string | null;
 }
 
+interface VacationTabBodyData {
+  pagination: VacationPagination;
+}
+
 interface VacationModalFormDataInterface {
   bosses: Boss[];
   form: VacationModalFormInterface;
+}
+interface FetchVacationsComposableParameter {
+  vacationType: VacationType;
+  page: number;
+  period: string;
 }
 
 interface ToastPayloadInterface {
@@ -111,6 +114,7 @@ type DrawHalfPageParams = {
   document: PDFDocument;
   vacation: Vacation;
 };
+
 export type {
   Boss,
   BossFetchInterface,
@@ -122,6 +126,8 @@ export type {
   VacationModalFormDataInterface,
   VacationModalDataInterface,
   VacationPagination,
+  VacationTabBodyData,
+  FetchVacationsComposableParameter,
   ToastPayloadInterface,
   VacationModalFormInterface,
   DrawHalfPageParams

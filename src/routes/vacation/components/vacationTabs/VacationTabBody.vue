@@ -1,119 +1,75 @@
 <template>
   <div
     :class="`tab-pane ${active ? 'active' : ''}`"
-    :id="type"
+    :id="`tab-${period}-${type}`"
     role="tabpanel"
-    :aria-labelledby="`${type}-tab`"
+    :aria-labelledby="`${period}-${type}-tab-body`"
   >
     <div class="m-3 p-3">
       <div
         class="row justify-content-center align-items-start g-1"
-        v-if="vacations.length"
+        v-if="vacations?.length"
       >
-        <VacationTable
-          :title="title"
-          :vacations="vacations"
-          :handle-edit="handleEdit"
-          :handle-delete="handleDelete"
-        />
+        <VacationTable :title="title" :vacations="vacations" />
       </div>
       <h4 class="text-center" v-else>Não há {{ model }} {{ time }}.</h4>
       <div
         class="row justify-content-center align-items-start g-1"
         v-if="vacations?.length"
       >
-        <div class="col-4">
-          <button
-            class="btn btn-secondary btn-sm"
-            type="button"
-            @click="handlePageChange(previousPage)"
-            v-if="previousPage !== null"
-          >
-            Anterior
-          </button>
-        </div>
-        <div class="col-4">
-          <span class="btn btn-sm b-4" @click="handlePageChange(1)">1</span>
-          <span v-if="pagination?.pageNumber > 1">...</span>
-          <span
-            v-if="
-              pagination?.pageNumber > 1 &&
-              pagination?.pageNumber < pagination?.totalPages
-            "
-            class="btn btn-sm b-4"
-          >
-            {{ pagination?.pageNumber }}
-          </span>
-          <span>...</span>
-          <span
-            class="btn btn-sm b-4"
-            @click="handlePageChange(pagination?.totalPages)"
-            :aria-disabled="pagination?.pageNumber === pagination?.totalPages"
-            >{{ pagination?.totalPages }}</span
-          >
-        </div>
-        <div class="col-4">
-          <button
-            class="btn btn-secondary btn-sm"
-            type="button"
-            @click="handlePageChange(nextPage)"
-            v-if="nextPage !== null"
-          >
-            Próxima
-          </button>
-        </div>
+        <VacationPagination
+          :handle-page-change="handlePageChange"
+          :pagination="pagination"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { useVacations } from "../../composables/vacations";
+import VacationPagination from "./VacationPagination.vue";
 import VacationTable from "./VacationTable.vue";
 
 export default {
-  emits: ["pageChanged"],
   name: "VacationTabBody",
-  props: [
-    "type",
-    "vacations",
-    "pagination",
-    "active",
-    "handleEdit",
-    "handleDelete",
-    "title",
-    "vacationType"
-  ],
+  props: ["active", "title", "type", "period", "pagination"],
   computed: {
-    previousPage() {
-      return this.pagination?.pageNumber > 1
-        ? this.pagination?.pageNumber - 1
-        : null;
-    },
-    nextPage() {
-      return this.pagination?.pageNumber < this.pagination?.totalPages
-        ? this.pagination?.pageNumber + 1
-        : null;
+    vacations() {
+      return this.pagination?.items ?? [];
     },
     model() {
-      if (this.vacationType === "dayOff") return "abonos";
-      else if (this.vacationType === "license") return "licenças-prêmio";
-      else if (this.vacationType === "vacation") return "férias";
+      if (this.type === "dayOff") return "abonos";
+      else if (this.type === "license") return "licenças-prêmio";
+      else if (this.type === "vacation") return "férias";
     },
     time() {
-      if (this.type === "present") return "em andamento";
-      else if (this.type === "past") return "fruídas(os)";
-      else if (this.type === "future") return "futuras(os)";
+      if (this.period === "present") return "em andamento";
+      else if (this.period === "past") return "fruídas(os)";
+      else if (this.period === "future") return "futuras(os)";
     }
   },
-  components: { VacationTable },
+  components: { VacationTable, VacationPagination },
   methods: {
-    handlePageChange(targetPage: number) {
+    async handlePageChange(targetPage: number) {
+      const { fetchVacations } = useVacations();
       if (
         targetPage > 0 &&
         targetPage <= this.pagination?.totalPages &&
         targetPage !== this.pagination?.pageNumber
       )
-        this.$emit("pageChanged", targetPage);
+        await fetchVacations({
+          type: this.type,
+          ...(this.period === "past" && { pastPage: targetPage }),
+          ...(this.period === "present" && { presentPage: targetPage }),
+          ...(this.period === "future" && { futurePage: targetPage })
+        });
+    }
+  },
+  watch: {
+    async type() {
+      useVacations().resetVacations();
+      await useVacations().fetchVacations({type: this.type})
     }
   }
 };

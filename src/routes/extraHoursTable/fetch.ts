@@ -10,7 +10,7 @@ const getExtraHoursWithRange = async (
   return runQuery({
     query: extraHoursQuery,
     label: "extraHoursWithRangeQuery",
-    variables: buildExtraHoursWithRangeVariables({ reference }),
+    variables: buildExtraHoursWithRangeVariables({ reference })
   });
 };
 
@@ -20,13 +20,13 @@ const processExtraHours = async (
   runQuery({
     query: processExtraHoursMutation,
     variables: { extraHourInput },
-    label: "processExtraHour",
+    label: "processExtraHour"
   });
 
 const extraHoursReferences = async (): Promise<ExtraHourFetch> =>
   runQuery({
     query: referenceQuery,
-    label: "ExtraHourReferences",
+    label: "ExtraHourReferences"
   });
 
 export { getExtraHoursWithRange, processExtraHours, extraHoursReferences };

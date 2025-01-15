@@ -15,25 +15,34 @@ import type {
 } from "./types";
 import type { VacationType } from "../workers/types";
 
-const getDayOffs = async (page:number = 1): Promise<VacationFetchInterface> =>
+const getDayOffs = async (
+  page: number = 1,
+  period: string
+): Promise<VacationFetchInterface> =>
   runQuery({
     query: vacationsQuery,
     label: "dayOffs",
-    variables: { type: "dayOff", page }
+    variables: { type: "dayOff", page, period }
   });
 
-const getVacations = async (page: number = 1): Promise<VacationFetchInterface> =>
+const getVacations = async (
+  page: number = 1,
+  period: string
+): Promise<VacationFetchInterface> =>
   runQuery({
     query: vacationsQuery,
     label: "vacations",
-    variables: { type: "vacation", page }
+    variables: { type: "vacation", page, period }
   });
 
-const getPremiumLicenses = async (page: number = 1): Promise<VacationFetchInterface> =>
+const getPremiumLicenses = async (
+  page: number = 1,
+  period: string
+): Promise<VacationFetchInterface> =>
   runQuery({
     query: vacationsQuery,
     label: "premiumLicenses",
-    variables: { type: "license", page }
+    variables: { type: "license", page, period }
   });
 
 const getWorkerById = async ({
@@ -84,11 +93,12 @@ const deleteVacation = async (_id: string): Promise<VacationFetchInterface> =>
 
 const getVacationsByType = async (
   type: VacationType,
-  page: number = 1
+  page: number = 1,
+  period: string
 ): Promise<VacationFetchInterface> => {
-  if (type === "dayOff") return await getDayOffs(page);
-  if (type === "vacation") return await getVacations(page);
-  if (type === "license") return await getPremiumLicenses(page);
+  if (type === "dayOff") return await getDayOffs(page, period);
+  if (type === "vacation") return await getVacations(page, period);
+  if (type === "license") return await getPremiumLicenses(page, period);
   return { data: undefined };
 };
 

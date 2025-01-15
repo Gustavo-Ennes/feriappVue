@@ -5,6 +5,7 @@ module.exports = {
   },
   extends: [
     "plugin:vue/vue3-strongly-recommended",
+    "plugin:prettier/recommended",
     "@vue/prettier",
     "@vue/typescript/recommended"
   ],

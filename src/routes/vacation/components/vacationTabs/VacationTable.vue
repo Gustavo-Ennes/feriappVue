@@ -58,10 +58,12 @@ import { capitalizeName } from "@/routes/utils";
 
 import type { Vacation } from "../../types";
 import { sort } from "ramda";
+import { useVacationModals } from "../../composables/modals";
+import { useVacations } from "../../composables/vacations";
 
 export default {
   name: "VacationTable",
-  props: ["title", "vacations", "handleDelete", "handleEdit"],
+  props: ["title", "vacations"],
   computed: {
     computedTitle() {
       return this.title?.split(" ")[1] ?? "";
@@ -76,6 +78,21 @@ export default {
   },
   methods: {
     capitalizeName,
+    handleEdit(vacation: Vacation) {
+      const { createEditModal, setCreateEditModalType } = useVacationModals();
+      const { setSelectedVacation } = useVacations();
+
+      setSelectedVacation(vacation);
+      setCreateEditModalType("edit");
+      createEditModal.value?.show();
+    },
+    handleDelete(vacation: Vacation) {
+      const { deleteConfirmationModal } = useVacationModals();
+      const { setSelectedVacation } = useVacations();
+
+      setSelectedVacation(vacation);
+      deleteConfirmationModal.value?.show();
+    },
     async handleDownloadPdf(vacation: Vacation): Promise<void> {
       this.$router.push({
         name: "pdf",
