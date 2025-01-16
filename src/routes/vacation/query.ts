@@ -43,8 +43,8 @@ query WorkerById($_id: ID!){
 `;
 
 const bossesQuery = `
-  query Bosses {
-    bosses {
+  query Bosses($onlyDirectors: Boolean) {
+    bosses(onlyDirectors: $onlyDirectors) {
       _id
       name
       role

@@ -52,7 +52,12 @@ const getWorkerById = async ({
 }): Promise<WorkerFetchInterface> =>
   runQuery({ query: workerByIdQuery, variables: { _id }, label: "workerById" });
 
-const getBosses = async () => runQuery({ query: bossesQuery, label: "bosses" });
+const getBosses = async (onlyDirectors?: boolean) =>
+  runQuery({
+    query: bossesQuery,
+    label: "bosses",
+    variables: { ...(onlyDirectors !== undefined && { onlyDirectors }) }
+  });
 
 const getBoss = async ({
   isDirector = false

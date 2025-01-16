@@ -83,11 +83,7 @@ import { useVacationModals } from "@/routes/vacation/composables/modals";
 
 export default {
   async beforeMount() {
-    const {
-      data: { bosses }
-    } = await getBosses();
-
-    this.bosses = bosses ?? [];
+    await this.updateBosses();
   },
   name: "VacationModalForm",
   props: ["workers", "submitForm", "vacation", "type"],
@@ -107,6 +103,13 @@ export default {
   },
   methods: {
     capitalizeName,
+    async updateBosses() {
+      const {
+        data: { bosses }
+      } = await getBosses(this.type === "vacation" || undefined);
+
+      this.bosses = bosses ?? [];
+    },
     async setForm() {
       if (this.computedModalType === "edit") {
         const startDate = format(
@@ -167,6 +170,11 @@ export default {
         this.setForm();
       },
       deep: true
+    },
+    type: {
+      async handler() {
+        await this.updateBosses();
+      }
     }
   }
 };

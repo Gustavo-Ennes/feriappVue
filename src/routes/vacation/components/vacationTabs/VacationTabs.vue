@@ -31,7 +31,6 @@
 <script lang="ts">
 import VacationTabHeader from "./VacationTabHeader.vue";
 import VacationTabBody from "./VacationTabBody.vue";
-import { futureVacations, pastVacations, presentVacations } from "../../utils";
 import { useVacations } from "../../composables/vacations";
 
 export default {
