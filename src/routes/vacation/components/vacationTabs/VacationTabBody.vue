@@ -10,6 +10,7 @@
         class="row justify-content-center align-items-start g-1"
         v-if="vacations?.length"
       >
+        <div class="col-12 "><p :style="{textAlign: 'right'}">Resultados: {{ pagination.totalResults }}</p></div>
         <VacationTable :title="title" :vacations="vacations" />
       </div>
       <h4 class="text-center" v-else>Não há {{ model }} {{ time }}.</h4>

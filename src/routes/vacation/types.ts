@@ -24,6 +24,7 @@ interface Vacation {
 interface VacationPagination {
   items: Vacation[];
   totalPages: number;
+  totalResults: number;
   pageNumber: number;
   error?: string;
 }

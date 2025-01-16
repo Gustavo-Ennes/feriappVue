@@ -29,6 +29,7 @@ query Vacations($type: String, $page: Int, $period: String){
     }
     totalPages
     pageNumber
+    totalResults
     error
   }
 }
