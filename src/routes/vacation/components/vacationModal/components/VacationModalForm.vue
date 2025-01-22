@@ -70,6 +70,10 @@
       </select>
       <p v-else>Não há chefes. Você precisa criá-los primeiro.</p>
     </div>
+    <div class="col-xs-12 col-sm- my-2" v-if="computedModalType === 'edit'">
+      <label class="form-label">Observação</label>
+      <textarea class="form-control" v-model="form.observation"></textarea>
+    </div>
   </form>
 </template>
 
@@ -96,7 +100,8 @@ export default {
         worker: this.vacation?.worker._id ?? null,
         type: this.vacation?.type ?? this.type,
         startDate: this.vacation?.startDate ?? format(new Date(), "yyyy-MM-dd"),
-        boss: this.vacation?.boss ?? null,
+        boss: this.vacation?.boss._id ?? null,
+        observation: this.vacation?.observation ?? undefined,
         _id: undefined
       }
     };
@@ -106,7 +111,7 @@ export default {
     async updateBosses() {
       const {
         data: { bosses }
-      } = await getBosses(this.type === "vacation" || undefined);
+      } = await getBosses();
 
       this.bosses = bosses ?? [];
     },
@@ -116,12 +121,14 @@ export default {
           new Date(this.vacation?.startDate),
           "yyyy-MM-dd"
         );
+
         this.form = {
           daysQtd: this.vacation.daysQtd,
           startDate,
           worker: this.vacation.worker._id,
           type: this.vacation.type,
           _id: this.vacation._id,
+          observation: this.vacation.observation,
           boss:
             this.vacation?.boss?._id ??
             (await getBoss({ isDirector: this.vacation.type === "vacation" }))
@@ -133,7 +140,8 @@ export default {
           type: this.type,
           startDate: format(new Date(), "yyyy-MM-dd"),
           worker: null,
-          boss: (await getBoss({ isDirector: false }))?._id
+          observation: "",
+          boss: (await getBoss({ isDirector: this.type === "vacation" }))?._id
         };
       }
     }
@@ -146,6 +154,11 @@ export default {
       return getVacationOptions(this.type);
     },
     computedForm() {
+      if (this.form.startDate)
+        this.form.startDate = format(
+          new Date(this.form.startDate),
+          "yyyy-MM-dd"
+        );
       return this.form;
     },
     computedModalType() {
@@ -165,7 +178,7 @@ export default {
       },
       deep: true
     },
-    modalType: {
+    computedModalType: {
       async handler() {
         this.setForm();
       },

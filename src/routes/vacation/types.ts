@@ -76,6 +76,7 @@ interface VacationModalFormInterface {
   startDate?: string;
   _id?: string;
   boss?: string | null;
+  observation?: string | number | string[];
 }
 
 interface VacationTabBodyData {

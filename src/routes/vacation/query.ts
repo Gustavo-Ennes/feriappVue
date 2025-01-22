@@ -24,6 +24,7 @@ query Vacations($type: String, $page: Int, $period: String){
       startDate
       endDate
       subType
+      observation
       createdAt
       updatedAt
     }

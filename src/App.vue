@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { Tooltip } from "bootstrap";
+import { Tooltip, Popover } from "bootstrap";
 
 import JustificationModal from "./components/JustificationModal/JustificationModal.vue";
 import LoadingFrame from "./components/LoadingFrame/index.vue";
@@ -24,24 +24,26 @@ export default {
   name: "app",
   mounted() {
     this.enableTooltipsEverywhere();
+    this.enablePopoversEverywhere();
   },
   methods: {
     handleSearch(searchTerm: string): void {
       this.$router.push({ name: "search", params: { searchTerm } });
     },
+    enablePopoversEverywhere() {
+      var popoverTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="popover"]')
+      );
+      popoverTriggerList.map(function (popoverTriggerEl) {
+        return new Popover(popoverTriggerEl, { container: "body" });
+      });
+    },
     enableTooltipsEverywhere() {
-      const tooltipTriggerList = [].slice.call(
+      var tooltipTriggerList = [].slice.call(
         document.querySelectorAll('[data-bs-toggle="tooltip"]')
       );
       tooltipTriggerList.map(function (tooltipTriggerEl) {
-        if (!(tooltipTriggerEl as any)._tooltip) {
-          const tooltip = new Tooltip(tooltipTriggerEl);
-          (tooltipTriggerEl as any)._tooltip = tooltip;
-          (tooltipTriggerEl as HTMLElement).addEventListener("remove", () => {
-            tooltip.dispose();
-          });
-          return tooltip;
-        }
+        return new Tooltip(tooltipTriggerEl);
       });
     }
   },

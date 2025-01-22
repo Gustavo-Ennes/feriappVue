@@ -52,6 +52,7 @@ export function useVacations() {
     const emptyPagination = {
       pageNumber: 0,
       totalPages: 0,
+      totalResults: 0,
       items: []
     };
 

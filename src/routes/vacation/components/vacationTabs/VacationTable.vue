@@ -11,7 +11,16 @@
     </thead>
     <tbody>
       <tr v-for="vacation in sortedVacations" :key="vacation._id">
-        <td>{{ capitalizeName((vacation.worker as Worker)?.name) }}</td>
+        <td>
+          {{ capitalizeName((vacation.worker as Worker)?.name) }}
+          <i
+            class="fa-solid fa-magnifying-glass text-primary"
+            v-if="vacation.observation"
+            data-bs-toggle="tooltip" 
+            data-bs-placement="top" 
+            :title="`Observação: ${vacation.observation}`" 
+          ></i>
+        </td>
         <td>{{ formatVacationDate(vacation.startDate) }}</td>
         <td>{{ vacation.daysQtd }}</td>
         <td>{{ formatVacationDate(vacation.endDate || "") }}</td>
@@ -19,7 +28,7 @@
           <div class="row justify-content-strecth align-items-stretch">
             <div class="col">
               <i
-                class="card-link fa-solid fa-pen text-warning text-"
+                class="card-link fa-solid fa-pen text-primary text-"
                 @click="handleEdit(vacation)"
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
@@ -37,7 +46,7 @@
             </div>
             <div class="col">
               <i
-                class="card-link fa-solid fa-print text-light text-right"
+                class="card-link fa-solid fa-print text-success text-right"
                 @click="handleDownloadPdf(vacation)"
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"

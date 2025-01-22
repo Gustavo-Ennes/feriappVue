@@ -118,7 +118,7 @@ export default {
           validatedForm
         );
         if (!errors && data?.createVacation) {
-          await fetchVacations({type: this.type})
+          await fetchVacations({ type: this.type });
         }
         this.computedModal?.hide();
         await this.prepareToastPayload({
@@ -151,7 +151,7 @@ export default {
         );
         if (!errors && data?.updateVacation) {
           response.success = true;
-          await fetchVacations({type: this.type})
+          await fetchVacations({ type: this.type });
           setSelectedVacation(undefined);
         }
       }
@@ -180,6 +180,15 @@ export default {
     },
     computedVacation() {
       return useVacations().selectedVacation.value;
+    },
+    computedModalType() {
+      return useVacationModals().createEditModalType.value;
+    }
+  },
+  watch: {
+    computedModalType() {
+      if (this.computedModalType === "create")
+        useVacations().setSelectedVacation(undefined);
     }
   },
   components: {
