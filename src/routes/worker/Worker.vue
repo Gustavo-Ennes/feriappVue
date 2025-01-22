@@ -1,6 +1,6 @@
 <template>
   <div class="container text-center my-5">
-    <div class="row justify-content-start align-items-center g-2">
+    <div v-if="worker" class="row justify-content-start align-items-center g-2">
       <div class="col-3" />
       <h1 class="col-6 text-primary">
         {{ capitalizeName(worker?.name ?? "nome") }}
@@ -101,7 +101,7 @@ export default {
     async getWorkerAndVacations() {
       const { data } = await workerAndVacations({ _id: this._id });
       this.worker = data.worker;
-      this.workerVacations = data.vacations;
+      this.workerVacations = data.vacations?.items ?? [];
     },
     instantiateModal(): void {
       const modalHTML = document.getElementById(`worker-modal`);

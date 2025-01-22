@@ -5,35 +5,227 @@ body {
   overflow-x: hidden;
 
   .card {
-    box-shadow: 4px 8px 12px 1px #00000063;
-    background-color: #005bc1;
-    color: #cbcbcb;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    color: #1c1e21;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
+
+    .card-header {
+      background-color: #f5f6f7;
+      color: #1c1e21;
+      border-bottom: 1px solid #dddfe2;
+    }
+
+    .card-body {
+      color: #1c1e21;
+    }
   }
 
   .toast {
-    box-shadow: 4px 8px 12px 1px #00000063;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    color: #1c1e21;
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
+
+    .toast-header {
+      background-color: #f5f6f7;
+      color: #1c1e21;
+      border-bottom: 1px solid #dddfe2;
+    }
+
+    .toast-body {
+      color: #1c1e21;
+    }
   }
 
   a {
-    color: #444;
+    color: #1877f2;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+      color: #0056c4;
+    }
   }
 
   .bg-primary {
-    background-color: #005bc1;
+    background-color: #1877f2 !important;
   }
 
   .text {
     &-primary {
-      color: #005bc1;
+      color: #1877f2 !important;
     }
     &-secondary {
-      color: #444;
+      color: #606770 !important;
     }
     &-light {
-      color: #cbcbcb;
+      color: #d0e3ff !important;
     }
     &-info {
-      color: #0056bd;
+      color: #1877f2 !important;
     }
+  }
+
+  .btn {
+    background-color: #e4e6eb;
+    color: #1c1e21;
+    border: 1px solid #ccd0d5;
+    border-radius: 6px;
+    box-shadow: none;
+
+    &:hover {
+      background-color: #d8dadf;
+      color: #1c1e21;
+    }
+
+    &-primary {
+      background-color: #1877f2;
+      border-color: #1877f2;
+      color: #e1e7f9 !important;
+
+      &:hover {
+        background-color: #155cbd;
+        border-color: #155cbd;
+        color: #ffffff;
+      }
+    }
+
+    &-secondary {
+      background-color: #7ab0f7 !important;
+      border-color: #1877f2 !important;
+      color: #fafafa !important;
+
+      &:hover {
+        background-color: #c1d4fe !important;
+        color: #a07474 !important;
+      }
+    }
+  }
+
+  .table {
+    color: #1c1e21;
+    background-color: #ffffff;
+    border: 1px solid #dddfe2;
+
+    thead {
+      background-color: #f5f6f7;
+      color: #3c87f8;
+      font-size: 12px;
+    }
+
+    tbody tr {
+      color: #3c87f8;
+      &:nth-child(even) {
+        background-color: #f5f6f7;
+      }
+    }
+
+    th {
+      border-color: #dddfe2;
+      color: #3c87f8;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    td {
+      border-color: #dddfe2;
+      color: #3c87f8;
+      font-size: 12px;
+    }
+  }
+
+  .nav-tabs {
+    .nav-link {
+      color: #606770;
+      background-color: transparent;
+      border: none;
+
+      &:hover {
+        color: #1877f2;
+        background-color: #e4e6eb;
+      }
+
+      &.active {
+        color: #ffffff;
+        background-color: #1877f2;
+        border: none;
+      }
+    }
+  }
+
+  .form-control {
+    background-color: #ffffff;
+    color: #1c1e21;
+    border: 1px solid #ccd0d5;
+    border-radius: 6px;
+
+    &:focus {
+      background-color: #ffffff;
+      border-color: #1877f2;
+      box-shadow: 0 0 5px rgba(24, 119, 242, 0.6);
+      color: #1c1e21;
+    }
+  }
+
+  .form-check-input {
+    background-color: #e4e6eb;
+    border-color: #ccd0d5;
+
+    &:checked {
+      background-color: #1877f2;
+      border-color: #1877f2;
+    }
+  }
+
+  .modal {
+    .modal-dialog {
+      border-radius: 6px;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-content {
+      background-color: #ffffff;
+      color: #1c1e21;
+      border: none;
+      border-radius: 6px;
+
+      .modal-header {
+        background-color: #f5f6f7;
+        color: #1c1e21;
+        border-bottom: 1px solid #dddfe2;
+      }
+
+      .modal-body {
+        color: #1c1e21;
+      }
+
+      .modal-footer {
+        background-color: #f5f6f7;
+        border-top: 1px solid #dddfe2;
+
+        .btn {
+          background-color: #1877f2;
+          color: #ffffff;
+          border: none;
+          border-radius: 6px;
+
+          &:hover {
+            background-color: #155cbd;
+          }
+        }
+      }
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    color: #3c87f8;
+  }
+  label {
+    color: #9d9e9f;
   }
 }

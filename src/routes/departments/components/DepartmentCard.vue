@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title"><i class="fa-solid fa-building h1" /></h5>
+      <h5 class="card-title"><i class="fa-solid fa-building h1 text-secondary" /></h5>
       <p class="card-title">{{ capitalizeName(department.name) }}</p>
       <small class="card-subtitle">{{
         capitalizeName(department.responsible)
@@ -9,7 +9,7 @@
       <div class="row justify-content-center">
         <div class="col-2">
           <i
-            class="card-link fa-solid fa-pen text-warning text-right"
+            class="card-link fa-solid fa-pen text-primary text-right"
             @click="handleEdit"
           />
         </div>
@@ -37,7 +37,8 @@ export default {
       this.handleOpenModal("edit");
     },
     handleDelete() {
-      // this.handleConfirmationModal();
+      this.$emit("setDepartment", this.department);
+      this.handleConfirmationModal();
     }
   }
 };

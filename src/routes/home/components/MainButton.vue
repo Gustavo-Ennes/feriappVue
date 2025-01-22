@@ -1,44 +1,46 @@
 <template>
-  <div class="my-2 button d-grid gap-2 w-100">
-    <button
-      class="btn btn-outline-primary text-center"
-      data-bs-toggle="tooltip"
-      data-bs-placement="top"
-      :title="`Atalho para ${label.toLowerCase()}`"
-      @click="action"
-    >
-      <i :class="`fa-solid fa-${iconClass}`"></i> <br />
-      {{ label }}
-    </button>
-  </div>
+  <button
+    class="btn btn-primary my-2 d-grid w-100 text-center"
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    :title="`Atalho para ${label.toLowerCase()}`"
+    @click="action"
+  >
+    <i :class="`fa-solid fa-${iconClass}`"></i> <br />
+    {{ label }}
+  </button>
 </template>
 
 <script lang="ts">
 export default {
   name: "MainButton",
-  props: ["label", "action", "iconClass"],
+  props: ["label", "action", "iconClass"]
 };
 </script>
 
 <style lang="scss" scoped>
-.button {
-  height: 30vh;
-  width: 200px;
-  text-align: center;
-  :hover {
-    color: #ffa600;
-  }
-}
 .btn {
-  width: 100%;
-  border: 3px solid rgb(0, 140, 255);
-  background-color: rgba(0, 0, 188, 0.1);
-  .fa-solid {
-    font-size: 30px;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  background-color: #1877f2;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.5s ease;
+
   &:hover {
-    border: 2px solid #ffa600;
-    background-color: rgb(0, 137, 250);
+    background-color: #155cbd; /* Darker blue on hover */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .fa-solid {
+    margin-right: 8px;
+    font-size: 20px; /* Icon size */
   }
 }
 </style>

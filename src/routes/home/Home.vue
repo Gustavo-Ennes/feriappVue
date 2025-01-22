@@ -92,10 +92,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-.row {
-  max-width: 100vw;
-  display: flex;
-}
-</style>

@@ -16,10 +16,33 @@ query WorkerQuery($_id: ID!){
   }
 
   vacations(fromWorker: $_id){
-    type
-    daysQtd
-    startDate
-    subType
+    items {
+      _id
+      worker{
+        _id
+        role
+        name
+        matriculation
+        department{
+          _id
+          name
+        }
+      }
+      boss {
+        _id
+        name
+        role
+        isDirector
+      }
+      daysQtd
+      type
+      startDate
+      subType    
+    }
+    totalPages
+    pageNumber
+    totalResults
+    error
   }
 }
 `;

@@ -56,10 +56,6 @@
 </template>
 
 <script lang="ts">
-import { useVacationModals } from "@/routes/vacation/composables/modals";
-import { useVacations } from "@/routes/vacation/composables/vacations";
-import { deleteVacation } from "@/routes/vacation/fetch";
-
 export default {
   name: "DeleteConfirmationModal",
   props: [
@@ -69,6 +65,8 @@ export default {
     "answer",
     "cancelButtonLabel",
     "confirmDrasticActionButtonLabel",
+    "confirmationCallback",
+    "hideCallback",
     "type"
   ],
   data() {
@@ -104,11 +102,9 @@ export default {
   },
   methods: {
     async sendDeleteConfirmation(): Promise<void> {
-      const { deleteConfirmationModal } = useVacationModals();
-      const { setSelectedVacation } = useVacations();
       const toastPayload: { title?: string; text?: string; type?: string } = {};
       try {
-        await this.deleteVacation();
+        await this.confirmationCallback();
         toastPayload.title = `Sucesso!`;
         toastPayload.text = `Deletedo(a) com sucesso`;
         toastPayload.type = "info";
@@ -122,22 +118,12 @@ export default {
         toastPayload.type = "danger";
       } finally {
         this.$store.dispatch("showToast", toastPayload);
-        setSelectedVacation(undefined);
-        deleteConfirmationModal.value?.hide();
-      }
-    },
-    async deleteVacation() {
-      const { selectedVacation, setSelectedVacation, fetchVacations } =
-        useVacations();
-      if (selectedVacation.value) {
-        await deleteVacation(selectedVacation.value._id);
-        setSelectedVacation(undefined);
-        await fetchVacations({ type: this.type });
+        // setSelectedVacation(undefined);
+        // deleteConfirmationModal.value?.hide();
       }
     },
     handleConfirmationModalHide() {
-      const { deleteConfirmationModal } = useVacationModals();
-      deleteConfirmationModal.value?.hide();
+      this.hideCallback();
     }
   }
 };

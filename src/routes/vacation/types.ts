@@ -42,7 +42,7 @@ interface VacationFetchInterface {
 interface WorkerFetchInterface {
   data: {
     worker?: Worker;
-    vacations?: Vacation[];
+    vacations?: VacationPagination;
   };
   errors?: any;
 }

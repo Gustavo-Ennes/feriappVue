@@ -39,7 +39,8 @@
   <DrasticConfirmationModal
     _id="departmentConfirmationModal"
     @hide="confirmationModal?.hide()"
-    :confirmationCallback="() => handleDeleteDepartment(department?._id as string)"
+    :confirmation-callback="() => handleDeleteDepartment(department?._id as string)"
+    :hide-callback="handleDeleteModalHide"
     text="Observe que ao deletar o setor, todos os trabalhadores não serão deletados e ficarão sem setor."
     confirm-drastic-action-button-label="Deletar assim mesmo"
   />
@@ -92,7 +93,12 @@ export default {
     },
     async handleDeleteDepartment(_id: string): Promise<void> {
       await deleteDepartment(_id);
+      this.department = undefined;
       await this.getAllDepartments();
+    },
+    async handleDeleteModalHide(){
+      this.department = undefined;
+      this.confirmationModal?.hide();
     }
   },
   data(): DepartmentsDataInterface {

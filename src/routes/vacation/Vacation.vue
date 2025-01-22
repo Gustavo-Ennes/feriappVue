@@ -1,7 +1,9 @@
 <template>
   <div class="container my-3 text-center">
     <div class="row g-2 justify-content-center">
-      <h1 class="col-4 offset-4 pt-4 text-center">{{ computedTitle }}</h1>
+      <h1 class="col-4 offset-4 pt-4 text-center text-primary">
+        {{ computedTitle }}
+      </h1>
       <h1 class="col pt-4 text-center">
         <button
           class="btn btn-primary"
@@ -14,20 +16,15 @@
         </button>
       </h1>
       <div class="col-12">
-        <VacationTabs
-          ref="tabs"
-          :title="computedButtonLabel"
-          :type="type"
-        />
+        <VacationTabs ref="tabs" :title="computedButtonLabel" :type="type" />
       </div>
     </div>
   </div>
-  <VacationModal
-    :type="type"
-    :title="computedTitle"
-  />
+  <VacationModal :type="type" :title="computedTitle" />
   <DrasticConfirmationModal
     _id="vacationConfirmationModal"
+    :confirmation-callback="handleDelete"
+    :hide-callback="handleDeleteModalHide"
     :type="type"
   />
 </template>
@@ -38,6 +35,7 @@ import VacationTabs from "./components/vacationTabs/VacationTabs.vue";
 import VacationModal from "./components/vacationModal/VacationModal.vue";
 import { useVacations } from "./composables/vacations";
 import { useVacationModals } from "./composables/modals";
+import { deleteVacation } from "./fetch";
 
 export default {
   name: "Vacation",
@@ -68,6 +66,23 @@ export default {
       setSelectedVacation(undefined);
       setCreateEditModalType("create");
       createEditModal.value?.show();
+    },
+    async handleDelete() {
+      const { selectedVacation, setSelectedVacation, fetchVacations } =
+        useVacations();
+
+      if (selectedVacation.value) {
+        await deleteVacation(selectedVacation.value._id);
+        setSelectedVacation(undefined);
+        await fetchVacations({ type: this.type });
+      }
+    },
+    async handleDeleteModalHide() {
+      const { setSelectedVacation } = useVacations();
+      const { deleteConfirmationModal } = useVacationModals();
+
+      setSelectedVacation(undefined);
+      deleteConfirmationModal.value?.hide();
     }
   },
   components: {
@@ -78,6 +93,6 @@ export default {
   mounted() {
     const { instantiateModals } = useVacationModals();
     instantiateModals();
-  },
+  }
 };
 </script>

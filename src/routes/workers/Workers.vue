@@ -32,8 +32,8 @@
     _id="workerConfirmationModal"
     text="Observe que ao deletar o trabalhador, todas as suas férias serão deletadas permanentemente."
     confirm-drastic-action-button-label="Deletar assim mesmo"
-    @hide="confirmationModal?.hide()"
-    :confirmationCallback="() => handleDeleteWorker(selectedWorker?._id as string)"
+    :hide-callback="handleDeleteModalHide"
+    :confirmation-callback="handleDeleteWorker"
   />
 </template>
 
@@ -63,13 +63,15 @@ export default {
       modalType: "",
       selectedWorker: undefined,
       departments: undefined,
-      confirmationModal: undefined,
+      confirmationModal: undefined
     };
   },
   methods: {
-    async handleDeleteWorker(_id: string): Promise<void> {
-      await deleteWorker(_id);
-      await this.getAllWorkers();
+    async handleDeleteWorker(): Promise<void> {
+      if (this.selectedWorker?._id) {
+        await deleteWorker(this.selectedWorker._id);
+        await this.getAllWorkers();
+      }
     },
     async getAllWorkers(): Promise<void> {
       const { data }: WorkerResponseInterface = await getWorkers();
@@ -82,6 +84,7 @@ export default {
       this.selectedWorker = worker;
     },
     handleOpenModal(type: string): void {
+      if (type === "create") this.selectedWorker = undefined;
       this.modalType = type;
       this.modal?.show();
     },
@@ -108,13 +111,17 @@ export default {
             registry.includes(searchTerm)
         ) ?? [];
     },
+    handleDeleteModalHide() {
+      this.selectedWorker = undefined;
+      this.confirmationModal?.hide();
+    }
   },
   components: {
     WorkerTable,
     WorkerSearch,
     WorkerModal,
-    DrasticConfirmationModal,
-  },
+    DrasticConfirmationModal
+  }
 };
 </script>
 
