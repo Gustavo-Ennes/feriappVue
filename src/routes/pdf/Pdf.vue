@@ -18,7 +18,8 @@ import {
   authorizationPdfQuery,
   reportPdfPdfQuery,
   vehicleUsageReportQuery,
-  materialRequisitionQuery
+  materialRequisitionQuery,
+  relationQuery
 } from "./query";
 
 export default {
@@ -30,7 +31,9 @@ export default {
         _id: undefined,
         type: undefined,
         reference: undefined,
-        justification: undefined
+        justification: undefined,
+        period: undefined,
+        vacationType: undefined
       }
     };
   },
@@ -44,28 +47,42 @@ export default {
   },
   async beforeMount() {
     const {
-      params: { type, _id, reference, justification }
+      params: { type, _id, reference, justification, vacationType, period }
     }: RouteLocationNormalizedLoaded = useRoute();
     this.params._id = _id;
     this.params.type = type.toString();
     this.params.reference = parse(reference as string, "MM-yyyy", new Date());
     this.params.justification = justification as string;
+    this.params.vacationType = vacationType as string;
+    this.params.period = period as string;
     await this.getPdfBinary(type as string);
   },
   methods: {
     async getPdfBinary(type: string) {
-      if (type === "vacation") {
-        await this.getVacationPdfBinary();
-      } else if (type === "justification") {
-        await this.getJustificationPdfBinary();
-      } else if (type === "authorization") {
-        await this.getAuthorizationPdfBinary();
-      } else if (type === "report") {
-        await this.getReportPdfBinary();
-      } else if (type === "vehicleUsageReport") {
-        await this.getVehivleUsageReportPdfBinary();
-      } else if (type === "materialRequisition") {
-        await this.getMaterialRequisitionPdfBinary();
+      switch (type) {
+        case "vacation":
+          await this.getVacationPdfBinary();
+          break;
+        case "justification":
+          await this.getJustificationPdfBinary();
+          break;
+        case "authorization":
+          await this.getAuthorizationPdfBinary();
+          break;
+        case "report":
+          await this.getReportPdfBinary();
+          break;
+        case "vehicleUsageReport":
+          await this.getVehivleUsageReportPdfBinary();
+          break;
+        case "materialRequisition":
+          await this.getMaterialRequisitionPdfBinary();
+          break;
+        case "relation":
+          await this.getRelationPdfBinary();
+          break;
+        default:
+          break;
       }
     },
     async getVehivleUsageReportPdfBinary() {
@@ -112,6 +129,19 @@ export default {
       });
 
       this.buffer = data.reportPdf;
+      if (this.buffer === null) {
+        this.$router.push("/notFound");
+      }
+    },
+    async getRelationPdfBinary() {
+      const { period, vacationType } = this.params;
+      const { data } = await runQuery({
+        query: relationQuery,
+        label: "relationPdfQuery",
+        variables: { period, type: vacationType }
+      });
+
+      this.buffer = data.relationPdf;
       if (this.buffer === null) {
         this.$router.push("/notFound");
       }

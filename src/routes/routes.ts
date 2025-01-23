@@ -65,7 +65,7 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/pdf/:type/:_id?/:reference?",
+    path: "/pdf/:type/:_id?/:reference?/:vacationType?/:period?",
     name: "pdf",
     component: () => import("./pdf/Pdf.vue"),
     props: true,

@@ -8,6 +8,8 @@ export type Params = {
   type?: string;
   reference?: Date;
   justification?: string;
+  period?: string;
+  vacationType?: string;
 };
 
 export type Height = {

@@ -26,10 +26,16 @@ export const vehicleUsageReportQuery = `
 query VehicleUsageReportPdf{
   vehicleUsageReportPdf
 }
-`
+`;
 
 export const materialRequisitionQuery = `
 query MaterialRequisitionPdf{
   materialRequisitionPdf
 }
+`;
+
+export const relationQuery = `
+  query RelationPdf($period: String, $type: String) {
+    relationPdf(period: $period, type: $type) 
+  }
 `;
