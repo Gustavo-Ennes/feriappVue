@@ -1,6 +1,6 @@
 <template>
   <form
-    @submit.prevent="submitForm(computedForm)"
+    @submit.prevent="submitForm(form)"
     class="row justify-content-center align-items-center"
     id="vacationCreateForm"
   >
@@ -78,12 +78,12 @@
 </template>
 
 <script lang="ts">
-import { format } from "date-fns";
 import type { VacationModalFormDataInterface } from "../../../types";
 import { capitalizeName } from "../../../../utils";
 import { getDaysOptions, getVacationOptions } from "./options";
 import { getBoss, getBosses } from "@/routes/vacation/fetch";
 import { useVacationModals } from "@/routes/vacation/composables/modals";
+import { format } from "date-fns";
 
 export default {
   async beforeMount() {
@@ -99,7 +99,9 @@ export default {
         daysQtd: this.vacation?.daysQtd ?? null,
         worker: this.vacation?.worker._id ?? null,
         type: this.vacation?.type ?? this.type,
-        startDate: this.vacation?.startDate ?? format(new Date(), "yyyy-MM-dd"),
+        startDate:
+          this.vacation?.startDate ??
+          format(new Date().setHours(3), "yyyy-MM-dd"),
         boss: this.vacation?.boss._id ?? null,
         observation: this.vacation?.observation ?? undefined,
         _id: undefined
@@ -116,12 +118,11 @@ export default {
       this.bosses = bosses ?? [];
     },
     async setForm() {
-      if (this.computedModalType === "edit") {
+      if (this.computedModalType === "edit" && this.vacation) {
         const startDate = format(
-          new Date(this.vacation?.startDate),
+          new Date(this.vacation.startDate),
           "yyyy-MM-dd"
         );
-
         this.form = {
           daysQtd: this.vacation.daysQtd,
           startDate,
@@ -152,14 +153,6 @@ export default {
     },
     vacationsOptions() {
       return getVacationOptions(this.type);
-    },
-    computedForm() {
-      if (this.form.startDate)
-        this.form.startDate = format(
-          new Date(this.form.startDate),
-          "yyyy-MM-dd"
-        );
-      return this.form;
     },
     computedModalType() {
       return useVacationModals().createEditModalType.value;

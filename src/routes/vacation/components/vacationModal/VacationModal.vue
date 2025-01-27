@@ -140,10 +140,6 @@ export default {
       const response = { success: false };
       delete validatedForm.subType;
       delete validatedForm.endDate;
-      validatedForm.startDate = set(
-        parse(validatedForm.startDate, "yyyy-MM-dd", new Date()),
-        { milliseconds: 1 }
-      ).toISOString();
 
       if (validatedForm) {
         const { data, errors }: VacationFetchInterface = await updateVacation(

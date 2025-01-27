@@ -1,5 +1,4 @@
 import { store } from "@/store/store";
-import { set } from "date-fns";
 import { object, string, type Schema, number } from "yup";
 
 import type { VacationFormType } from "../../../types";
@@ -17,7 +16,7 @@ const VacationCreateFormSchema: Schema = object({
     .required("Data de início é obrigatória")
     .matches(
       /^\d{4}\-\d{2}\-\d{2}$/gm,
-      "A data de início das férias precisa estar nesse formato: yyyy/MM/dd"
+      "A data de início das férias precisa estar nesse formato: yyyy-MM-dd"
     ),
   _id: string()
 });
