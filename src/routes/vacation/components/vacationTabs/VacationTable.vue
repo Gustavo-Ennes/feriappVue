@@ -16,14 +16,14 @@
           <i
             class="fa-solid fa-magnifying-glass text-primary"
             v-if="vacation.observation"
-            data-bs-toggle="tooltip" 
-            data-bs-placement="top" 
-            :title="`Observação: ${vacation.observation}`" 
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            :title="`Observação: ${vacation.observation}`"
           ></i>
         </td>
         <td>{{ formatVacationDate(vacation.startDate) }}</td>
         <td>{{ vacation.daysQtd }}</td>
-        <td>{{ formatVacationDate(vacation.endDate || "") }}</td>
+        <td>{{ formatVacationEndDate(vacation.endDate || "") }}</td>
         <td>
           <div class="row justify-content-strecth align-items-stretch">
             <div class="col">
@@ -61,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import { format } from "date-fns";
+import { add, format } from "date-fns";
 import type { Worker } from "@/routes/workers/types";
 import { capitalizeName } from "@/routes/utils";
 
@@ -109,7 +109,9 @@ export default {
       });
     },
     formatVacationDate: (dateString: string) =>
-      format(new Date(dateString), "dd/MM/yyyy")
+      format(new Date(dateString), "dd/MM/yyyy"),
+    formatVacationEndDate: (dateString: string) =>
+      format(add(new Date(dateString), { days: 1 }), "dd/MM/yyyy")
   }
 };
 </script>
