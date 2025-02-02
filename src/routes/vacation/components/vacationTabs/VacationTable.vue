@@ -111,7 +111,7 @@ export default {
     formatVacationDate: (dateString: string) =>
       format(new Date(dateString), "dd/MM/yyyy"),
     formatVacationEndDate: (dateString: string) =>
-      format(add(new Date(dateString), { days: 1 }), "dd/MM/yyyy")
+      dateString ? format(new Date(dateString), "dd/MM/yyyy") : ""
   }
 };
 </script>

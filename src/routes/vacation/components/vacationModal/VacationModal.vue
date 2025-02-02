@@ -182,7 +182,7 @@ export default {
     }
   },
   watch: {
-    computedModalType() {
+    'computedModalType.value'() {
       if (this.computedModalType === "create")
         useVacations().setSelectedVacation(undefined);
     }
